@@ -36,11 +36,31 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Query(const F4SE::QueryInterface* a
 	return true;
 }
 
+namespace
+{
+	void MessageCallback(F4SE::MessagingInterface::Message* a_msg)
+	{
+		switch (a_msg->type)
+		{
+		case F4SE::MessagingInterface::kGameDataReady:
+		{
+			// do stuff
+			//RE::ConsoleLog::GetSingleton()->AddString("EngineFixesF4SE::kGameDataReady");
+			break;
+		}
+		default:
+			break;
+		}
+	}
+}
+
 extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f4se)
 {
 	F4SE::Init(a_f4se);
 
 	logger::info("Loaded"sv);
+
+	F4SE::GetMessagingInterface()->RegisterListener(MessageCallback);
 
 	return true;
 }

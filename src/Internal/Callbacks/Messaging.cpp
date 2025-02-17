@@ -1,3 +1,5 @@
+#include "Internal/Fixes/CellAttachDetachEvent.hpp"
+
 namespace Internal::Messaging
 {
 	// handles various F4SE events
@@ -7,6 +9,8 @@ namespace Internal::Messaging
 
 		switch (a_msg->type) {
 			case F4SE::MessagingInterface::kGameDataReady: {
+				// TODO install CellAttachDetachEvent fix here
+				Internal::Fixes::CellAttachDetachEvent::Install();
 				break;
 			}
 			case F4SE::MessagingInterface::kGameLoaded: {

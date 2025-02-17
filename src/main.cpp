@@ -1,3 +1,6 @@
+#include "Internal/Config/Config.hpp"
+#include "Internal/Patches/Installation.hpp"
+
 F4SE_EXPORT constinit auto F4SEPlugin_Version = []() noexcept {
 	auto data = F4SE::PluginVersionData();
 
@@ -36,21 +39,18 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Query(const F4SE::QueryInterface* a
 	return true;
 }
 
-namespace
+void MessageCallback(F4SE::MessagingInterface::Message* a_msg)
 {
-	void MessageCallback(F4SE::MessagingInterface::Message* a_msg)
+	switch (a_msg->type)
 	{
-		switch (a_msg->type)
-		{
 		case F4SE::MessagingInterface::kGameDataReady:
 		{
 			// do stuff
-			//RE::ConsoleLog::GetSingleton()->AddString("EngineFixesF4SE::kGameDataReady");
+			RE::ConsoleLog::GetSingleton()->AddString("EngineFixesF4SE::kGameDataReady (temp mesg)");
 			break;
 		}
 		default:
 			break;
-		}
 	}
 }
 
@@ -58,9 +58,13 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f
 {
 	F4SE::Init(a_f4se);
 
-	logger::info("Loaded"sv);
+	Internal::Config::Load();
+	logger::info("Config loaded");
+	Internal::Patches::Install();
+	logger::info("Patches loaded");
 
 	F4SE::GetMessagingInterface()->RegisterListener(MessageCallback);
 
+	logger::info("Loaded"sv);
 	return true;
 }

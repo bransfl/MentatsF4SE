@@ -2,9 +2,8 @@
 #include "Internal/Config/Config.hpp"
 #include "RE/Bethesda/Settings.hpp"
 #include <RE/Bethesda/Actor.hpp>
-#include <string>
 
-REL::Relocation<uintptr_t> ptr_EvaluateConditions{ REL::ID(1228998) };
+REL::Relocation<uintptr_t> ptr_EvaluateConditions_OG{ REL::ID(1228998) };
 
 namespace Internal::Fixes::MagicEffectConditions
 {
@@ -25,7 +24,13 @@ namespace Internal::Fixes::MagicEffectConditions
 		}
 
 		F4SE::Trampoline& trampoline = F4SE::GetTrampoline();
-		trampoline.write_branch<5>(ptr_EvaluateConditions.address(), &EvaluateConditions);
+		if (!REL::Module::IsNG()) {
+			// write to OG address
+			trampoline.write_branch<5>(ptr_EvaluateConditions_OG.address(), &EvaluateConditions);
+		}
+		else {
+			// write to NG address
+		}
 	}
 
 	float ActiveEffectConditionUpdateInterval()
@@ -53,11 +58,13 @@ namespace Internal::Fixes::MagicEffectConditions
 			if (!forceUpdate) {
 				if (activeEffect->elapsedSeconds <= 0.0F) {
 					reinterpret_cast<float&>(activeEffect->pad94) = elapsedTimeDelta;
+					logger::debug("MagicEffectConditions -> activeEffect's pad94 was set to elapsedTimeDelta");
 					return;
 				}
 
 				if (conditionUpdateTime > 0.0F && conditionUpdateTime < ActiveEffectConditionUpdateInterval()) {
 					reinterpret_cast<float&>(activeEffect->pad94) += elapsedTimeDelta;
+					logger::debug("MagicEffectConditions -> activeEffect's pad94 had elapsedTimeDelta added.");
 					return;
 				}
 			}

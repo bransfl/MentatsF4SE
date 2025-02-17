@@ -1,6 +1,12 @@
 #include "Internal/Patches/LoadEditorIDs.hpp"
 #include "Internal/Config/Config.hpp"
 #include <SimpleIni.h>
+#include <iostream>
+#include <filesystem>
+
+bool fileExists(const std::string& filename) {
+    return std::filesystem::exists(filename);
+}
 
 namespace Internal::Patches::LoadEditorIDs
 {
@@ -8,8 +14,14 @@ namespace Internal::Patches::LoadEditorIDs
 
 	void Install() noexcept
 	{
-		// todo - check for PCL dll + check for baka framework edid toml and return early if ini patches loaded
-		CSimpleIniA a_ini;
+		std::string filepath = "Data/F4SE/Plugins/";
+		if (fileExists(filepath + "PapyrusCommonLibrary.dll") || fileExists(filepath + "BakaFramework.dll")) {
+			logger::info("LoadEditorIDs -> PapyrusCommonLibrary or BakaFramework was installed. Aborting patch.");
+			return;
+		} else {
+			logger::info("LoadEditorIDs -> PapyrusCommonLibrary or BakaFramework was NOT installed. Continuing patch.");
+		}
+		
 
 		EditorIDs.reserve(RESERVED_SIZE);
 

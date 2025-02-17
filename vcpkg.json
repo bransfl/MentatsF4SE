@@ -3,6 +3,7 @@
 	"dependencies": [
 		"rsm-mmio",
 		"spdlog",
-		"simpleini"
+		"simpleini",
+		"toml11"
 	]
 }

@@ -13,9 +13,11 @@ namespace Internal::Fixes::MagicEffectConditions
 		}
 
 		if (std::filesystem::exists("Data/F4SE/Plugins/MGEFConditionFix.dll")) {
+			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - MGEF Condition Fix was detected. It is recommended that you disable this mod while using EngineFixesF4SE.");
 			logger::info("MagicEffectConditions -> MGEFConditionFix was installed. Aborting fix.");
 			return;
 		}
+
 		// should have the contents of Fix() here probably
 	}
 
@@ -48,28 +50,22 @@ namespace Internal::Fixes::MagicEffectConditions
 		}
 
 		if ((activeEffect->flags.all(RE::ActiveEffect::Flags::kHasConditions) || activeEffect->displacementSpell) && activeEffect->target && activeEffect->target->GetTargetStatsObject()) {
-			// todo this needs to be tested with the data below this
-			auto& conditionUpdateTime = reinterpret_cast<float&>(activeEffect->elapsedSeconds);
 
-			// temp for testing
-			//auto* floatPtr = reinterpret_cast<float*>(reinterpret_cast<std::uintptr_t>(&activeEffect) + 0x90);
-			//logger::info("MagicEffectConditions -> TEMP | floatPtr=");
+			auto& conditionUpdateTime = reinterpret_cast<float&>(activeEffect->pad94);
 
 			if (!forceUpdate) {
 				if (activeEffect->elapsedSeconds <= 0.0F) {
-					conditionUpdateTime = elapsedTimeDelta;
+					reinterpret_cast<float&>(activeEffect->pad94) = elapsedTimeDelta;
 					return;
 				}
 
 				if (conditionUpdateTime > 0.0F && conditionUpdateTime < ActiveEffectConditionUpdateInterval()) {
-					conditionUpdateTime += elapsedTimeDelta;
+					reinterpret_cast<float&>(activeEffect->pad94) += elapsedTimeDelta;
 					return;
 				}
 			}
-			conditionUpdateTime = elapsedTimeDelta;
 
-			if (activeEffect->effect->conditions.IsTrue(activeEffect->target->GetTargetStatsObject(), activeEffect->caster.get().get())\
-														&& !activeEffect->CheckDisplacementSpellOnTarget()) {
+			if (activeEffect->effect->conditions.IsTrue(activeEffect->target->GetTargetStatsObject(), activeEffect->caster.get().get()) && !activeEffect->CheckDisplacementSpellOnTarget()) {
 				activeEffect->conditionStatus = RE::ActiveEffect::ConditionStatus::kTrue;
 				logger::debug("MagicEffectConditions -> activeEffect's ConditionStatus was set to kTrue");
 			}

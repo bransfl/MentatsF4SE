@@ -31,12 +31,17 @@ namespace Internal::Fixes::MagicEffectConditions
 	float ActiveEffectConditionUpdateInterval()
 	{
 		static auto* conditionInterval = RE::GameSettingCollection::GetSingleton()->GetSetting("fActiveEffectConditionUpdateInterval");
-		return conditionInterval->GetFloat() > 0.001F ? conditionInterval->GetFloat() : 1.0F;
+		if (conditionInterval->GetFloat() > 0.001F) {
+			return conditionInterval->GetFloat();
+		} else {
+			return 1.0F;
+		}
 	}
 
 	void EvaluateConditions(RE::ActiveEffect* activeEffect, float elapsedTimeDelta, bool forceUpdate)
 	{
 		if (activeEffect->conditionStatus == RE::ActiveEffect::ConditionStatus::kNotAvailable) {
+			logger::debug("MagicEffectConditions -> activeEffect's ConditionStatus was kNotAvailable. Return.");
 			return;
 		}
 
@@ -63,12 +68,15 @@ namespace Internal::Fixes::MagicEffectConditions
 
 			if (activeEffect->effect->conditions.IsTrue(activeEffect->target->GetTargetStatsObject(), target.get()) && !activeEffect->CheckDisplacementSpellOnTarget()) {
 				activeEffect->conditionStatus = RE::ActiveEffect::ConditionStatus::kTrue;
+				logger::debug("MagicEffectConditions -> activeEffect's ConditionStatus was set to kTrue");
 			} else {
 				activeEffect->conditionStatus = RE::ActiveEffect::ConditionStatus::kFalse;
+				logger::debug("MagicEffectConditions -> activeEffect's ConditionStatus was set to kFalse");
 			}
 		}
 		else {
 			activeEffect->conditionStatus = RE::ActiveEffect::ConditionStatus::kNotAvailable;
+			logger::debug("MagicEffectConditions -> activeEffect's ConditionStatus was set to kNotAvailable");
 		}
 	}
 }

@@ -44,6 +44,7 @@ namespace Internal::Fixes::MagicEffectConditions
 		if ((activeEffect->flags.all(RE::ActiveEffect::Flags::kHasConditions) || activeEffect->displacementSpell) && activeEffect->target && activeEffect->target->GetTargetStatsObject()) {
 			// TODO elapsedSeconds probably isnt correct
 			auto& conditionUpdateTime = reinterpret_cast<float&>(activeEffect->elapsedSeconds);
+			//auto& conditionUpdateTime = reinterpret_cast<float&>(activeEffect->castingSource.get(uint32_t));
 
 			if (!forceUpdate) {
 				if (activeEffect->elapsedSeconds <= 0.0F) {

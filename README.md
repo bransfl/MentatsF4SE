@@ -2,7 +2,7 @@
 
 ## About
 
-This is a template for my CommonLibF4 NG project, designed to be a simple and straightforward way to start developing script extender mods for Fallout 4.
+This is a project that patches several issues with the game's engine.
 
 ## Build Dependencies
 

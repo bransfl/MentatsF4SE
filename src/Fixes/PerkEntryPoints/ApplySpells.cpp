@@ -1,8 +1,13 @@
+#include "Internal/Config/Config.hpp"
+
 // fixes entrypoint kApplyCombatHitSpell so multiple spells can be applied at once
 namespace Internal::Fixes::PerkEntryPoints::ApplySpells
 {
 	void Install() noexcept {
-
+		if (!Config::bApplyCombatHitSpellFix.GetValue()) {
+			logger::info("PerkEntryPoints::ApplySpells -> Fix was disabled in the ini file. Fix aborted.");
+			return;
+		}
 	}
 
 	/* Apply Combat Hit Spell

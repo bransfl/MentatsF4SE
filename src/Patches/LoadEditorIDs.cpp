@@ -13,6 +13,11 @@ namespace Internal::Patches::LoadEditorIDs
 
 	void Install() noexcept
 	{
+		if (!Config::bLoadEditorIds.GetValue()) {
+			logger::info("LoadEditorIDs -> Patch was disabled in the ini file. Patch aborted.");
+			return;
+		}
+
 		// check if editorids are already loaded by another mod
 		std::string filepath = "Data/F4SE/Plugins/";
 		if (std::filesystem::exists(filepath + "PapyrusCommonLibrary.dll")) {
@@ -21,8 +26,7 @@ namespace Internal::Patches::LoadEditorIDs
 		}
 		if (std::filesystem::exists(filepath + "BakaFramework.dll")) {
 			const toml::value bakaToml = toml::parse(filepath + "BakaFramework.toml");
-			std::string bakaEnableLoadingEditorIDs = bakaToml.at("EnableLoadingEditorIDs").as_string();
-			if (bakaEnableLoadingEditorIDs == "true") {
+			if ((bakaToml.at("EnableLoadingEditorIDs").as_string()) == "true") {
 				logger::info("LoadEditorIDs -> BakaFramework was installed. Aborting patch.");
 				return;
 			}

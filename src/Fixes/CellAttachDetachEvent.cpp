@@ -1,6 +1,7 @@
 #include "Internal/Fixes/CellAttachDetachEvent.hpp"
 #include "RE/Bethesda/GameScript.hpp"
 #include "RE/Bethesda/TESCellAttachDetachEvent.hpp"
+#include "Internal/Config/Config.hpp"
 
 // stolen geluxrum code from
 // https://github.com/GELUXRUM/EngineFixesF4/blob/master/EngineFixesF4/src/main.cpp
@@ -8,6 +9,11 @@ namespace Internal::Fixes::CellAttachDetachEvent
 {
 	void Install() noexcept
 	{
+		if (!Config::bCellAttachDetachEvent.GetValue()) {
+			logger::info("CellAttachDetachEvent -> Fix was disabled in the ini file. Fix aborted.");
+			return;
+		}
+
 		RE::RegisterForCellAttachDetach(CellAttachDetachListener::GetSingleton());
 		logger::info("Registered cell attach/detach listener.");
 	}
@@ -22,6 +28,7 @@ namespace Internal::Fixes::CellAttachDetachEvent
 	{
 		if (a_event.reference != nullptr && !a_event.attached) {
 			a_event.reference->UpdateDynamicNavmesh(false);
+			logger::info("CellAttachDetachEvent -> DynamicNavmesh was updated.");
 		}
 		return RE::BSEventNotifyControl::kContinue;
 	}

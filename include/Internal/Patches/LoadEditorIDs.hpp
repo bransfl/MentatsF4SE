@@ -1,5 +1,6 @@
 #pragma once
 
+// loads editorids for usage in the console
 namespace Internal::Patches::LoadEditorIDs
 {
 	static auto EditorIDs = std::unordered_map<std::uint32_t, RE::BSFixedString>();

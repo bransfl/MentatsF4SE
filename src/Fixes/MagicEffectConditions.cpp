@@ -1,6 +1,7 @@
 #include "Internal/Config/Config.hpp"
 #include "RE/Bethesda/Settings.hpp"
 #include <RE/Bethesda/Actor.hpp>
+#include <string>
 
 namespace Internal::Fixes::MagicEffectConditions
 {
@@ -10,7 +11,12 @@ namespace Internal::Fixes::MagicEffectConditions
 			logger::info("MagicEffectConditions -> Fix was disabled in the ini file. Fix aborted.");
 			return;
 		}
-		// should have the contents of Fix() probably
+
+		if (std::filesystem::exists("Data/F4SE/Plugins/MGEFConditionFix.dll")) {
+			logger::info("MagicEffectConditions -> MGEFConditionFix was installed. Aborting fix.");
+			return;
+		}
+		// should have the contents of Fix() here probably
 	}
 
 	void Fix(bool& magicEffectConditions)
@@ -42,9 +48,12 @@ namespace Internal::Fixes::MagicEffectConditions
 		}
 
 		if ((activeEffect->flags.all(RE::ActiveEffect::Flags::kHasConditions) || activeEffect->displacementSpell) && activeEffect->target && activeEffect->target->GetTargetStatsObject()) {
-			// TODO elapsedSeconds probably isnt correct
+			// todo this needs to be tested with the data below this
 			auto& conditionUpdateTime = reinterpret_cast<float&>(activeEffect->elapsedSeconds);
-			//auto& conditionUpdateTime = reinterpret_cast<float&>(activeEffect->castingSource.get(uint32_t));
+
+			// temp for testing
+			//auto* floatPtr = reinterpret_cast<float*>(reinterpret_cast<std::uintptr_t>(&activeEffect) + 0x90);
+			//logger::info("MagicEffectConditions -> TEMP | floatPtr=");
 
 			if (!forceUpdate) {
 				if (activeEffect->elapsedSeconds <= 0.0F) {

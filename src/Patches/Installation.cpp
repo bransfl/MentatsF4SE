@@ -1,5 +1,6 @@
 #include "Internal/Patches/Installation.hpp"
 #include "Internal/Patches/LoadEditorIDs.hpp"
+#include "Internal/Patches/ConsoleHelpPrintEditorID.hpp"
 
 namespace Internal::Patches
 {
@@ -7,6 +8,7 @@ namespace Internal::Patches
 	{
 		logger::info("Installing patches"sv);
 
+		ConsoleHelpPrintEditorID::Install();
 		LoadEditorIDs::Install();
 	}
 }

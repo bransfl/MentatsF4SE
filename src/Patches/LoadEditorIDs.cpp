@@ -18,7 +18,7 @@ namespace Internal::Patches::LoadEditorIDs
 			return;
 		}
 
-		// check if editorids are already loaded by another mod
+		// check if editorids are already loaded/will be loaded by another mod
 		std::string filepath = "Data/F4SE/Plugins/";
 		if (std::filesystem::exists(filepath + "PapyrusCommonLibrary.dll")) {
 			logger::info("LoadEditorIDs -> PapyrusCommonLibrary was installed. Aborting patch.");

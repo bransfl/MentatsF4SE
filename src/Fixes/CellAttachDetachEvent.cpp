@@ -15,7 +15,7 @@ namespace Internal::Fixes::CellAttachDetachEvent
 		}
 
 		RE::RegisterForCellAttachDetach(CellAttachDetachListener::GetSingleton());
-		logger::info("Registered cell attach/detach listener.");
+		logger::info("CellAttachDetachEvent -> Registered cell attach/detach listener.");
 	}
 
 	CellAttachDetachListener* CellAttachDetachListener::GetSingleton()
@@ -28,7 +28,7 @@ namespace Internal::Fixes::CellAttachDetachEvent
 	{
 		if (a_event.reference != nullptr && !a_event.attached) {
 			a_event.reference->UpdateDynamicNavmesh(false);
-			logger::info("CellAttachDetachEvent -> DynamicNavmesh was updated.");
+			logger::debug("CellAttachDetachEvent -> DynamicNavmesh was updated.");
 		}
 		return RE::BSEventNotifyControl::kContinue;
 	}

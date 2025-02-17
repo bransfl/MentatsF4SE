@@ -109,6 +109,11 @@
 			"inherits": [
 				"release-msvc"
 			]
+		},
+		{
+			"name": "test01",
+			"description": "",
+			"displayName": ""
 		}
 	]
 }

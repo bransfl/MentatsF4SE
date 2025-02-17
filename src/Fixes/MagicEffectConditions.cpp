@@ -4,6 +4,7 @@
 #include <RE/Bethesda/Actor.hpp>
 
 REL::Relocation<uintptr_t> ptr_EvaluateConditions_OG{ REL::ID(1228998) };
+REL::Relocation<uintptr_t> ptr_EvaluateConditions_NG;
 
 namespace Internal::Fixes::MagicEffectConditions
 {
@@ -30,6 +31,7 @@ namespace Internal::Fixes::MagicEffectConditions
 		}
 		else {
 			// write to NG address
+			// trampoline.write_branch<5>(ptr_EvaluateConditions_NG.address(), &EvaluateConditions);
 		}
 	}
 

@@ -9,7 +9,6 @@ namespace Internal::Messaging
 
 		switch (a_msg->type) {
 			case F4SE::MessagingInterface::kGameDataReady: {
-				// TODO install CellAttachDetachEvent fix here
 				Internal::Fixes::CellAttachDetachEvent::Install();
 				break;
 			}

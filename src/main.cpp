@@ -41,19 +41,6 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Query(const F4SE::QueryInterface* a
 	return true;
 }
 
-void MessageCallback(F4SE::MessagingInterface::Message* a_msg)
-{
-	switch (a_msg->type) {
-		case F4SE::MessagingInterface::kGameDataReady: {
-			// do stuff
-			RE::ConsoleLog::GetSingleton()->AddString("EngineFixesF4SE::kGameDataReady (temp mesg)\n");
-			break;
-		}
-		default:
-			break;
-	}
-}
-
 extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f4se)
 {
 	F4SE::Init(a_f4se);
@@ -67,7 +54,9 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f
 	Internal::Patches::Install();
 	logger::info("Patches loaded");
 
+	// more patches/fixes are installed in Internal/Callbacks/Messaging
 	F4SE::GetMessagingInterface()->RegisterListener(Internal::Messaging::Callback);
+	logger::info("Registered for F4SE events");
 
 	logger::info("Loaded"sv);
 	return true;

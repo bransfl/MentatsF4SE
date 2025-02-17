@@ -1,10 +1,16 @@
+#include "Internal/Fixes/MagicEffectConditions.hpp"
 #include "Internal/Config/Config.hpp"
 #include "RE/Bethesda/Settings.hpp"
 #include <RE/Bethesda/Actor.hpp>
 #include <string>
 
+REL::Relocation<uintptr_t> ptr_EvaluateConditions{ REL::ID(1228998) };
+
 namespace Internal::Fixes::MagicEffectConditions
 {
+	// forward declaration for Install() since MagicEffectConditions.hpp is being annoying
+	void EvaluateConditions(RE::ActiveEffect* activeEffect, float elapsedTimeDelta, bool forceUpdate);
+
 	void Install() noexcept
 	{
 		if (!Config::bMagicEffectConditions.GetValue()) {
@@ -18,17 +24,8 @@ namespace Internal::Fixes::MagicEffectConditions
 			return;
 		}
 
-		// should have the contents of Fix() here probably
-	}
-
-	void Fix(bool& magicEffectConditions)
-	{
-		// note - bool& magicEffectConditions isnt needed, in SSE engine fixes it's just a config option for applying the patch
-
-		if (magicEffectConditions == true) {
-			// temp to make the compiler chill
-		}
-		// Utility::Memory::SafeWriteAbsoluteJump(Addresses::Fixes::MagicEffectConditions::EvaluateConditions, reinterpret_cast<std::uintptr_t>(std::addressof(MagicEffectConditions::EvaluateConditions)));
+		F4SE::Trampoline& trampoline = F4SE::GetTrampoline();
+		trampoline.write_branch<5>(ptr_EvaluateConditions.address(), &EvaluateConditions);
 	}
 
 	float ActiveEffectConditionUpdateInterval()

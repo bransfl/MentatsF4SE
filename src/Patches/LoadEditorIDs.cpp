@@ -1,5 +1,6 @@
 #include "Internal/Patches/LoadEditorIDs.hpp"
 #include "Internal/Config/Config.hpp"
+#include <SimpleIni.h>
 
 namespace Internal::Patches::LoadEditorIDs
 {
@@ -7,8 +8,8 @@ namespace Internal::Patches::LoadEditorIDs
 
 	void Install() noexcept
 	{
-		// TODO - if PCL or baka framework installed, return
-
+		// todo - check for PCL dll + check for baka framework edid toml and return early if ini patches loaded
+		CSimpleIniA a_ini;
 
 		EditorIDs.reserve(RESERVED_SIZE);
 

@@ -1,4 +1,5 @@
 #include "Internal/Config/Config.hpp"
+#include "Internal/Fixes/Installation.hpp"
 #include "Internal/Patches/Installation.hpp"
 
 F4SE_EXPORT constinit auto F4SEPlugin_Version = []() noexcept {
@@ -60,6 +61,8 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f
 
 	Internal::Config::Load();
 	logger::info("Config loaded");
+	Internal::Fixes::Install();
+	logger::info("Fixes loaded");
 	Internal::Patches::Install();
 	logger::info("Patches loaded");
 

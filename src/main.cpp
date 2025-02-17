@@ -1,3 +1,4 @@
+#include "Internal/Callbacks/Messaging.hpp"
 #include "Internal/Config/Config.hpp"
 #include "Internal/Fixes/Installation.hpp"
 #include "Internal/Patches/Installation.hpp"
@@ -42,10 +43,8 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Query(const F4SE::QueryInterface* a
 
 void MessageCallback(F4SE::MessagingInterface::Message* a_msg)
 {
-	switch (a_msg->type)
-	{
-		case F4SE::MessagingInterface::kGameDataReady:
-		{
+	switch (a_msg->type) {
+		case F4SE::MessagingInterface::kGameDataReady: {
 			// do stuff
 			RE::ConsoleLog::GetSingleton()->AddString("EngineFixesF4SE::kGameDataReady (temp mesg)\n");
 			break;
@@ -61,12 +60,14 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f
 
 	Internal::Config::Load();
 	logger::info("Config loaded");
+
 	Internal::Fixes::Install();
 	logger::info("Fixes loaded");
+
 	Internal::Patches::Install();
 	logger::info("Patches loaded");
 
-	F4SE::GetMessagingInterface()->RegisterListener(MessageCallback);
+	F4SE::GetMessagingInterface()->RegisterListener(Internal::Messaging::Callback);
 
 	logger::info("Loaded"sv);
 	return true;

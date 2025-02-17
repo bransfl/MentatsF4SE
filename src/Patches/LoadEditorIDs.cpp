@@ -1,28 +1,35 @@
 #include "Internal/Patches/LoadEditorIDs.hpp"
 #include "Internal/Config/Config.hpp"
 #include <SimpleIni.h>
-#include <iostream>
 #include <filesystem>
+#include <iostream>
+#include <toml.hpp>
+#include <toml11/parser.hpp>
 
-bool fileExists(const std::string& filename) {
-    return std::filesystem::exists(filename);
-}
-
+// loads editorids for usage in the console
 namespace Internal::Patches::LoadEditorIDs
 {
 	static constexpr auto RESERVED_SIZE = 0x20000ui32;
 
 	void Install() noexcept
 	{
+		// check if editorids are already loaded by another mod
 		std::string filepath = "Data/F4SE/Plugins/";
-		if (fileExists(filepath + "PapyrusCommonLibrary.dll") || fileExists(filepath + "BakaFramework.dll")) {
-			logger::info("LoadEditorIDs -> PapyrusCommonLibrary or BakaFramework was installed. Aborting patch.");
+		if (std::filesystem::exists(filepath + "PapyrusCommonLibrary.dll")) {
+			logger::info("LoadEditorIDs -> PapyrusCommonLibrary was installed. Aborting patch.");
 			return;
-		} else {
-			logger::info("LoadEditorIDs -> PapyrusCommonLibrary or BakaFramework was NOT installed. Continuing patch.");
 		}
-		
+		if (std::filesystem::exists(filepath + "BakaFramework.dll")) {
+			const toml::value bakaToml = toml::parse(filepath + "BakaFramework.toml");
+			std::string bakaEnableLoadingEditorIDs = bakaToml.at("EnableLoadingEditorIDs").as_string();
+			if (bakaEnableLoadingEditorIDs == "true") {
+				logger::info("LoadEditorIDs -> BakaFramework was installed. Aborting patch.");
+				return;
+			}
+		}
+		logger::info("LoadEditorIDs -> PapyrusCommonLibrary or BakaFramework was NOT installed. Continuing patch.");
 
+		// load editorids
 		EditorIDs.reserve(RESERVED_SIZE);
 
 		// Patch<RE::TESForm>::Install();

@@ -1,5 +1,5 @@
 #include "Internal/Fixes/Installation.hpp"
-#include "Internal/Fixes/ApplySpells.hpp"
+#include "Internal/Fixes/PerkEntryPoints/ApplySpells.hpp"
 
 namespace Internal::Fixes
 {
@@ -7,6 +7,6 @@ namespace Internal::Fixes
 	{
 		logger::info("Installing fixes"sv);
 
-		ApplySpells::Install();
+		PerkEntryPoints::ApplySpells::Install();
 	}
 }

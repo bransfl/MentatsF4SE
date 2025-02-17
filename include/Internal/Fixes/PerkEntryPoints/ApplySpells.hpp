@@ -1,7 +1,7 @@
 #pragma once
 
 // fixes entrypoint kApplyCombatHitSpell so multiple spells can be applied at once
-namespace Internal::Fixes::ApplySpells
+namespace Internal::Fixes::PerkEntryPoints::ApplySpells
 {
 	void Install() noexcept;
 

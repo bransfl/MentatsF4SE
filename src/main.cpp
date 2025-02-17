@@ -47,7 +47,7 @@ void MessageCallback(F4SE::MessagingInterface::Message* a_msg)
 		case F4SE::MessagingInterface::kGameDataReady:
 		{
 			// do stuff
-			RE::ConsoleLog::GetSingleton()->AddString("EngineFixesF4SE::kGameDataReady (temp mesg)");
+			RE::ConsoleLog::GetSingleton()->AddString("EngineFixesF4SE::kGameDataReady (temp mesg)\n");
 			break;
 		}
 		default:

@@ -5,7 +5,7 @@ namespace Internal::Fixes
 {
 	void Install() noexcept
 	{
-		logger::debug("Installing fixes"sv);
+		logger::info("Installing fixes"sv);
 
 		ApplySpells::Install();
 	}

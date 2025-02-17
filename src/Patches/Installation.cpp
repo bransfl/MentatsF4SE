@@ -5,7 +5,7 @@ namespace Internal::Patches
 {
 	void Install() noexcept
 	{
-		logger::debug("Installing patches"sv);
+		logger::info("Installing patches"sv);
 
 		LoadEditorIDs::Install();
 	}

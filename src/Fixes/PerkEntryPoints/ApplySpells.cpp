@@ -1,4 +1,5 @@
 #include "Internal/Config/Config.hpp"
+#include "Internal/Fixes/PerkEntryPoints/ApplySpells.hpp"
 
 // fixes entrypoint kApplyCombatHitSpell so multiple spells can be applied at once
 namespace Internal::Fixes::PerkEntryPoints::ApplySpells

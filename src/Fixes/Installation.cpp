@@ -1,6 +1,7 @@
 #include "Internal/Fixes/Installation.hpp"
 #include "Internal/Fixes/MagicEffectConditions.hpp"
 #include "Internal/Fixes/PerkEntryPoints/ApplySpells.hpp"
+#include "Internal/Fixes/TransferManyItems/AddManyItems.hpp"
 
 namespace Internal::Fixes
 {
@@ -9,6 +10,8 @@ namespace Internal::Fixes
 		logger::info("Installing fixes"sv);
 
 		PerkEntryPoints::ApplySpells::Install();
+		TransferManyItems::AddManyItems::Install();
+		//TransferManyItems::DropManyItems::Install();
 		// CellAttachDetachEvent::Install();		handled in Messaging.cpp
 		MagicEffectConditions::Install();
 	}

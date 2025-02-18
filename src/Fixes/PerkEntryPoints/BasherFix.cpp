@@ -1,4 +1,5 @@
 #include "Internal/Config/Config.hpp"
+#include "Internal/Fixes/PerkEntryPoints/BasherFix.hpp"
 
 // fixes entrypoint kModOutgoingLimbBashDamage so it actually works
 namespace Internal::Fixes::PerkEntryPoints::BasherFix

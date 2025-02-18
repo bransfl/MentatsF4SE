@@ -4,7 +4,7 @@
 #include <RE/Bethesda/Actor.hpp>
 
 REL::Relocation<uintptr_t> ptr_EvaluateConditions_OG{ REL::ID(1228998) };
-REL::Relocation<uintptr_t> ptr_EvaluateConditions_NG;
+REL::Relocation<uintptr_t> ptr_EvaluateConditions_NG;	// need to get this somehow
 
 namespace Internal::Fixes::MagicEffectConditions
 {

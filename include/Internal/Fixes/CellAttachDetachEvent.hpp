@@ -1,3 +1,5 @@
+#pragma once
+
 namespace Internal::Fixes::CellAttachDetachEvent
 {
 	void Install() noexcept;

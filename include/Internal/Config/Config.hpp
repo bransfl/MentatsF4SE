@@ -8,6 +8,8 @@ namespace Internal::Config
 	// fixes
 	inline const auto bApplyCombatHitSpellFix = REX::INI::Bool{ "Fixes"sv, "bApplyCombatHitSpellFix"sv, true};
 	inline const auto bBasherFix = REX::INI::Bool{ "Fixes"sv, "bBasherFix"sv, true};
+	inline const auto bAddManyItems = REX::INI::Bool{ "Fixes"sv, "bAddManyItems"sv, true};
+	inline const auto bDropManyItems = REX::INI::Bool{ "Fixes"sv, "bDropManyItems"sv, true};
 	inline const auto bMagicEffectConditions = REX::INI::Bool{ "Fixes"sv, "bMagicEffectConditions"sv, true};
 	inline const auto bCellAttachDetachEvent = REX::INI::Bool{ "Fixes"sv, "bCellAttachDetachEvent"sv, true};
 

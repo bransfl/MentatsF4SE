@@ -5,7 +5,7 @@ namespace Internal::Fixes::LeveledListCrashFix
 	void Install() noexcept;
 
 	// returns the total amount of leveledlist entries
-	int8_t GetListCount(RE::TESLeveledList* leveledList);
+	int8_t GetListEntriesCount(RE::TESLeveledList* leveledList);
 
 	// returns a vector of all of the forms in the leveledlist
 	std::vector<RE::TESForm*> GetListEntries(RE::TESLeveledList* leveledList);

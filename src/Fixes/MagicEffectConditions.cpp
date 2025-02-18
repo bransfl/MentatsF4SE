@@ -17,22 +17,21 @@ namespace Internal::Fixes::MagicEffectConditions
 			logger::info("MagicEffectConditions -> Fix was disabled in the ini file. Fix aborted.");
 			return;
 		}
-
 		if (std::filesystem::exists("Data/F4SE/Plugins/MGEFConditionFix.dll")) {
-			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - MGEF Condition Fix was detected. It is recommended that you disable this mod while using EngineFixesF4SE.\n");
+			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Mod 'MGEF Condition Fix' was detected. It is recommended that you disable this mod while using EngineFixesF4SE.\n");
 			logger::info("MagicEffectConditions -> MGEFConditionFix was installed. Aborting fix.");
 			return;
 		}
 
 		F4SE::AllocTrampoline(8 * 8);
 		F4SE::Trampoline& trampoline = F4SE::GetTrampoline();
-		if (!REL::Module::IsNG()) {
-			// write to OG address
-			trampoline.write_branch<5>(ptr_EvaluateConditions_OG.address(), &EvaluateConditions);
+		if (REL::Module::IsNG()) {
+			// NG Patch
+			// trampoline.write_branch<5>(ptr_EvaluateConditions_NG.address(), &EvaluateConditions); TODO
 		}
 		else {
-			// write to NG address
-			// trampoline.write_branch<5>(ptr_EvaluateConditions_NG.address(), &EvaluateConditions);
+			// OG Patch
+			trampoline.write_branch<5>(ptr_EvaluateConditions_OG.address(), &EvaluateConditions);
 		}
 	}
 

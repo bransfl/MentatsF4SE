@@ -12,6 +12,7 @@ namespace Internal::Config
 	inline const auto bDropManyItems = REX::INI::Bool{ "Fixes"sv, "bDropManyItems"sv, true};
 	inline const auto bMagicEffectConditions = REX::INI::Bool{ "Fixes"sv, "bMagicEffectConditions"sv, true};
 	inline const auto bCellAttachDetachEvent = REX::INI::Bool{ "Fixes"sv, "bCellAttachDetachEvent"sv, true};
+	inline const auto bLeveledListCrashFix = REX::INI::Bool{ "Fixes"sv, "bLeveledListCrashFix"sv, true};
 
 	// patches
 	inline const auto bLoadEditorIds = REX::INI::Bool{ "Patches"sv, "bLoadEditorIds"sv, true };

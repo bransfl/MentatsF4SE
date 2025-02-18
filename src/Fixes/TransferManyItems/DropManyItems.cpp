@@ -1,16 +1,16 @@
 #include "Internal/Fixes/TransferManyItems/DropManyItems.hpp"
 
-REL::Relocation<uintptr_t> ptr_ExtraDataList_ctor_OG{ REL::ID(526160) };
-REL::Relocation<uintptr_t> ptr_ExtraDataList_ctor_NG{ REL::ID(2221088) };
+// REL::Relocation<uintptr_t> ptr_ExtraDataList_ctor_OG{ REL::ID(526160) };
+// REL::Relocation<uintptr_t> ptr_ExtraDataList_ctor_NG{ REL::ID(2221088) };
 
-REL::Relocation<uintptr_t> ptr_ExtraDataList_CopyList_OG{ REL::ID(533056) };
-REL::Relocation<uintptr_t> ptr_ExtraDataList_CopyList_NG{ REL::ID(2233536) };
+// REL::Relocation<uintptr_t> ptr_ExtraDataList_CopyList_OG{ REL::ID(533056) };
+// REL::Relocation<uintptr_t> ptr_ExtraDataList_CopyList_NG{ REL::ID(2233536) };
 
-REL::Relocation<uintptr_t> ptr_ExtraDataList_SetCount_OG{ REL::ID(552880) };
-REL::Relocation<uintptr_t> ptr_ExtraDataList_SetCount_NG{ REL::ID(2256640) };
+// REL::Relocation<uintptr_t> ptr_ExtraDataList_SetCount_OG{ REL::ID(552880) };
+// REL::Relocation<uintptr_t> ptr_ExtraDataList_SetCount_NG{ REL::ID(2256640) };
 
-REL::Relocation<uintptr_t> ptr_DropItemIntoWorld_Original_OG{ REL::ID(4171136) };
-REL::Relocation<uintptr_t> ptr_DropItemIntoWorld_Original_NG{ REL::ID(4904928) };
+// REL::Relocation<uintptr_t> ptr_DropItemIntoWorld_Original_OG{ REL::ID(4171136) };
+// REL::Relocation<uintptr_t> ptr_DropItemIntoWorld_Original_NG{ REL::ID(4904928) };
 
 #define CastAndAssign(dest) dest = (_##dest)(RelocationManager::s_baseAddr + dest##_Addr[index])
 

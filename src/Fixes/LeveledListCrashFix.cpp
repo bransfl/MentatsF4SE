@@ -17,18 +17,6 @@ namespace Internal::Fixes::LeveledListCrashFix
 
 		// Hooks::ProtectLeveledItems::Install();
 		// Hooks::ProtectLeveledActors::Install();
-
-		// === example from mgef conditions fix code ===
-		// F4SE::AllocTrampoline(8 * 8);
-		// F4SE::Trampoline& trampoline = F4SE::GetTrampoline();
-		// if (!REL::Module::IsNG()) {
-		// 	// write to OG address
-		// 	trampoline.write_branch<5>(ptr_EvaluateConditions_OG.address(), &EvaluateConditions);
-		// }
-		// else {
-		// 	// write to NG address
-		// 	// trampoline.write_branch<5>(ptr_EvaluateConditions_NG.address(), &EvaluateConditions);
-		// }
 	}
 
 	// returns the total amount of leveledlist entries
@@ -62,7 +50,7 @@ namespace Internal::Fixes::LeveledListCrashFix
 			if (a_problem) {
 				// temp for the compiler
 			}
-			// logger::info("Caught problematic insertion of form {} to leveled list {}.", a_problem->GetFormEditorID(), a_list->GetFormEditorID());
+			// logger::info("Caught problematic insertion of form {} to leveled list {}.", _debugEDID(a_problem), _debugEDID(a_list));
 			logger::info("EngineFixesF4SE::LeveledListCrashFix -> The form has not been inserted. For ease of review,\nhere are the current contents of the list:\n");
 
 			int i = 1;
@@ -87,17 +75,21 @@ namespace Internal::Fixes::LeveledListCrashFix
 
 		bool ProtectLeveledItems::Install()
 		{
-			// F4SE::AllocTrampoline(14);
-			// auto& trampoline = F4SE::GetTrampoline();
+			F4SE::AllocTrampoline(14);
+			auto& trampoline = F4SE::GetTrampoline();
 
-			// REL::Relocation<std::uintptr_t> target{ REL::ID(55965), 0x56 };
-			// if (!(REL::make_pattern<"E8 75 1C 7C FF">().match(target.address()) ||
-			// 	REL::make_pattern<"E8 D5 FF 7B FF">().match(target.address()))) {
-			// 	logger::info("Failed to validate hook address for ProtectLevItems. Aborting load.");
-			// 	return false;
-			// }
-			logger::info("Installed leveled item patch.");
-			//_originalCall = trampoline.write_call<5>(target.address(), &AddForm);
+			if (REL::Module::IsNG()) {
+				// NG Patch
+				logger::info("LeveledListCrashFix -> Game version is NG. Item patch aborted.");
+				return false;
+			}
+			else {
+				// OG Patch
+				REL::Relocation<uintptr_t> ptr_LeveledItemAddForm_OG{ REL::ID(903957) };
+				_originalCall = trampoline.write_branch<5>(ptr_LeveledItemAddForm_OG.address(), &ProtectLeveledItems::AddForm);
+			}
+
+			logger::info("LeveledListCrashFix -> Installed leveled item patch.");
 			return true;
 		}
 
@@ -114,18 +106,21 @@ namespace Internal::Fixes::LeveledListCrashFix
 
 		bool ProtectLeveledActors::Install()
 		{
-			// F4SE::AllocTrampoline(14);
-			// auto& trampoline = F4SE::GetTrampoline();
+			F4SE::AllocTrampoline(14);
+			auto& trampoline = F4SE::GetTrampoline();
 
-			// REL::Relocation<std::uintptr_t> target{ REL::ID(55954), 0x56 };
-			// if (!(REL::make_pattern<"E8 F5 24 7C FF">().match(target.address()) ||
-			// 		REL::make_pattern<"E8 55 08 7C FF">().match(target.address()))) {
-			// 	logger::info("Failed to validate hook address for ProtectLeveledActors. Aborting load.");
-			// 	return false;
-			// }
+			if (REL::Module::IsNG()) {
+				// NG Patch
+				logger::info("LeveledListCrashFix -> Game version is NG. Actor patch aborted.");
+				return false;
+			}
+			else {
+				// OG Patch
+				REL::Relocation<uintptr_t> ptr_LeveledItemAddForm_OG{ REL::ID(1200614) };
+				_originalCall = trampoline.write_branch<5>(ptr_LeveledItemAddForm_OG.address(), &ProtectLeveledActors::AddForm);
+			}
 
-			logger::info("Installed leveled actor patch.");
-			//_originalCall = trampoline.write_call<5>(target.address(), &AddForm);
+			logger::info("LeveledListCrashFix -> Installed leveled actor patch.");
 			return true;
 		}
 	}

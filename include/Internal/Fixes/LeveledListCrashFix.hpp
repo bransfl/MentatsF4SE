@@ -2,21 +2,18 @@
 
 namespace Internal::Fixes::LeveledListCrashFix
 {
-	void InstallHooks();
 	void Install() noexcept;
 
-	namespace Hooks
-	{
-		void Hookedmem_LeveledItem_AddForm(std::uint64_t* a_unk, RE::BSScript::IVirtualMachine* a_vm, __int64 a_unk1, RE::TESForm* a_item, RE::TESForm* a_unk2, __int16 a_unk3);
-		void Hookedmem_LeveledActor_AddForm(std::uint64_t* a_unk, RE::BSScript::IVirtualMachine* a_vm, __int64 a_unk1, RE::TESForm* a_actor, RE::TESForm* a_unk2);
+	RE::LEVELED_OBJECT* Hook_AddLeveledObject(RE::TESLeveledList* a_this, uint16_t a_level, uint16_t a_count, int8_t a_chanceNone, RE::TESForm* a_item, RE::ContainerItemExtra* a_itemExtra);
 
-		void DebugLeveledList(RE::TESLeveledList* a_list);
-	}
+	// original function for TAddLeveledObject()
+	static inline REL::Relocation<decltype(&Hook_AddLeveledObject)> _originalCall;
 
-	namespace Sanitizer
-	{
-		void Sanitize();
-	}
+	// reports null forms in leveledlists
+	void DebugLeveledList(RE::TESLeveledList* a_list);
+
+	// reports invalid leveledlists entries or leveledlists with >255 entries
+	void Sanitize();
 
 	// returns the total amount of leveledlist entries
 	int8_t GetListEntriesCount(RE::TESLeveledList* leveledList);

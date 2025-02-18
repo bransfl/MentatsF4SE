@@ -42,7 +42,7 @@ namespace Internal::Messaging
 			// }
 			case F4SE::MessagingInterface::kGameDataReady: {
 				Internal::Fixes::CellAttachDetachEvent::Install();
-				Internal::Fixes::LeveledListCrashFix::Sanitizer::Sanitize();
+				Internal::Fixes::LeveledListCrashFix::Sanitize();
 				break;
 			}
 			default: {

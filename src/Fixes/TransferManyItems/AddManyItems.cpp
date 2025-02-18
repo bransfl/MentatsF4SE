@@ -1,7 +1,7 @@
 #include "Internal/Fixes/TransferManyItems/AddManyItems.hpp"
 #include "Internal/Config/Config.hpp"
-#include "f4se_common/SafeWrite.h"
 #include "f4se_common/Relocation.h"
+#include "f4se_common/SafeWrite.h"
 
 namespace Internal::Fixes::TransferManyItems::AddManyItems
 {

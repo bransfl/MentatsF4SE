@@ -1,5 +1,7 @@
 #pragma once
 
+// this file has been rewritten for commonlib with proper int_t types, etc
+
 void SafeWriteBuf(uintptr_t addr, void * data, size_t len);
 void SafeWrite8(uintptr_t addr, uint8_t data);
 void SafeWrite16(uintptr_t addr, uint16_t data);

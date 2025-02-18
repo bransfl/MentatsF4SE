@@ -1,14 +1,23 @@
 #pragma once
 
+#include "RE/Bethesda/PerkEntries.hpp"
+
 // fixes entrypoint kApplyCombatHitSpell so multiple spells can be applied at once
 namespace Internal::Fixes::PerkEntryPoints::ApplySpells
 {
 	void Install() noexcept;
 
-	// static void ApplyCombatHitSpell(
-	// 	Utility::Enumeration<RE::BGSEntryPoint::EntryPoint, std::uint32_t> entryPoint,
-	// 	Skyrim::Actor*                                                         perkOwner,
-	// 	...);
+	class ApplySpells
+	{
+	public:
+		static void ApplyCombatHitSpell(
+			REX::Enum<RE::BGSPerkEntry::EntryPoint, std::uint8_t> entryPoint,
+			RE::Actor* perkOwner,
+			...);
 
-	//void ApplyCombatHitSpell(RE::BGSEntryPoint entryPoint) noexcept;
+		static std::vector<void*> HandleEntryPoint(
+			REX::Enum<RE::BGSPerkEntry::EntryPoint, std::uint8_t> entryPoint,
+			RE::Actor* perkOwner,
+			std::vector<RE::TESForm*> conditionFilterArguments);
+	};
 }

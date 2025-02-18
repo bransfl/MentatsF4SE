@@ -15,16 +15,16 @@ namespace Internal::Fixes::TransferManyItems::AddManyItems
 
 		uint8_t buf[] = { 0x44, 0x8B, 0x44, 0x24, 0x74, 0x90 };
 
-		if (!REL::Module::IsNG()) {
-			logger::info("AddManyItems -> Game version is OG.");
-			// OG patch
-			SafeWriteBuf(RelocationManager::s_baseAddr + 0x003FBF3E, buf, sizeof(buf));
+		if (REL::Module::IsNG()) {
+			// NG patch
+			logger::info("AddManyItems -> Game version is NG.");
+			buf[4] = 0x70;	// modify buf
+			SafeWriteBuf(RelocationManager::s_baseAddr + 0x004AEF51, buf, sizeof(buf));
 		}
 		else {
-			logger::info("AddManyItems -> Game version is NG.");
-			// NG patch
-			buf[4] = 0x70;
-			SafeWriteBuf(RelocationManager::s_baseAddr + 0x004AEF51, buf, sizeof(buf));
+			// OG patch
+			logger::info("AddManyItems -> Game version is OG.");
+			SafeWriteBuf(RelocationManager::s_baseAddr + 0x003FBF3E, buf, sizeof(buf));
 		}
 
 		logger::info("AddManyItems -> Patch applied.");

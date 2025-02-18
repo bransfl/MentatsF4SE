@@ -7,7 +7,27 @@ namespace Internal::Fixes::LeveledListCrashFix
 	{
 		// Hooks::ProtectLeveledItems::Install();
 		// Hooks::ProtectLeveledActors::Install();
-		// Hooks::ProtectLeveledSpells::Install();
+	}
+
+	// returns the total amount of leveledlist entries
+	int8_t GetListCount(RE::TESLeveledList* leveledList)
+	{
+		return leveledList->baseListCount + leveledList->scriptListCount;
+	}
+
+	// returns a vector of all of the forms in the leveledlist
+	std::vector<RE::TESForm*> GetListEntries(RE::TESLeveledList* leveledList)
+	{
+		std::vector<RE::TESForm*> ret;
+		for (size_t i = 0; i < leveledList->baseListCount; i++) {
+			RE::LEVELED_OBJECT &entry = leveledList->leveledLists[i];
+			ret.push_back(entry.form);
+		}
+		for (size_t i = 0; i < leveledList->scriptListCount; i++) {
+			RE::LEVELED_OBJECT* &entry = leveledList->scriptAddedLists[i];
+			ret.push_back(entry->form);
+		}
+		return ret;
 	}
 
 	namespace Hooks
@@ -82,38 +102,11 @@ namespace Internal::Fixes::LeveledListCrashFix
 			//_originalCall = trampoline.write_call<5>(target.address(), &AddForm);
 			return true;
 		}
-
-		// Leveled Spells
-		void ProtectLeveledSpells::AddForm(RE::TESLeveledList* a_this, RE::TESBoundObject* a_list, unsigned short a_level, unsigned long long a_count, RE::TESForm* a_form)
-		{
-			// if (a_this->numEntries > 254) {
-			// 	DebugLeveledList(a_this, a_form);
-			// }
-			// else {
-			_originalCall(a_this, a_list, a_level, a_count, a_form);
-			// }
-		}
-
-		bool ProtectLeveledSpells::Install()
-		{
-			// F4SE::AllocTrampoline(14);
-			// auto& trampoline = F4SE::GetTrampoline();
-
-			// REL::Relocation<std::uintptr_t> target{ REL::ID(55976), 0x56 };
-			// if (!(REL::make_pattern<"E8 65 13 7C FF">().match(target.address()) ||
-			// 		REL::make_pattern<"E8 C5 F6 7B FF">().match(target.address()))) {
-			// 	logger::info("Failed to validate hook address for ProtectLeveledSpells. Aborting load.");
-			// 	return false;
-			// }
-
-			logger::info("Installed leveled spell patch.");
-			//_originalCall = trampoline.write_call<5>(target.address(), &AddForm);
-			return true;
-		}
 	}
 
 	namespace Sanitizer
 	{
+		// checks all leveledlists to report if any leveledlists have >255 entries
 		void Sanitize()
 		{
 			logger::info("LeveledListCrashFix::Sanitizer -> Sanitizing LeveledLists");
@@ -124,20 +117,21 @@ namespace Internal::Fixes::LeveledListCrashFix
 			auto& formArray = dataHandler->GetFormArray<RE::TESLevItem>();
 
 			for (auto* form : formArray) {
-				auto* ll = form->As<RE::TESLeveledList>();
+				auto* leveledList = form->As<RE::TESLeveledList>();
 
-				if (!ll) {
+				if (!leveledList) {
 					continue;
 				}
-				std::int8_t numEntries = ll->baseListCount + ll->scriptListCount;
-				if (!(numEntries == 0 || numEntries == 255)) {
-					continue;
-				}
+				// std::int8_t numEntries = leveledList->baseListCount + leveledList->scriptListCount;
+				// if (!(numEntries == 0 || numEntries == 255)) {
+				// 	continue;
+				// }
 
 				size_t i = 0;
-				// for (auto& llEntry : ll->entries) {
-				// 	i++;
-				// }
+				for (int8_t j = 0; j < leveledList->scriptListCount; j++) {
+					// auto* entry = leveledList->scriptAddedLists[i];
+					i++;
+				}
 				if (i <= 255) {
 					continue;
 				}

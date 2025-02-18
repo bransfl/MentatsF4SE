@@ -19,7 +19,7 @@ namespace Internal::Fixes::MagicEffectConditions
 		}
 
 		if (std::filesystem::exists("Data/F4SE/Plugins/MGEFConditionFix.dll")) {
-			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - MGEF Condition Fix was detected. It is recommended that you disable this mod while using EngineFixesF4SE.");
+			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - MGEF Condition Fix was detected. It is recommended that you disable this mod while using EngineFixesF4SE.\n");
 			logger::info("MagicEffectConditions -> MGEFConditionFix was installed. Aborting fix.");
 			return;
 		}

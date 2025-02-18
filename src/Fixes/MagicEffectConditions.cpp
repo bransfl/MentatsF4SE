@@ -4,7 +4,7 @@
 #include <RE/Bethesda/Actor.hpp>
 
 REL::Relocation<uintptr_t> ptr_EvaluateConditions_OG{ REL::ID(1228998) };
-REL::Relocation<uintptr_t> ptr_EvaluateConditions_NG;	// need to get this somehow
+REL::Relocation<uintptr_t> ptr_EvaluateConditions_NG; // need to get this somehow
 
 namespace Internal::Fixes::MagicEffectConditions
 {
@@ -24,6 +24,7 @@ namespace Internal::Fixes::MagicEffectConditions
 			return;
 		}
 
+		F4SE::AllocTrampoline(8 * 8);
 		F4SE::Trampoline& trampoline = F4SE::GetTrampoline();
 		if (!REL::Module::IsNG()) {
 			// write to OG address

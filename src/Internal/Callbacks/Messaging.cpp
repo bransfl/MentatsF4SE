@@ -1,4 +1,5 @@
 #include "Internal/Fixes/CellAttachDetachEvent.hpp"
+#include "Internal/Fixes/LeveledListCrashFix.hpp"
 
 namespace Internal::Messaging
 {
@@ -41,6 +42,7 @@ namespace Internal::Messaging
 			// }
 			case F4SE::MessagingInterface::kGameDataReady: {
 				Internal::Fixes::CellAttachDetachEvent::Install();
+				// Internal::Fixes::LeveledListCrashFix::Sanitizer::Sanitize(); TODO when implemented
 				break;
 			}
 			default: {

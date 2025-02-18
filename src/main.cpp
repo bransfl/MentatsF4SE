@@ -46,7 +46,7 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f
 	F4SE::Init(a_f4se);
 
 	// for the MagicEffectConditions trampoline
-	F4SE::AllocTrampoline(8 * 8);
+	// F4SE::AllocTrampoline(8 * 8); moved to MagicEffectConditions
 
 	// more patches/fixes are installed in Internal/Callbacks/Messaging
 	F4SE::GetMessagingInterface()->RegisterListener(Internal::Messaging::Callback);

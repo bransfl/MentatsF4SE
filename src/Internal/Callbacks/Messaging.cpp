@@ -42,7 +42,8 @@ namespace Internal::Messaging
 			// }
 			case F4SE::MessagingInterface::kGameDataReady: {
 				Internal::Fixes::CellAttachDetachEvent::Install();
-				// Internal::Fixes::LeveledListCrashFix::Sanitizer::Sanitize(); TODO when implemented
+				Internal::Fixes::LeveledListCrashFix::Sanitizer::Sanitize();
+				logger::debug("Messaging: Finished processing for message of type: {}"sv, a_msg->type);
 				break;
 			}
 			default: {

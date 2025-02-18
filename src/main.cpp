@@ -45,21 +45,16 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f
 {
 	F4SE::Init(a_f4se);
 
-	// for the MagicEffectConditions trampoline
-	// F4SE::AllocTrampoline(8 * 8); moved to MagicEffectConditions
-
 	// more patches/fixes are installed in Internal/Callbacks/Messaging
+	logger::info("Registering for F4SE events...");
 	F4SE::GetMessagingInterface()->RegisterListener(Internal::Messaging::Callback);
-	logger::info("Registered for F4SE events");
+	logger::info("Registered for F4SE events.");
 
 	Internal::Config::Load();
-	logger::info("Config loaded");
 
 	Internal::Fixes::Install();
-	logger::info("Fixes loaded");
 
 	Internal::Patches::Install();
-	logger::info("Patches loaded");
 
 	logger::info("Loaded"sv);
 

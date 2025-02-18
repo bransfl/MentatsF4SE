@@ -15,8 +15,8 @@ namespace Internal::Fixes::LeveledListCrashFix
 			return;
 		}
 
-		// Hooks::ProtectLeveledItems::Install();
-		// Hooks::ProtectLeveledActors::Install();
+		Hooks::ProtectLeveledItems::Install();
+		Hooks::ProtectLeveledActors::Install();
 	}
 
 	// returns the total amount of leveledlist entries
@@ -149,8 +149,8 @@ namespace Internal::Fixes::LeveledListCrashFix
 					continue;
 				}
 
-				std::vector<RE::TESForm*> listEntries = GetListEntries(leveledList);
-				size_t listEntriesLen = listEntries.size();
+				// todo - this might be redundant due to the check above?
+				size_t listEntriesLen = GetListEntries(leveledList).size();
 				if (listEntriesLen <= 255) {
 					continue;
 				}

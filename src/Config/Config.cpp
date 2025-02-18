@@ -9,8 +9,10 @@ namespace Internal::Config
 
 	void Load() noexcept
 	{
+		logger::info("Config loading...");
 		auto* ini = REX::INI::SettingStore::GetSingleton();
 		ini->Init(FILE_PATH, CUSTOM_FILE_PATH);
 		ini->Load();
+		logger::info("Config loaded");
 	}
 }

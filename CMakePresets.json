@@ -101,19 +101,6 @@
 			"name": "release-msvc",
 			"configurePreset": "build-release-msvc",
 			"configuration": "Release"
-		},
-		{
-			"name": "release-msvc-custom",
-			"description": "",
-			"displayName": "",
-			"inherits": [
-				"release-msvc"
-			]
-		},
-		{
-			"name": "test01",
-			"description": "",
-			"displayName": ""
 		}
 	]
 }

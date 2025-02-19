@@ -6,10 +6,6 @@ namespace Internal::Fixes::MagicEffectConditions
 {
 	void Install() noexcept;
 
-	class MagicEffectConditions
-	{
-	public:
-		static float ActiveEffectConditionUpdateInterval();
-		static void EvaluateConditions(RE::ActiveEffect* activeEffect, float elapsedTimeDelta, bool forceUpdate);
-	};
+	static float ActiveEffectConditionUpdateInterval();
+	static void EvaluateConditions(RE::ActiveEffect* activeEffect, float elapsedTimeDelta, bool forceUpdate);
 }

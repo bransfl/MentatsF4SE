@@ -2,14 +2,17 @@
 
 namespace Internal::Fixes::LeveledListCrashFix
 {
+	// installs the fix
 	void Install() noexcept;
 
-	void Hook_LeveledItemAddForm(std::uint64_t* a_unk, RE::BSScript::IVirtualMachine* a_vm, __int64 a_unk1, RE::TESForm* a_item, RE::TESForm* a_list, __int16 a_unk3);
+	// the hook
+	RE::LEVELED_OBJECT* Hook_AddLeveledObject(RE::TESLeveledList* a_this, uint16_t a_level, uint16_t a_count, int8_t chanceNone, RE::TESForm* a_item, RE::ContainerItemExtra* a_itemExtra);
 
-	void Hook_LeveledActorAddForm(std::uint64_t* a_unk, RE::BSScript::IVirtualMachine* a_vm, __int64 a_unk1, RE::TESForm* a_actor, RE::TESForm* a_list);
+	// the hooker
+	void RegisterHookOG(F4SE::Trampoline& trampoline);
 
-	static inline REL::Relocation<decltype(&Hook_LeveledItemAddForm)> _OC_LeveledItemAddForm;
-	static inline REL::Relocation<decltype(&Hook_LeveledActorAddForm)> _OC_LeveledActorAddForm;
+	// the hooker
+	void RegisterHookNG(F4SE::Trampoline& trampoline);
 
 	// reports null forms in leveledlists
 	void DebugLeveledList(RE::TESLeveledList* a_list);

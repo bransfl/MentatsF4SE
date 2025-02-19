@@ -10,7 +10,7 @@ namespace Internal::Fixes::CellAttachDetachEvent
 	void Install() noexcept
 	{
 		if (!Config::bCellAttachDetachEvent.GetValue()) {
-			logger::info("CellAttachDetachEvent -> Fix was disabled in the ini file. Fix aborted.");
+			logger::info("Fix aborted: CellAttachDetachEvent. Reason: Fix was disabled in ini file.");
 			return;
 		}
 

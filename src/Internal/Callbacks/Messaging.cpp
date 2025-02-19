@@ -1,4 +1,5 @@
 #include "Internal/Fixes/CellAttachDetachEvent.hpp"
+#include "Internal/Fixes/CombatMusicFix.hpp"
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
 
 namespace Internal::Messaging
@@ -19,9 +20,15 @@ namespace Internal::Messaging
 			// case F4SE::MessagingInterface::kPreLoadGame: {
 			// 	break;
 			// }
-			// case F4SE::MessagingInterface::kPostLoadGame: {
-			// 	break;
-			// }
+			case F4SE::MessagingInterface::kPostLoadGame: {
+				// CombatMusicFix
+				auto playerCharacter = RE::PlayerCharacter::GetSingleton();
+				if (playerCharacter && !playerCharacter->IsInCombat()) {
+					Internal::Fixes::CombatMusicFix::Fix();
+					logger::info("CombatMusicFix -> Fix ran through kPostLoadGame event.");
+				}
+				break;
+			}
 			// case F4SE::MessagingInterface::kPreSaveGame: {
 			// 	break;
 			// }
@@ -41,7 +48,9 @@ namespace Internal::Messaging
 			// 	break;
 			// }
 			case F4SE::MessagingInterface::kGameDataReady: {
+				// CellAttachDetachEvent
 				Internal::Fixes::CellAttachDetachEvent::Install();
+				// LeveledListCrashFix
 				Internal::Fixes::LeveledListCrashFix::Sanitize();
 				break;
 			}

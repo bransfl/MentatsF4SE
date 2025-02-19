@@ -13,7 +13,6 @@ namespace Internal::Fixes
 		PerkEntryPoints::ApplySpells::Install();
 		TransferManyItems::AddManyItems::Install();
 		// TransferManyItems::DropManyItems::Install();	still WIP
-		// CellAttachDetachEvent::Install();	Handled in Messaging.cpp
 		// LeveledListCrashFix::Install(); WIP
 		MagicEffectConditions::Install();
 

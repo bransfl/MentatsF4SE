@@ -1,7 +1,7 @@
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
 #include "Internal/Config/Config.hpp"
 
-#pragma warning(disable : 4100)	// for RegisterHookOG
+#pragma warning(disable : 4100) // for RegisterHookOG
 
 // qudix's RE:
 // TESLeveledList::AddScriptAddedLeveledObject
@@ -17,6 +17,8 @@ namespace Internal::Fixes::LeveledListCrashFix
 	// installs the fix
 	void Install() noexcept
 	{
+		logger::info("Fix installing: LeveledListCrashFix.");
+
 		if (!Config::bLeveledListCrashFix.GetValue()) {
 			logger::info("Fix aborted: LeveledListCrashFix. Reason: Fix was disabled in ini file.");
 			return;
@@ -28,19 +30,18 @@ namespace Internal::Fixes::LeveledListCrashFix
 		}
 
 		if (REL::Module::IsNG()) {
-			auto& trampoline = F4SE::GetTrampoline();
-			trampoline.create(64); // idk how big this one needs to be
-			RegisterHookNG(trampoline);
+			// auto& trampoline = F4SE::GetTrampoline();
+			// trampoline.create(64); // idk how big this one needs to be
+			// RegisterHookNG(trampoline);
 		}
 		else {
 			// OG Patch
-			logger::info("Fix aborted: LeveledListCrashFix. Reason: Game version was OG.");
-			return;
 			// auto& trampoline = F4SE::GetTrampoline();
 			// trampoline.create(64); // idk how big this one needs to be
 			// RegisterHookOG(trampoline);
 		}
-		logger::info("Fix applied: LeveledListCrashFix");
+
+		logger::info("Fix installed: LeveledListCrashFix");
 	}
 
 	// the hook

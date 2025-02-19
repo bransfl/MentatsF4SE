@@ -5,22 +5,30 @@
 
 #pragma warning(disable : 4100)
 
+// prevents combat music from playing when not intended to play
 namespace Internal::Fixes::CombatMusicFix
 {
-	// console commands to stop the music
-	static inline const std::vector<std::string> stopCombatMusic = {
-		"removemusic MUScombat",
-	};
 
 	void Install() noexcept
 	{
+		logger::info("Fix installing: CombatMusicFix.");
+
 		TESDeathEventListener* deathEvent = new TESDeathEventListener();
 		RE::TESDeathEvent::GetEventSource()->RegisterSink(deathEvent);
+
+		logger::info("Fix installed: CombatMusicFix.");
 	}
 
+	// console cmds to run to stop music
+	static inline const std::vector<std::string> StopCombatMusic = {
+		"removemusic MUScombat",
+	};
+	// todo - this needs the other music types, and to be silent. sorry vish
+
+	// please (just) stop the music!
 	void Fix()
 	{
-		for (const auto& command : stopCombatMusic) {
+		for (const auto& command : StopCombatMusic) {
 			Utility::Console::ExecuteCommand(command);
 		}
 	}

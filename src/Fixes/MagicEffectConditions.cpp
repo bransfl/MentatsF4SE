@@ -10,8 +10,10 @@ namespace Internal::Fixes::MagicEffectConditions
 
 	void Install() noexcept
 	{
+		logger::info("Fix installing: MagicEffectConditions.");
+
 		if (!Config::bMagicEffectConditions.GetValue()) {
-			logger::info("Fix aborted: bMagicEffectConditions. Reason: Fix was disabled in ini file.");
+			logger::info("Fix aborted: MagicEffectConditions. Reason: Fix was disabled in ini file.");
 			return;
 		}
 		if (std::filesystem::exists("Data/F4SE/Plugins/MGEFConditionFix.dll")) {
@@ -23,7 +25,7 @@ namespace Internal::Fixes::MagicEffectConditions
 		F4SE::AllocTrampoline(8 * 8);
 		F4SE::Trampoline& trampoline = F4SE::GetTrampoline();
 		if (REL::Module::IsNG()) {
-			logger::info("Fix aborted: bMagicEffectConditions. Reason: Game version was NG.");
+			logger::info("Fix aborted: MagicEffectConditions. Reason: Game version was NG.");
 			return;
 			// NG Patch - Don't have address for this yet.
 			// REL::Relocation<uintptr_t> ptr_EvaluateConditions_NG{ REL::ID() };
@@ -34,7 +36,8 @@ namespace Internal::Fixes::MagicEffectConditions
 			REL::Relocation<uintptr_t> ptr_EvaluateConditions_OG{ REL::ID(1228998) };
 			trampoline.write_branch<5>(ptr_EvaluateConditions_OG.address(), &EvaluateConditions);
 		}
-		logger::info("Fix applied: OutfitRedressFix");
+
+		logger::info("Fix installed: MagicEffectConditions.");
 	}
 
 	float ActiveEffectConditionUpdateInterval()

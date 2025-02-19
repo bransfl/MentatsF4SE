@@ -18,7 +18,11 @@ namespace Internal::Fixes::TransferManyItems::DropManyItems
 {
 	void Install() noexcept
 	{
+		logger::info("Fix installing: DropManyItems.");
+
 		// REL::Relocation<ExtraDataList_CopyList_OG> jumpLocation{ REL::ID(1394576), 0x1DE };
+
+		logger::info("Fix installed: DropManyItems.");
 	}
 
 	// uint32_t* DropItemIntoWorld_Hook(RE::TESObjectREFR* refr, uint32_t* handle, RE::TESBoundObject* item, int32_t count, RE::TESObjectREFR* container, RE::NiPoint3* pa, RE::NiPoint3* pb, RE::ExtraDataList* extra)

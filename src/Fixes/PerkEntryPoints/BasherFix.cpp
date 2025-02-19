@@ -5,9 +5,13 @@
 namespace Internal::Fixes::PerkEntryPoints::BasherFix
 {
 	void Install() noexcept {
+		logger::info("Fix installing: BasherFix.");
+
 		if (!Config::bBasherFix.GetValue()) {
-			logger::info("PerkEntryPoints::BasherFix -> Fix was disabled in the ini file. Fix aborted.");
+			logger::info("Fix aborted: BasherFix. Reason: Fix was disabled in ini file.");
 			return;
 		}
+		
+		logger::info("Fix installed: BasherFix.");
 	}
 }

@@ -8,25 +8,26 @@ namespace Internal::Fixes::TransferManyItems::AddManyItems
 
 	void Install() noexcept
 	{
+		logger::info("Fix installing: AddManyItems.");
+
 		if (!Config::bAddManyItems.GetValue()) {
-			logger::info("AddManyItems -> Fix was disabled in the ini file. Fix aborted.");
+			logger::info("Fix aborted: AddManyItems. Reason: Game version was NG.");
 			return;
 		}
 
 		uint8_t buf[] = { 0x44, 0x8B, 0x44, 0x24, 0x74, 0x90 };
 
+		// this patch works on both versions of the game
 		if (REL::Module::IsNG()) {
 			// NG patch
-			logger::info("AddManyItems -> Game version is NG.");
-			buf[4] = 0x70;	// modify buf
+			buf[4] = 0x70;
 			SafeWriteBuf(RelocationManager::s_baseAddr + 0x004AEF51, buf, sizeof(buf));
 		}
 		else {
 			// OG patch
-			logger::info("AddManyItems -> Game version is OG.");
 			SafeWriteBuf(RelocationManager::s_baseAddr + 0x003FBF3E, buf, sizeof(buf));
 		}
 
-		logger::info("AddManyItems -> Patch applied.");
+		logger::info("Fix installed: AddManyItems.");
 	}
 }

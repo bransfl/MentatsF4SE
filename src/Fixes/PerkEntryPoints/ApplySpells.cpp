@@ -11,29 +11,27 @@ namespace Internal::Fixes::PerkEntryPoints::ApplySpells
 
 	void Install() noexcept
 	{
+		logger::info("Fix installing: ApplySpells.");
+		
 		if (!Config::bApplyCombatHitSpellFix.GetValue()) {
-			logger::info("PerkEntryPoints::ApplySpells -> Fix was disabled in the ini file. Fix aborted.");
+			logger::info("Fix aborted: ApplySpells. Reason: Fix was disabled in ini file.");
 			return;
 		}
-
-		// if (!Patterns::Patches::PerkEntryPoints::ApplySpells::ApplyCombatHitSpell()) {
-
-		// }
 
 		// F4SE::Trampoline& trampoline = F4SE::GetTrampoline();
 
 		if (REL::Module::IsNG()) {
 			// NG Patch
-			logger::info("PerkEntryPoints::ApplySpells -> Game version is NG.");
+			logger::info("Fix aborted: ApplySpells. Reason: Game version was NG.");
+			return;
 		}
 		else {
 			// OG Patch
-			logger::info("PerkEntryPoints::ApplySpells -> Game version is OG.");
 			// REL::Relocation<uintptr_t> ptr_BGSEntryPoint_HandleEntryPoint_OG{ REL::ID(714336) };
 			// trampoline.write_branch<5>(ptr_BGSEntryPoint_HandleEntryPoint_OG.address(), &ApplyCombatHitSpell);
 		}
 
-		// logger::info("PerkEntryPoints::ApplySpells -> Patch applied.");
+		logger::info("Fix installed: ApplySpells.");
 	}
 
 	// TODO

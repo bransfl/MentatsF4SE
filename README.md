@@ -2,7 +2,9 @@
 
 ## About
 
-This is a project that patches several issues with the game's engine.
+This is a project that patches or resolves various issues with Fallout 4's game engine.
+
+This plugin is built from decompiled data from Fallout.exe and categorized into CommonLibF4.
 
 ## Build Dependencies
 

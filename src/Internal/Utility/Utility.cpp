@@ -2,33 +2,30 @@
 
 namespace Internal::Utility
 {
-	// inline void sendConsoleCommand(const std::string& a_command)
-	// {
-	// 	const auto scriptFactory = RE::IFormFactory::GetConcreteFormFactoryByType<RE::Script>();
-	// 	if (const auto script = scriptFactory ? scriptFactory->Create() : nullptr) {
-	// 		const auto selectedRef = RE::Console::GetSelectedRef();
-	// 		script->SetCommand(a_command);
-	// 		script->CompileAndRun(selectedRef.get());
-	// 		delete script;
-	// 	}
 	namespace Console
 	{
 		// runs a console command
-		bool ExecuteCommand(const std::string& a_command)
+		void ExecuteCommand(std::string_view a_command, bool a_silent)
 		{
+			auto* log = RE::ConsoleLog::GetSingleton();
 			auto compiler = RE::ScriptCompiler();
+
 			auto* scriptFactory = RE::ConcreteFormFactory<RE::Script>::GetFormFactory();
-			if (const auto script = scriptFactory ? scriptFactory->Create() : nullptr) {
-				const auto menu = RE::UI::GetSingleton()->GetMenu<RE::Console>();
-				if (!menu)
-					return false;
-				const auto refHandle = menu->GetCurrentPickREFR();
-				const auto selectedRef = refHandle ? refHandle.get().get() : nullptr;
-				script->SetText(a_command);
-				script->CompileAndRun(&compiler, RE::COMPILER_NAME::kSystemWindow, selectedRef);
-				delete script;
+			auto* script = scriptFactory->Create();
+			auto buffer = log->buffer;
+
+			script->SetText(a_command);
+			// todo check if nullptr is preventing it from running
+			script->CompileAndRun(&compiler, RE::COMPILER_NAME::kSystemWindow, nullptr);
+
+			if (!script->header.isCompiled) {
+				//logger:info("Internal::Utility::Console::ExecuteCommand: Failed to compile command \"{}\""sv, a_command);
 			}
-			return true;
+
+			if (a_silent == true) {
+				log->buffer = std::move(buffer);
+			}
+			delete script;
 		}
 	}
 }

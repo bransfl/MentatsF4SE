@@ -1,18 +1,37 @@
 #pragma once
+#pragma warning(disable : 4100)
 
 namespace Internal::Fixes::CombatMusicFix
 {
 	void Install() noexcept;
 
+	void InitFix();
+
 	void Fix();
 
-	class TESDeathEventListener : public RE::BSTEventSink<RE::TESDeathEvent>
+	class EventSink : public RE::BSTEventSink<RE::TESDeathEvent>
 	{
-	public:
-		static TESDeathEventListener* GetSingleton();
-		virtual RE::BSEventNotifyControl ProcessEvent(const RE::TESDeathEvent& a_event, RE::BSTEventSource<RE::TESDeathEvent>*) override;
-	};
+		EventSink() = default;
 
-	// callback function for f4se events
-	void Callback(F4SE::MessagingInterface::Message* a_msg);
+	public:
+		EventSink(const EventSink&) = delete;
+		EventSink(EventSink&&) = delete;
+		EventSink& operator=(const EventSink&) = delete;
+		EventSink& operator=(EventSink&&) = delete;
+
+		static EventSink* GetSingleton()
+		{
+			static EventSink singleton;
+			return &singleton;
+		}
+
+		virtual RE::BSEventNotifyControl ProcessEvent(const RE::TESDeathEvent& a_event, RE::BSTEventSource<RE::TESDeathEvent>*) override
+		{
+			auto playerCharacter = RE::PlayerCharacter::GetSingleton();
+			if (playerCharacter && !playerCharacter->IsInCombat()) {
+				Fix();
+			}
+			return RE::BSEventNotifyControl::kContinue;
+		}
+	};
 }

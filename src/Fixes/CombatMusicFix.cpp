@@ -3,8 +3,6 @@
 #include "Internal/Utility/Utility.hpp"
 #include "RE/Bethesda/Events.hpp"
 
-#pragma warning(disable : 4100)
-
 // prevents combat music from playing when not intended to play
 namespace Internal::Fixes::CombatMusicFix
 {
@@ -13,58 +11,34 @@ namespace Internal::Fixes::CombatMusicFix
 	{
 		logger::info("Fix installing: CombatMusicFix.");
 
-		TESDeathEventListener* deathEvent = new TESDeathEventListener();
-		RE::TESDeathEvent::GetEventSource()->RegisterSink(deathEvent);
-
-		F4SE::GetMessagingInterface()->RegisterListener(Callback);
-
 		logger::info("Fix installed: CombatMusicFix.");
+	}
+
+	void InitFix()
+	{
+		auto* eventSink = EventSink::GetSingleton();
+		RE::TESDeathEvent::GetEventSource()->RegisterSink(eventSink);
 	}
 
 	// console cmds to run to stop music
 	static inline const std::vector<std::string> StopCombatMusic = {
-		"removemusic MUScombat",
+		"RemoveMusic MUSzCombat",
+		"RemoveMusic MUSzCombatBoss",
+		"RemoveMusic MUSzCombatBossLegendary",
+		"RemoveMusic MUSzCombatHigh",
+		"RemoveMusic MUSzCombatInst307",
+		"RemoveMusic MUSzCombatInst307Boss",
+		"RemoveMusic MUSzCombatMassFusion",
+		"RemoveMusic MUSzDLC01CombatMechanist",
+		"RemoveMusic MUSzDLC01CombatMechanistMinions",
 	};
-	// todo - this needs the other music types, and to be silent. sorry vish
 
 	// please (just) stop the music!
 	void Fix()
 	{
+		logger::info("CombatMusicFix - fix ran");
 		for (const auto& command : StopCombatMusic) {
-			Utility::Console::ExecuteCommand(command);
-		}
-	}
-
-	TESDeathEventListener* TESDeathEventListener::GetSingleton()
-	{
-		static TESDeathEventListener instance;
-		return &instance;
-	}
-
-	RE::BSEventNotifyControl Internal::Fixes::CombatMusicFix::TESDeathEventListener::ProcessEvent(const RE::TESDeathEvent& a_event, RE::BSTEventSource<RE::TESDeathEvent>*)
-	{
-		auto playerCharacter = RE::PlayerCharacter::GetSingleton();
-		if (playerCharacter && !playerCharacter->IsInCombat()) {
-			Internal::Fixes::CombatMusicFix::Fix();
-			logger::info("CombatMusicFix -> Fix ran through TESDeathEventListener event.");
-		}
-		return RE::BSEventNotifyControl::kContinue;
-	}
-
-	void Callback(F4SE::MessagingInterface::Message* a_msg)
-	{
-		switch (a_msg->type) {
-			case F4SE::MessagingInterface::kPostLoadGame: {
-				auto playerCharacter = RE::PlayerCharacter::GetSingleton();
-				if (playerCharacter && !playerCharacter->IsInCombat()) {
-					Internal::Fixes::CombatMusicFix::Fix();
-					logger::info("CombatMusicFix -> Fix ran through kPostLoadGame event.");
-				}
-				break;
-			}
-			default: {
-				break;
-			}
+			Utility::Console::ExecuteCommand(command, false);
 		}
 	}
 }

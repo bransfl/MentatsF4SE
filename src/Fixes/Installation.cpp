@@ -12,7 +12,7 @@ namespace Internal::Fixes
 	{
 		logger::info("Installing fixes..."sv);
 
-		PerkEntryPoints::ApplySpells::Install();
+		// PerkEntryPoints::ApplySpells::Install();
 		// PerkEntryPoints::BasherFix::Install(); WIP
 		// PerkEntryPoints::CastSpells::Install(); WIP
 		TransferManyItems::AddManyItems::Install();

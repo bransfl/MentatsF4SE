@@ -20,9 +20,6 @@ namespace Internal::Fixes::LeveledListCrashFix
 	// reports invalid leveledlists entries or leveledlists with >255 entries
 	void Sanitize();
 
-	// callback function for f4se events
-	void Callback(F4SE::MessagingInterface::Message* a_msg);
-
 	// returns the total amount of leveledlist entries
 	int8_t GetListEntriesCount(RE::TESLeveledList* leveledList);
 

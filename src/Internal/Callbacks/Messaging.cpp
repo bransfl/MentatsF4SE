@@ -6,47 +6,57 @@ namespace Internal::Messaging
 	// handles various F4SE callback events
 	void Callback(F4SE::MessagingInterface::Message* a_msg)
 	{
-		logger::debug("Messaging: Received message of type: {}"sv, a_msg->type);
+		logger::info("Messaging: Received message of type: {}"sv, a_msg->type);
 
-		// uncomment event cases as needed
-		// switch (a_msg->type) {
-		// 	case F4SE::MessagingInterface::kPostLoad: {
-		// 		break;
-		// 	}
-		// 	case F4SE::MessagingInterface::kPostPostLoad: {
-		// 		break;
-		// 	}
-		// 	case F4SE::MessagingInterface::kPreLoadGame: {
-		// 		break;
-		// 	}
-		// 	case F4SE::MessagingInterface::kPostLoadGame: {
-		// 		break;
-		// 	}
-		// 	case F4SE::MessagingInterface::kPreSaveGame: {
-		// 		break;
-		// 	}
-		// 	case F4SE::MessagingInterface::kPostSaveGame: {
-		// 		break;
-		// 	}
-		// 	case F4SE::MessagingInterface::kDeleteGame: {
-		// 		break;
-		// 	}
-		// 	case F4SE::MessagingInterface::kInputLoaded: {
-		// 		break;
-		// 	}
-		// 	case F4SE::MessagingInterface::kNewGame: {
-		// 		break;
-		// 	}
-		// 	case F4SE::MessagingInterface::kGameLoaded: {
-		// 		break;
-		// 	}
-		// 	case F4SE::MessagingInterface::kGameDataReady: {
-		// 		break;
-		// 	}
-		// 	default: {
-		// 		break;
-		// 	}
-		// }
-		logger::debug("Messaging: Finished processing for message of type: {}"sv, a_msg->type);
+		switch (a_msg->type) {
+			case F4SE::MessagingInterface::kPostLoad: {
+				break;
+			}
+			case F4SE::MessagingInterface::kPostPostLoad: {
+				break;
+			}
+			case F4SE::MessagingInterface::kPreLoadGame: {
+				break;
+			}
+			case F4SE::MessagingInterface::kPostLoadGame: {
+				// CombatMusicFix
+				auto playerCharacter = RE::PlayerCharacter::GetSingleton();
+				if (playerCharacter && !playerCharacter->IsInCombat()) {
+					Internal::Fixes::CombatMusicFix::Fix();
+				}
+				break;
+			}
+			case F4SE::MessagingInterface::kPreSaveGame: {
+				break;
+			}
+			case F4SE::MessagingInterface::kPostSaveGame: {
+				break;
+			}
+			case F4SE::MessagingInterface::kDeleteGame: {
+				break;
+			}
+			case F4SE::MessagingInterface::kInputLoaded: {
+				break;
+			}
+			case F4SE::MessagingInterface::kNewGame: {
+				break;
+			}
+			case F4SE::MessagingInterface::kGameLoaded: {
+				break;
+			}
+			case F4SE::MessagingInterface::kGameDataReady: {
+				// CombatMusicFix
+				Internal::Fixes::CombatMusicFix::InitFix();
+
+				// LeveledListCrashFix
+				Internal::Fixes::LeveledListCrashFix::Sanitize();
+				break;
+			}
+			default: {
+				break;
+			}
+		}
+
+		logger::info("Messaging: Finished processing for message of type: {}"sv, a_msg->type);
 	}
 }

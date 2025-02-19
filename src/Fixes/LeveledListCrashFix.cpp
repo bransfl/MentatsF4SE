@@ -3,6 +3,13 @@
 
 namespace Internal::Fixes::LeveledListCrashFix
 {
+	// Item
+	typedef void(mem_LeveledItem_AddFormSig)(std::uint64_t*, RE::BSScript::IVirtualMachine*, __int64, RE::TESForm*, RE::TESForm*, __int16);
+	REL::Relocation<mem_LeveledItem_AddFormSig> OriginalFunction_Item;
+
+	// Actor
+	typedef void(mem_LeveledActor_AddFormSig)(std::uint64_t*, RE::BSScript::IVirtualMachine*, __int64, RE::TESForm*, RE::TESForm*);
+	REL::Relocation<mem_LeveledActor_AddFormSig> OriginalFunction_Actor;
 
 	void Install() noexcept
 	{
@@ -22,23 +29,42 @@ namespace Internal::Fixes::LeveledListCrashFix
 			return;
 		}
 		else {
+			
 			// OG Patch
 			F4SE::AllocTrampoline(64);
 			F4SE::Trampoline& trampoline = F4SE::GetTrampoline();
-			REL::Relocation<uintptr_t> ptr_AddLeveledObject_OG{ REL::ID(1163308) };
-			_originalCall = trampoline.write_branch<5>(ptr_AddLeveledObject_OG.address(), &Hook_AddLeveledObject);
+			// Item
+			//REL::Relocation<mem_LeveledItem_AddFormSig> itemFuncLocation{ REL::ID(903957) };
+			REL::Relocation<uintptr_t> ptr_LeveledItemAddForm_OG{ REL::ID(903957) };
+			_OC_LeveledItemAddForm = trampoline.write_branch<5>(ptr_LeveledItemAddForm_OG.address(), &Hook_LeveledItemAddForm);
+			// Actor
+			//REL::Relocation<mem_LeveledActor_AddFormSig> actorFuncLocation{ REL::ID(1200614) };
+			REL::Relocation<uintptr_t> ptr_LeveledActorAddForm_OG{ REL::ID(1200614) };
+			_OC_LeveledActorAddForm = trampoline.write_branch<5>(ptr_LeveledActorAddForm_OG.address(), &Hook_LeveledActorAddForm);
 		}
 		logger::info("LeveledListCrashFix -> Fix applied.");
 	}
 
-	RE::LEVELED_OBJECT* Hook_AddLeveledObject(RE::TESLeveledList* a_this, uint16_t a_level, uint16_t a_count, int8_t a_chanceNone, RE::TESForm* a_item, RE::ContainerItemExtra* a_itemExtra)
+	void Hook_LeveledItemAddForm(std::uint64_t* a_unk, RE::BSScript::IVirtualMachine* a_vm, __int64 a_unk1, RE::TESForm* a_item, RE::TESForm* a_list, __int16 a_unk3)
 	{
-		if (GetListEntriesCount(a_this) > 254) {
-			DebugLeveledList(a_this);
-			return nullptr;
+		// i think its crashing bc of this cast
+		if (GetListEntriesCount(a_list->As<RE::TESLeveledList>()) > 254) {
+			DebugLeveledList(a_list->As<RE::TESLeveledList>());
+			return;
 		}
 		else {
-			return _originalCall(a_this, a_level, a_count, a_chanceNone, a_item, a_itemExtra);
+			_OC_LeveledItemAddForm(a_unk, a_vm, a_unk1, a_item, a_list, a_unk3);
+		}
+	}
+
+	void Hook_LeveledActorAddForm(std::uint64_t* a_unk, RE::BSScript::IVirtualMachine* a_vm, __int64 a_unk1, RE::TESForm* a_actor, RE::TESForm* a_list)
+	{
+		if (GetListEntriesCount(a_list->As<RE::TESLeveledList>()) > 254) {
+			DebugLeveledList(a_list->As<RE::TESLeveledList>());
+			return;
+		}
+		else {
+			_OC_LeveledActorAddForm(a_unk, a_vm, a_unk1, a_actor, a_list);
 		}
 	}
 
@@ -46,12 +72,12 @@ namespace Internal::Fixes::LeveledListCrashFix
 	void DebugLeveledList(RE::TESLeveledList* a_list)
 	{
 		// logger::info("Caught problematic insertion of form {} to leveled list {}.", _debugEDID(a_problem), _debugEDID(a_list));
-		//logger::info("EngineFixesF4SE::LeveledListCrashFix -> The form has not been inserted. For ease of review,\nhere are the current contents of the list:\n");
+		// logger::info("EngineFixesF4SE::LeveledListCrashFix -> The form has not been inserted. For ease of review,\nhere are the current contents of the list:\n");
 
 		int i = 1;
 		for (auto* entry : GetListEntries(a_list)) {
 			if (!entry) {
-				//logger::warn("LeveledListCrashFix -> Null form found: {}. This is a problem, do not ignore it.", i);
+				// logger::warn("LeveledListCrashFix -> Null form found: {}. This is a problem, do not ignore it.", i);
 			}
 			++i;
 		}
@@ -87,7 +113,7 @@ namespace Internal::Fixes::LeveledListCrashFix
 				continue;
 			}
 
-			//logger::info("LeveledListCrashFix::Sanitizer -> LeveledList {} has {} entries", form->GetFormEditorID(), listEntriesLen);
+			// logger::info("LeveledListCrashFix::Sanitizer -> LeveledList {} has {} entries", form->GetFormEditorID(), listEntriesLen);
 			foundBadLL = true;
 		}
 		if (foundBadLL) {

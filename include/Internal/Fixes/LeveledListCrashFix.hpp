@@ -5,14 +5,9 @@ namespace Internal::Fixes::LeveledListCrashFix
 	// installs the fix
 	void Install() noexcept;
 
-	// the hook
-	RE::LEVELED_OBJECT* Hook_AddLeveledObject(RE::TESLeveledList* a_this, uint16_t a_level, uint16_t a_count, int8_t chanceNone, RE::TESForm* a_item, RE::ContainerItemExtra* a_itemExtra);
-
-	// the hooker
-	void RegisterHookOG(F4SE::Trampoline& trampoline);
-
-	// the hooker
-	void RegisterHookNG(F4SE::Trampoline& trampoline);
+	// the hooks
+	void Hook_LeveledItemAddForm(RE::BSScript::IVirtualMachine* a_vm, std::uint32_t a_stackID, RE::TESLevItem* a_leveledItemList, RE::TESForm* a_formToAdd, unsigned int a_level, unsigned int a_count);
+	void Hook_LeveledActorAddForm(RE::BSScript::IVirtualMachine* a_vm, std::uint32_t a_stackID, RE::TESLevCharacter* a_leveledCharacterList, RE::TESForm* a_formToAdd, unsigned int a_level);
 
 	// reports null forms in leveledlists
 	void DebugLeveledList(RE::TESLeveledList* a_list);
@@ -21,8 +16,8 @@ namespace Internal::Fixes::LeveledListCrashFix
 	void Sanitize();
 
 	// returns the total amount of leveledlist entries
-	int8_t GetListEntriesCount(RE::TESLeveledList* leveledList);
+	int8_t GetNumEntries(RE::TESLeveledList* leveledList);
 
 	// returns a vector of all of the forms in the leveledlist
-	std::vector<RE::TESForm*> GetListEntries(RE::TESLeveledList* leveledList);
+	std::vector<RE::TESForm*> GetEntries(RE::TESLeveledList* leveledList);
 }

@@ -18,7 +18,7 @@ namespace Internal::Fixes
 		TransferManyItems::AddManyItems::Install();
 		// TransferManyItems::DropManyItems::Install(); WIP
 		CombatMusicFix::Install();
-		// LeveledListCrashFix::Install(); WIP
+		LeveledListCrashFix::Install();
 		MagicEffectConditions::Install();
 		OutfitRedressFix::Install();
 

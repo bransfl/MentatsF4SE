@@ -9,52 +9,44 @@ namespace Internal::Messaging
 		logger::debug("Messaging: Received message of type: {}"sv, a_msg->type);
 
 		// uncomment event cases as needed
-		switch (a_msg->type) {
-			// case F4SE::MessagingInterface::kPostLoad: {
-			// 	break;
-			// }
-			// case F4SE::MessagingInterface::kPostPostLoad: {
-			// 	break;
-			// }
-			// case F4SE::MessagingInterface::kPreLoadGame: {
-			// 	break;
-			// }
-			case F4SE::MessagingInterface::kPostLoadGame: {
-				// CombatMusicFix
-				auto playerCharacter = RE::PlayerCharacter::GetSingleton();
-				if (playerCharacter && !playerCharacter->IsInCombat()) {
-					Internal::Fixes::CombatMusicFix::Fix();
-					logger::info("CombatMusicFix -> Fix ran through kPostLoadGame event.");
-				}
-				break;
-			}
-			// case F4SE::MessagingInterface::kPreSaveGame: {
-			// 	break;
-			// }
-			// case F4SE::MessagingInterface::kPostSaveGame: {
-			// 	break;
-			// }
-			// case F4SE::MessagingInterface::kDeleteGame: {
-			// 	break;
-			// }
-			// case F4SE::MessagingInterface::kInputLoaded: {
-			// 	break;
-			// }
-			// case F4SE::MessagingInterface::kNewGame: {
-			// 	break;
-			// }
-			// case F4SE::MessagingInterface::kGameLoaded: {
-			// 	break;
-			// }
-			case F4SE::MessagingInterface::kGameDataReady: {
-				// LeveledListCrashFix
-				Internal::Fixes::LeveledListCrashFix::Sanitize();
-				break;
-			}
-			default: {
-				break;
-			}
-		}
+		// switch (a_msg->type) {
+		// 	case F4SE::MessagingInterface::kPostLoad: {
+		// 		break;
+		// 	}
+		// 	case F4SE::MessagingInterface::kPostPostLoad: {
+		// 		break;
+		// 	}
+		// 	case F4SE::MessagingInterface::kPreLoadGame: {
+		// 		break;
+		// 	}
+		// 	case F4SE::MessagingInterface::kPostLoadGame: {
+		// 		break;
+		// 	}
+		// 	case F4SE::MessagingInterface::kPreSaveGame: {
+		// 		break;
+		// 	}
+		// 	case F4SE::MessagingInterface::kPostSaveGame: {
+		// 		break;
+		// 	}
+		// 	case F4SE::MessagingInterface::kDeleteGame: {
+		// 		break;
+		// 	}
+		// 	case F4SE::MessagingInterface::kInputLoaded: {
+		// 		break;
+		// 	}
+		// 	case F4SE::MessagingInterface::kNewGame: {
+		// 		break;
+		// 	}
+		// 	case F4SE::MessagingInterface::kGameLoaded: {
+		// 		break;
+		// 	}
+		// 	case F4SE::MessagingInterface::kGameDataReady: {
+		// 		break;
+		// 	}
+		// 	default: {
+		// 		break;
+		// 	}
+		// }
 		logger::debug("Messaging: Finished processing for message of type: {}"sv, a_msg->type);
 	}
 }

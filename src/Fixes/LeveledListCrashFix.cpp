@@ -41,6 +41,8 @@ namespace Internal::Fixes::LeveledListCrashFix
 			// RegisterHookOG(trampoline);
 		}
 
+		F4SE::GetMessagingInterface()->RegisterListener(Callback);
+
 		logger::info("Fix installed: LeveledListCrashFix");
 	}
 
@@ -117,6 +119,19 @@ namespace Internal::Fixes::LeveledListCrashFix
 			logger::warn("LeveledListCrashFix::Sanitizer -> Warning: At least 1 leveled list has over 255 entries in the plugin record. Check the log at Documents/My Games/Fallout4/F4SE/EngineFixesF4SE.log");
 		}
 		logger::info("LeveledListCrashFix::Sanitizer -> listsChecked={}", listsChecked);
+	}
+
+	void Callback(F4SE::MessagingInterface::Message* a_msg)
+	{
+		switch (a_msg->type) {
+			case F4SE::MessagingInterface::kGameDataReady: {
+				Sanitize();
+				break;
+			}
+			default: {
+				break;
+			}
+		}
 	}
 
 	// returns the total amount of leveledlist entries

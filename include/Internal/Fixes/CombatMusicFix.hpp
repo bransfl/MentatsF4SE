@@ -12,4 +12,7 @@ namespace Internal::Fixes::CombatMusicFix
 		static TESDeathEventListener* GetSingleton();
 		virtual RE::BSEventNotifyControl ProcessEvent(const RE::TESDeathEvent& a_event, RE::BSTEventSource<RE::TESDeathEvent>*) override;
 	};
+
+	// callback function for f4se events
+	void Callback(F4SE::MessagingInterface::Message* a_msg);
 }

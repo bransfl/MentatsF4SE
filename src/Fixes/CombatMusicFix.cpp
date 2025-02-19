@@ -16,6 +16,8 @@ namespace Internal::Fixes::CombatMusicFix
 		TESDeathEventListener* deathEvent = new TESDeathEventListener();
 		RE::TESDeathEvent::GetEventSource()->RegisterSink(deathEvent);
 
+		F4SE::GetMessagingInterface()->RegisterListener(Callback);
+
 		logger::info("Fix installed: CombatMusicFix.");
 	}
 
@@ -47,5 +49,22 @@ namespace Internal::Fixes::CombatMusicFix
 			logger::info("CombatMusicFix -> Fix ran through TESDeathEventListener event.");
 		}
 		return RE::BSEventNotifyControl::kContinue;
+	}
+
+	void Callback(F4SE::MessagingInterface::Message* a_msg)
+	{
+		switch (a_msg->type) {
+			case F4SE::MessagingInterface::kPostLoadGame: {
+				auto playerCharacter = RE::PlayerCharacter::GetSingleton();
+				if (playerCharacter && !playerCharacter->IsInCombat()) {
+					Internal::Fixes::CombatMusicFix::Fix();
+					logger::info("CombatMusicFix -> Fix ran through kPostLoadGame event.");
+				}
+				break;
+			}
+			default: {
+				break;
+			}
+		}
 	}
 }

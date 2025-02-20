@@ -1,8 +1,8 @@
-#include "Internal/Fixes/PerkEntryPoints/ApplySpells.hpp"
+#include "Internal/Fixes/PerkEntryPoints/ApplySpellsFix.hpp"
 #include "Internal/Config/Config.hpp"
 
 // fixes entrypoint kApplyCombatHitSpell so multiple spells can be applied at once
-namespace Internal::Fixes::PerkEntryPoints::ApplySpells
+namespace Internal::Fixes::PerkEntryPoints::ApplySpellsFix
 {
 
 	void ApplyCombatHitSpell(REX::Enum<RE::BGSPerkEntry::EntryPoint, std::uint8_t> entryPoint,
@@ -11,10 +11,10 @@ namespace Internal::Fixes::PerkEntryPoints::ApplySpells
 
 	void Install() noexcept
 	{
-		logger::info("Fix installing: ApplySpells.");
+		logger::info("Fix installing: ApplySpellsFix.");
 		
-		if (!Config::bApplyCombatHitSpellFix.GetValue()) {
-			logger::info("Fix aborted: ApplySpells. Reason: Fix was disabled in ini file.");
+		if (!Config::bApplySpellsFix.GetValue()) {
+			logger::info("Fix aborted: ApplySpellsFix. Reason: Fix was disabled in ini file.");
 			return;
 		}
 
@@ -22,7 +22,7 @@ namespace Internal::Fixes::PerkEntryPoints::ApplySpells
 
 		if (REL::Module::IsNG()) {
 			// NG Patch
-			logger::info("Fix aborted: ApplySpells. Reason: Game version was NG.");
+			logger::info("Fix aborted: ApplySpellsFix. Reason: Game version was NG.");
 			return;
 		}
 		else {
@@ -31,7 +31,7 @@ namespace Internal::Fixes::PerkEntryPoints::ApplySpells
 			// trampoline.write_branch<5>(ptr_BGSEntryPoint_HandleEntryPoint_OG.address(), &ApplyCombatHitSpell);
 		}
 
-		logger::info("Fix installed: ApplySpells.");
+		logger::info("Fix installed: ApplySpellsFix.");
 	}
 
 	// TODO
@@ -46,7 +46,7 @@ namespace Internal::Fixes::PerkEntryPoints::ApplySpells
 
 	// 	va_end(variadicArguments);
 
-	// 	// auto combatHitSpellItems = ApplySpells::HandleEntryPoint(entryPoint, perkOwner, std::vector<RE::TESForm*>{ perkOwner, weapon, target });
+	// 	// auto combatHitSpellItems = ApplySpellsFix::HandleEntryPoint(entryPoint, perkOwner, std::vector<RE::TESForm*>{ perkOwner, weapon, target });
 
 	// 	// for (auto* combatHitSpellItem : combatHitSpellItems) {
 	// 	// 	if (combatHitSpellItem) {
@@ -76,7 +76,7 @@ namespace Internal::Fixes::PerkEntryPoints::ApplySpells
 
 // Skyrim::BGSEntryPoint::GetEntryPoint(entryPoint)->entryPointFunctionType.get()
 
-// std::vector<void*> ApplySpells::HandleEntryPoint(
+// std::vector<void*> ApplySpellsFix::HandleEntryPoint(
 // 	Utility::Enumeration<Skyrim::BGSEntryPoint::EntryPoint, std::uint32_t> entryPoint,
 // 	Skyrim::Actor*                                                         perkOwner,
 // 	std::vector<Skyrim::TESForm*>                                          conditionFilterArguments)

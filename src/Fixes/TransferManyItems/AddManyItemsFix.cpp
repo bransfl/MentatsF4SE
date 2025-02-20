@@ -1,4 +1,4 @@
-#include "Internal/Fixes/TransferManyItems/AddManyItems.hpp"
+#include "Internal/Fixes/TransferManyItems/AddManyItemsFix.hpp"
 #include "Internal/Config/Config.hpp"
 #include "f4se_common/Relocation.h"
 #include "f4se_common/SafeWrite.h"
@@ -10,7 +10,7 @@ namespace Internal::Fixes::TransferManyItems::AddManyItems
 	{
 		logger::info("Fix installing: AddManyItems.");
 
-		if (!Config::bAddManyItems.GetValue()) {
+		if (!Config::bAddManyItemsFix.GetValue()) {
 			logger::info("Fix aborted: AddManyItems. Reason: Game version was NG.");
 			return;
 		}

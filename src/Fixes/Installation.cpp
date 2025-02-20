@@ -3,8 +3,8 @@
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
 #include "Internal/Fixes/MagicEffectConditions.hpp"
 #include "Internal/Fixes/OutfitRedressFix.hpp"
-#include "Internal/Fixes/PerkEntryPoints/ApplySpells.hpp"
-#include "Internal/Fixes/TransferManyItems/AddManyItems.hpp"
+#include "Internal/Fixes/PerkEntryPoints/ApplySpellsFix.hpp"
+#include "Internal/Fixes/TransferManyItems/AddManyItemsFix.hpp"
 
 namespace Internal::Fixes
 {
@@ -12,11 +12,11 @@ namespace Internal::Fixes
 	{
 		logger::info("Installing fixes..."sv);
 
-		// PerkEntryPoints::ApplySpells::Install(); WIP
+		// PerkEntryPoints::ApplySpellsFix::Install(); WIP
 
 		// PerkEntryPoints::BasherFix::Install(); WIP
 
-		// PerkEntryPoints::CastSpells::Install(); WIP
+		// PerkEntryPoints::CastSpellsFix::Install(); WIP
 
 		TransferManyItems::AddManyItems::Install();
 

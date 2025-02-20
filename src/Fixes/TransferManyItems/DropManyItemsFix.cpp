@@ -1,4 +1,4 @@
-#include "Internal/Fixes/TransferManyItems/DropManyItems.hpp"
+#include "Internal/Fixes/TransferManyItems/DropManyItemsFix.hpp"
 
 // REL::Relocation<uintptr_t> ptr_ExtraDataList_ctor_OG{ REL::ID(526160) };
 // REL::Relocation<uintptr_t> ptr_ExtraDataList_ctor_NG{ REL::ID(2221088) };

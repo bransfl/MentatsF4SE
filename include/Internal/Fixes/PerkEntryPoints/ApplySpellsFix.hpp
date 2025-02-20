@@ -3,11 +3,11 @@
 #include "RE/Bethesda/PerkEntries.hpp"
 
 // fixes entrypoint kApplyCombatHitSpell so multiple spells can be applied at once
-namespace Internal::Fixes::PerkEntryPoints::ApplySpells
+namespace Internal::Fixes::PerkEntryPoints::ApplySpellsFix
 {
 	void Install() noexcept;
 
-	class ApplySpells
+	class ApplySpellsFix
 	{
 	public:
 		static void ApplyCombatHitSpell(

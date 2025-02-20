@@ -1,0 +1,16 @@
+#include "Internal/Fixes/PerkEntryPoints/CastSpellsFix.hpp"
+#include "Internal/Config/Config.hpp"
+
+namespace Internal::Fixes::PerkEntryPoints::CastSpellsFix
+{
+	void Install() noexcept {
+		logger::info("Fix installing: CastSpellsFix.");
+
+		if (!Config::bCastSpells.GetValue()) {
+			logger::info("Fix aborted: CastSpellsFix. Reason: Fix was disabled in ini file.");
+			return;
+		}
+		
+		logger::info("Fix installed: CastSpellsFix.");
+	}
+}

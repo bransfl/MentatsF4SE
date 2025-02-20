@@ -32,7 +32,6 @@ namespace Internal::Fixes::CombatMusicFix
 	// please (just) stop the music!
 	void Fix()
 	{
-		RE::ConsoleLog::GetSingleton()->AddString("EngineFixesF4SE::CombatMusicFix::Fix() ran! (temp mesg)\n");
 		logger::info("CombatMusicFix - fix ran");
 		for (const auto& command : StopCombatMusic) {
 			Utility::Console::ExecuteCommand(command, false);

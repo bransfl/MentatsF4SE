@@ -5,7 +5,7 @@ namespace Internal::Config
 	// fixes
 	inline const auto bApplySpellsFix = REX::INI::Bool{ "Fixes"sv, "bApplySpellsFix"sv, true };
 	inline const auto bBasherFix = REX::INI::Bool{ "Fixes"sv, "bBasherFix"sv, true };
-	inline const auto bCastSpells = REX::INI::Bool{ "Fixes"sv, "bCastSpells"sv, true };
+	inline const auto bCastSpellsFix = REX::INI::Bool{ "Fixes"sv, "bCastSpellsFix"sv, true };
 	//
 	inline const auto bAddManyItemsFix = REX::INI::Bool{ "Fixes"sv, "bAddManyItemsFix"sv, true };
 	inline const auto bDropManyItemsFix = REX::INI::Bool{ "Fixes"sv, "bDropManyItemsFix"sv, true };

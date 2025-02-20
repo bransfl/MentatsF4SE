@@ -6,7 +6,7 @@ namespace Internal::Fixes::PerkEntryPoints::CastSpellsFix
 	void Install() noexcept {
 		logger::info("Fix installing: CastSpellsFix."sv);
 
-		if (!Config::bCastSpells.GetValue()) {
+		if (!Config::bCastSpellsFix.GetValue()) {
 			logger::info("Fix aborted: CastSpellsFix. Reason: Fix was disabled in ini file."sv);
 			return;
 		}

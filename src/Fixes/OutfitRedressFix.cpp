@@ -17,7 +17,7 @@ namespace Internal::Fixes::OutfitRedressFix
 			return;
 		}
 
-		if (Config::bIsNG == true) {
+		if (REL::Module::IsNG()) {
 			// NG Patch - Don't have address for this yet.
 			logger::info("Fix aborted: OutfitRedressFix. Reason: Game version was NG."sv);
 			return;

@@ -22,7 +22,7 @@ namespace Internal::Fixes::MagicEffectConditions
 
 		F4SE::AllocTrampoline(8 * 8);
 		F4SE::Trampoline& trampoline = F4SE::GetTrampoline();
-		if (Config::bIsNG == true) {
+		if (REL::Module::IsNG()) {
 			logger::info("Fix aborted: MagicEffectConditions. Reason: Game version was NG."sv);
 			return;
 			// NG Patch - Don't have address for this yet.

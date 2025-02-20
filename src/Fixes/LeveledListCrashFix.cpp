@@ -33,7 +33,7 @@ namespace Internal::Fixes::LeveledListCrashFix
 			return;
 		}
 
-		if (Config::bIsNG == true) {
+		if (REL::Module::IsNG()) {
 			// NG Patch
 			logger::info("Fix aborted: MagicEffectConditions. Reason: Game version was NG."sv);
 			return;

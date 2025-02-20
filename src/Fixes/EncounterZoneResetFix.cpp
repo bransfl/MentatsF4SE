@@ -14,15 +14,15 @@ namespace Internal::Fixes::EncounterZoneResetFix
 			return;
 		}
 
-		if (REX::W32::GetModuleHandleW(L"Buffout4.dll") && Config::bIsNG == false) {
-			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Mod 'Buffout 4 NG' was detected.\n");
-			logger::warn("Fix aborted: EncounterZoneResetFix. Reason: Mod was installed: Buffout4.dll AND game version was OG."sv);
+		// if buffout4ng is installed AND version is og AND buffout4ng's fix is enabled, abort
+		if (REX::W32::GetModuleHandleW(L"Buffout4.dll") && !REL::Module::IsNG()) {
+			logger::warn("Fix aborted: EncounterZoneResetFix. Reason: Mod was installed: Buffout4.dll AND game version was og"sv);
 			return;
 		}
-
-		auto& cells = RE::CellAttachDetachEventSource::CellAttachDetachEventSourceSingleton::GetSingleton();
-		cells.source.RegisterSink(Events::CellAttachDetachEventHandler::GetSingleton());
-
-		logger::info("EncounterZoneResetFix -> Fix installed."sv);
 	}
+
+	auto& cells = RE::CellAttachDetachEventSource::CellAttachDetachEventSourceSingleton::GetSingleton();
+	// cells.RegisterSink(Events::CellAttachDetachEventHandler::GetSingleton());
+
+	// logger::info("EncounterZoneResetFix -> Fix installed."sv);
 }

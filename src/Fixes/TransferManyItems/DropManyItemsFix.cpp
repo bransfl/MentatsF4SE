@@ -64,7 +64,7 @@ namespace Internal::Fixes::TransferManyItems::DropManyItemsFix
 		}
 
 		// i use gbranchtrampoline here since sylee used it and i'm clearly such a free thinker
-		if (Config::bIsNG == true) {
+		if (REL::Module::IsNG()) {
 			// NG Patch
 			if (!g_branchTrampoline.Create(14)) {
 				logger::warn("DropManyItems couldn't create codegen buffer"sv);

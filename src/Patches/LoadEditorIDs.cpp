@@ -13,7 +13,7 @@ namespace Internal::Patches::LoadEditorIDs
 
 	void Install() noexcept
 	{
-		if (!Config::bLoadEditorIds.GetValue()) {
+		if (!Config::bLoadEditorIDs.GetValue()) {
 			logger::info("LoadEditorIDs -> Patch was disabled in the ini file. Patch aborted.");
 			return;
 		}
@@ -223,7 +223,7 @@ namespace Internal::Patches::LoadEditorIDs
 
 		const auto idIt = map->find(editorID);
 		if (idIt != map->end()) {
-			if (!Config::bLoadEditorIds.GetValue()) {
+			if (!Config::bLoadEditorIDs.GetValue()) {
 				return false;
 			}
 

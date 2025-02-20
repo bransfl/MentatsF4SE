@@ -5,6 +5,7 @@
 #include "Internal/Fixes/OutfitRedressFix.hpp"
 #include "Internal/Fixes/PerkEntryPoints/ApplySpellsFix.hpp"
 #include "Internal/Fixes/TransferManyItems/AddManyItemsFix.hpp"
+#include "Internal/Fixes/TransferManyItems/DropManyItemsFix.hpp"
 
 namespace Internal::Fixes
 {
@@ -18,9 +19,9 @@ namespace Internal::Fixes
 
 		// PerkEntryPoints::CastSpellsFix::Install(); WIP
 
-		TransferManyItems::AddManyItems::Install();
+		TransferManyItems::AddManyItemsFix::Install();
 
-		// TransferManyItems::DropManyItems::Install(); WIP
+		TransferManyItems::DropManyItemsFix::Install();
 
 		// CombatMusicFix is handled in Messaging.cpp
 

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Internal::Fixes::TransferManyItems::AddManyItems
+namespace Internal::Fixes::TransferManyItems::AddManyItemsFix
 {
 	void Install() noexcept;
 }

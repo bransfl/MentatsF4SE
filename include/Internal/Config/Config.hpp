@@ -18,7 +18,6 @@ namespace Internal::Config
 
 	// patches
 	inline const auto bLoadEditorIds = REX::INI::Bool{ "Patches"sv, "bLoadEditorIds"sv, true };
-	inline const auto bConsoleHelpPrintEditorID = REX::INI::Bool{ "Patches"sv, "bConsoleHelpPrintEditorID"sv, true };
 
 	void Load() noexcept;
 }

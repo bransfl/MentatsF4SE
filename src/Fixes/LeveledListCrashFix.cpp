@@ -136,14 +136,11 @@ namespace Internal::Fixes::LeveledListCrashFix
 			if (!(numEntries == 0 || numEntries == 255)) {
 				continue;
 			}
-
-			// todo - this might be redundant due to the check above?
-			size_t listEntriesLen = GetEntries(leveledList).size();
-			if (listEntriesLen <= 255) {
+			if (numEntries <= 255) {
 				continue;
 			}
 
-			// logger::info("LeveledListCrashFix::Sanitizer -> LeveledList {} has {} entries", form->GetFormEditorID(), listEntriesLen);
+			logger::info("LeveledListCrashFix::Sanitizer -> LeveledList {} has {} entries", form->GetFormEditorID(), numEntries);
 			foundBadLL = true;
 		}
 		if (foundBadLL) {

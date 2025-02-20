@@ -11,12 +11,12 @@ namespace Internal::Fixes::CombatMusicFix
 	{
 		logger::info("Fix installing: CombatMusicFix.");
 
-		// RE::TESDeathEvent::GetEventSource()->RegisterSink(Events::DeathEventHandler::GetSingleton());
+		RE::TESDeathEvent::GetEventSource()->RegisterSink(Events::DeathEventHandler::GetSingleton());
 
 		logger::info("Fix installed: CombatMusicFix.");
 	}
 
-	// console cmds to run to stop music
+	// console cmds to run to stop all combat music
 	static inline const std::vector<std::string> StopCombatMusic = {
 		"RemoveMusic MUSzCombat",
 		"RemoveMusic MUSzCombatBoss",
@@ -32,7 +32,7 @@ namespace Internal::Fixes::CombatMusicFix
 	// please (just) stop the music!
 	void Fix()
 	{
-		logger::info("CombatMusicFix - fix ran");
+		logger::info("CombatMusicFix -> Fix ran.");
 		for (const auto& command : StopCombatMusic) {
 			Utility::Console::ExecuteCommand(command, false);
 		}
@@ -40,10 +40,12 @@ namespace Internal::Fixes::CombatMusicFix
 
 	bool CheckNeedsFix()
 	{
+		bool ret = false;	// setup this way for logging
 		auto playerCharacter = RE::PlayerCharacter::GetSingleton();
 		if (playerCharacter && !playerCharacter->IsInCombat()) {
-			return true;
+			ret = true;
 		}
-		return false;
+		logger::info("CombatMusicFix -> CheckNeedsFix() -> ret={}", ret);
+		return ret;
 	}
 }

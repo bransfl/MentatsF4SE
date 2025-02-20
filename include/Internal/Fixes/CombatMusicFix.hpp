@@ -22,6 +22,7 @@ namespace Internal::Fixes::CombatMusicFix
 
 			virtual RE::BSEventNotifyControl ProcessEvent(const RE::TESDeathEvent& a_event, RE::BSTEventSource<RE::TESDeathEvent>*) override
 			{
+				logger::info("CombatMusicFix -> Event recieved.");
 				if (CheckNeedsFix() == true) {
 					Fix();
 				}

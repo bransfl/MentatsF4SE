@@ -5,8 +5,8 @@
 
 namespace Internal::Fixes::MagicEffectConditions
 {
-	// forward declaration for Install() since MagicEffectConditions.hpp is being annoying
-	void EvaluateConditions(RE::ActiveEffect* activeEffect, float elapsedTimeDelta, bool forceUpdate);
+	typedef void(EvaluateConditionsSig)(RE::ActiveEffect*, float, bool);
+	REL::Relocation<EvaluateConditionsSig> OriginalFunction_EvaluateConditions;
 
 	void Install() noexcept
 	{
@@ -33,8 +33,8 @@ namespace Internal::Fixes::MagicEffectConditions
 		}
 		else {
 			// OG Patch
-			REL::Relocation<uintptr_t> ptr_EvaluateConditions_OG{ REL::ID(1228998) };
-			trampoline.write_branch<5>(ptr_EvaluateConditions_OG.address(), &EvaluateConditions);
+			REL::Relocation<uintptr_t> evaluateConditionsFuncLocation{ REL::ID(1228998) };
+			OriginalFunction_EvaluateConditions = trampoline.write_branch<5>(evaluateConditionsFuncLocation.address(), &Hook_EvaluateConditions);
 		}
 
 		logger::info("Fix installed: MagicEffectConditions.");
@@ -51,12 +51,14 @@ namespace Internal::Fixes::MagicEffectConditions
 		}
 	}
 
-	void EvaluateConditions(RE::ActiveEffect* activeEffect, float elapsedTimeDelta, bool forceUpdate)
+	void Hook_EvaluateConditions(RE::ActiveEffect* activeEffect, float elapsedTimeDelta, bool forceUpdate)
 	{
 		if (activeEffect->conditionStatus == RE::ActiveEffect::ConditionStatus::kNotAvailable) {
 			logger::debug("MagicEffectConditions -> activeEffect's ConditionStatus was kNotAvailable. Return.");
 			return;
 		}
+
+		// if fire and forget (chems) call og func maybe?
 
 		if ((activeEffect->flags.all(RE::ActiveEffect::Flags::kHasConditions) || activeEffect->displacementSpell) && activeEffect->target && activeEffect->target->GetTargetStatsObject()) {
 

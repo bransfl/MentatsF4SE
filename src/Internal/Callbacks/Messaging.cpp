@@ -20,10 +20,10 @@ namespace Internal::Messaging
 			}
 			case F4SE::MessagingInterface::kPostLoadGame: {
 				// CombatMusicFix
-				auto playerCharacter = RE::PlayerCharacter::GetSingleton();
-				if (playerCharacter && !playerCharacter->IsInCombat()) {
+				if (Internal::Fixes::CombatMusicFix::CheckNeedsFix() == true) {
 					Internal::Fixes::CombatMusicFix::Fix();
 				}
+
 				break;
 			}
 			case F4SE::MessagingInterface::kPreSaveGame: {
@@ -46,10 +46,11 @@ namespace Internal::Messaging
 			}
 			case F4SE::MessagingInterface::kGameDataReady: {
 				// CombatMusicFix
-				Internal::Fixes::CombatMusicFix::InitFix();
+				Internal::Fixes::CombatMusicFix::Install();
 
 				// LeveledListCrashFix
 				Internal::Fixes::LeveledListCrashFix::Sanitize();
+				
 				break;
 			}
 			default: {

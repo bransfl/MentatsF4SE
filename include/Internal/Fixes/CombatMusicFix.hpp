@@ -5,33 +5,28 @@ namespace Internal::Fixes::CombatMusicFix
 {
 	void Install() noexcept;
 
-	void InitFix();
-
 	void Fix();
 
-	class EventSink : public RE::BSTEventSink<RE::TESDeathEvent>
+	bool CheckNeedsFix();
+
+	namespace Events
 	{
-		EventSink() = default;
-
-	public:
-		EventSink(const EventSink&) = delete;
-		EventSink(EventSink&&) = delete;
-		EventSink& operator=(const EventSink&) = delete;
-		EventSink& operator=(EventSink&&) = delete;
-
-		static EventSink* GetSingleton()
+		class DeathEventHandler : public RE::BSTEventSink<RE::TESDeathEvent>
 		{
-			static EventSink singleton;
-			return &singleton;
-		}
-
-		virtual RE::BSEventNotifyControl ProcessEvent(const RE::TESDeathEvent& a_event, RE::BSTEventSource<RE::TESDeathEvent>*) override
-		{
-			auto playerCharacter = RE::PlayerCharacter::GetSingleton();
-			if (playerCharacter && !playerCharacter->IsInCombat()) {
-				Fix();
+		public:
+			[[nodiscard]] static DeathEventHandler* GetSingleton()
+			{
+				static DeathEventHandler singleton;
+				return std::addressof(singleton);
 			}
-			return RE::BSEventNotifyControl::kContinue;
-		}
-	};
+
+			virtual RE::BSEventNotifyControl ProcessEvent(const RE::TESDeathEvent& a_event, RE::BSTEventSource<RE::TESDeathEvent>*) override
+			{
+				if (CheckNeedsFix() == true) {
+					Fix();
+				}
+				return RE::BSEventNotifyControl::kContinue;
+			}
+		};
+	}
 }

@@ -11,13 +11,9 @@ namespace Internal::Fixes::CombatMusicFix
 	{
 		logger::info("Fix installing: CombatMusicFix.");
 
-		logger::info("Fix installed: CombatMusicFix.");
-	}
+		// RE::TESDeathEvent::GetEventSource()->RegisterSink(Events::DeathEventHandler::GetSingleton());
 
-	void InitFix()
-	{
-		auto* eventSink = EventSink::GetSingleton();
-		RE::TESDeathEvent::GetEventSource()->RegisterSink(eventSink);
+		logger::info("Fix installed: CombatMusicFix.");
 	}
 
 	// console cmds to run to stop music
@@ -36,9 +32,19 @@ namespace Internal::Fixes::CombatMusicFix
 	// please (just) stop the music!
 	void Fix()
 	{
+		RE::ConsoleLog::GetSingleton()->AddString("EngineFixesF4SE::CombatMusicFix::Fix() ran! (temp mesg)\n");
 		logger::info("CombatMusicFix - fix ran");
 		for (const auto& command : StopCombatMusic) {
 			Utility::Console::ExecuteCommand(command, false);
 		}
+	}
+
+	bool CheckNeedsFix()
+	{
+		auto playerCharacter = RE::PlayerCharacter::GetSingleton();
+		if (playerCharacter && !playerCharacter->IsInCombat()) {
+			return true;
+		}
+		return false;
 	}
 }

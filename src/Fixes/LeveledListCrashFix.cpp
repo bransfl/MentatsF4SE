@@ -1,7 +1,7 @@
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
 #include "Internal/Config/Config.hpp"
 
-#include "DetourXS/detourxs.h"
+#include "detourxs/detourxs.h"
 
 #pragma warning(disable : 4100) // for RegisterHookOG
 
@@ -13,7 +13,6 @@
 namespace Internal::Fixes::LeveledListCrashFix
 {
 	// typedefs
-
 	typedef void(mem_LeveledItemAddFormSig)(RE::BSScript::IVirtualMachine*, uint32_t, RE::TESLevItem*, RE::TESForm*, unsigned int, unsigned int);
 	REL::Relocation<mem_LeveledItemAddFormSig> OriginalFunction_LeveledItemAddForm;
 	DetourXS itemHook;
@@ -50,7 +49,8 @@ namespace Internal::Fixes::LeveledListCrashFix
 			REL::Relocation<mem_LeveledItemAddFormSig> itemFuncLocation{ REL::ID(903957) };
 			if (itemHook.Create(reinterpret_cast<LPVOID>(itemFuncLocation.address()), &Hook_LeveledItemAddForm)) {
 				OriginalFunction_LeveledItemAddForm = reinterpret_cast<std::uintptr_t>(itemHook.GetTrampoline());
-			} else {
+			}
+			else {
 				logger::warn("LeveledListCrashFix -> Failed to create Item hook");
 			}
 
@@ -58,7 +58,8 @@ namespace Internal::Fixes::LeveledListCrashFix
 			REL::Relocation<mem_LeveledActorAddFormSig> actorFuncLocation{ REL::ID(1200614) };
 			if (actorHook.Create(reinterpret_cast<LPVOID>(actorFuncLocation.address()), &Hook_LeveledActorAddForm)) {
 				OriginalFunction_LeveledActorAddForm = reinterpret_cast<std::uintptr_t>(actorHook.GetTrampoline());
-			} else {
+			}
+			else {
 				logger::warn("LeveledListCrashFix -> Failed to create Actor hook");
 			}
 
@@ -71,9 +72,11 @@ namespace Internal::Fixes::LeveledListCrashFix
 	// the hooks
 	void Hook_LeveledItemAddForm(RE::BSScript::IVirtualMachine* a_vm, std::uint32_t a_stackID, RE::TESLevItem* a_leveledItemList, RE::TESForm* a_formToAdd, unsigned int a_level, unsigned int a_count)
 	{
+		logger::info("LeveledListCrashFix -> Hook_LeveledItemAddForm ran");
 		if (GetNumEntries(a_leveledItemList) > 254) {
 			DebugLeveledList(a_leveledItemList);
-			logger::warn("LeveledListCrashFix -> Full item leveledlist found: TODO_LEVELEDLIST_NAME_HERE");
+			logger::warn("LeveledListCrashFix -> Full actor leveledlist found: {}", a_leveledItemList->GetFormEditorID());
+			a_vm->PostError("LeveledListCrashFix -> Full item leveledlist found. Check EngineFixesF4SE.log for more information.", a_stackID, RE::BSScript::ErrorLogger::Severity::kError);
 			return;
 		}
 		else {
@@ -83,9 +86,11 @@ namespace Internal::Fixes::LeveledListCrashFix
 
 	void Hook_LeveledActorAddForm(RE::BSScript::IVirtualMachine* a_vm, std::uint32_t a_stackID, RE::TESLevCharacter* a_leveledCharacterList, RE::TESForm* a_formToAdd, unsigned int a_level)
 	{
+		logger::info("LeveledListCrashFix -> Hook_LeveledActorAddForm ran");
 		if (GetNumEntries(a_leveledCharacterList) > 254) {
 			DebugLeveledList(a_leveledCharacterList);
-			logger::warn("LeveledListCrashFix -> Full actor leveledlist found: TODO_LEVELEDLIST_NAME_HERE");
+			logger::warn("LeveledListCrashFix -> Full actor leveledlist found: {}", a_leveledCharacterList->GetFormEditorID());
+			a_vm->PostError("LeveledListCrashFix -> Full actor leveledlist found. Check EngineFixesF4SE.log for more information.", a_stackID, RE::BSScript::ErrorLogger::Severity::kError);
 			return;
 		}
 		else {
@@ -97,11 +102,11 @@ namespace Internal::Fixes::LeveledListCrashFix
 	void DebugLeveledList(RE::TESLeveledList* a_list)
 	{
 		logger::info("LeveledListCrashFix -> DebugLeveledList started...");
-		
+
 		int i = 1;
 		for (auto* entry : GetEntries(a_list)) {
 			if (!entry) {
-				logger::warn("LeveledListCrashFix -> Null form found: {}. This is a problem, do not ignore it.", i);
+				logger::warn("LeveledListCrashFix -> Null form found: {} at: {}. This is a problem, do not ignore it.", entry->GetFormEditorID(), i);
 			}
 			++i;
 		}

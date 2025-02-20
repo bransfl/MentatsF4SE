@@ -12,14 +12,22 @@ namespace Internal::Fixes
 	{
 		logger::info("Installing fixes..."sv);
 
-		// PerkEntryPoints::ApplySpells::Install();
+		// PerkEntryPoints::ApplySpells::Install(); WIP
+
 		// PerkEntryPoints::BasherFix::Install(); WIP
+
 		// PerkEntryPoints::CastSpells::Install(); WIP
+
 		TransferManyItems::AddManyItems::Install();
+
 		// TransferManyItems::DropManyItems::Install(); WIP
-		CombatMusicFix::Install();
+
+		// CombatMusicFix is handled in Messaging.cpp
+
 		LeveledListCrashFix::Install();
+
 		MagicEffectConditions::Install();
+
 		OutfitRedressFix::Install();
 
 		logger::info("Fixes installed."sv);

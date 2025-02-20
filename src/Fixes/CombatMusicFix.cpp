@@ -33,6 +33,7 @@ namespace Internal::Fixes::CombatMusicFix
 	void Fix()
 	{
 		logger::info("CombatMusicFix -> Fix ran.");
+		// todo - make this asynchronous and add a 3-5 second delay so it doesnt instantly end
 		for (const auto& command : StopCombatMusic) {
 			Utility::Console::ExecuteCommand(command, true);
 		}
@@ -49,14 +50,3 @@ namespace Internal::Fixes::CombatMusicFix
 		return ret;
 	}
 }
-// static void fix()
-// {
-// 	auto asyncFunc = []() {
-// 		std::this_thread::sleep_for(std::chrono::seconds(5));
-// 		for (const auto& command : stopCombatMusic) {
-// 			inlineUtils::sendConsoleCommand(command);
-// 		}
-// 	};
-// 	std::jthread t(asyncFunc);
-// 	t.detach();
-// }

@@ -1,5 +1,6 @@
 #pragma once
-#pragma warning(disable : 4100)
+#pragma warning(push)
+#pragma warning(disable : 4100) // for a_event
 
 namespace Internal::Fixes::CombatMusicFix
 {
@@ -31,3 +32,5 @@ namespace Internal::Fixes::CombatMusicFix
 		};
 	}
 }
+
+#pragma warning(pop)

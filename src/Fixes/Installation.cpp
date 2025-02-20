@@ -27,7 +27,7 @@ namespace Internal::Fixes
 
 		LeveledListCrashFix::Install();
 
-		MagicEffectConditions::Install();
+		// MagicEffectConditions::Install(); WIP
 
 		OutfitRedressFix::Install();
 

@@ -46,23 +46,23 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f
 	F4SE::Init(a_f4se);
 
 	// more patches/fixes are installed in Internal/Callbacks/Messaging
-	logger::info("---");
-	logger::info("Registering for F4SE events...");
+	logger::info("---"sv);
+	logger::info("Registering for F4SE events..."sv);
 	F4SE::GetMessagingInterface()->RegisterListener(Internal::Messaging::Callback);
-	logger::info("Registered for F4SE events.");
-	logger::info("---");
+	logger::info("Registered for F4SE events."sv);
+	logger::info("---"sv);
 
 	Internal::Config::Load();
-	logger::info("---");
+	logger::info("---"sv);
 
 	Internal::Fixes::Install();
-	logger::info("---");
+	logger::info("---"sv);
 
 	Internal::Patches::Install();
-	logger::info("---");
+	logger::info("---"sv);
 
 	logger::info("Loaded"sv);
-	logger::info("---");
+	logger::info("---"sv);
 
 	return true;
 }

@@ -15,7 +15,6 @@ namespace Internal::Utility
 			auto buffer = log->buffer;
 
 			script->SetText(a_command);
-			// todo check if nullptr is preventing it from running
 			script->CompileAndRun(&compiler, RE::COMPILER_NAME::kSystemWindow, nullptr);
 
 			if (!script->header.isCompiled) {

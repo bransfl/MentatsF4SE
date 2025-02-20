@@ -11,10 +11,10 @@ namespace Internal::Fixes::PerkEntryPoints::ApplySpellsFix
 
 	void Install() noexcept
 	{
-		logger::info("Fix installing: ApplySpellsFix.");
+		logger::info("Fix installing: ApplySpellsFix."sv);
 		
 		if (!Config::bApplySpellsFix.GetValue()) {
-			logger::info("Fix aborted: ApplySpellsFix. Reason: Fix was disabled in ini file.");
+			logger::info("Fix aborted: ApplySpellsFix. Reason: Fix was disabled in ini file."sv);
 			return;
 		}
 
@@ -22,7 +22,7 @@ namespace Internal::Fixes::PerkEntryPoints::ApplySpellsFix
 
 		if (REL::Module::IsNG()) {
 			// NG Patch
-			logger::info("Fix aborted: ApplySpellsFix. Reason: Game version was NG.");
+			logger::info("Fix aborted: ApplySpellsFix. Reason: Game version was NG."sv);
 			return;
 		}
 		else {
@@ -31,7 +31,7 @@ namespace Internal::Fixes::PerkEntryPoints::ApplySpellsFix
 			// trampoline.write_branch<5>(ptr_BGSEntryPoint_HandleEntryPoint_OG.address(), &ApplyCombatHitSpell);
 		}
 
-		logger::info("Fix installed: ApplySpellsFix.");
+		logger::info("Fix installed: ApplySpellsFix."sv);
 	}
 
 	// TODO

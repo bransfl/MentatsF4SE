@@ -5,21 +5,21 @@ namespace Internal::Fixes::OutfitRedressFix
 {
 	void Install() noexcept
 	{
-		logger::info("Fix installing: OutfitRedressFix");
+		logger::info("Fix installing: OutfitRedressFix"sv);
 
 		if (!Config::bOutfitRedressFix.GetValue()) {
-			logger::info("Fix aborted: OutfitRedressFix. Reason: Fix was disabled in ini file.");
+			logger::info("Fix aborted: OutfitRedressFix. Reason: Fix was disabled in ini file."sv);
 			return;
 		}
-		if (std::filesystem::exists("Data/F4SE/Plugins/Outfit-ReDress-Fix.dll")) {
+		if (std::filesystem::exists("Data/F4SE/Plugins/Outfit-ReDress-Fix.dll"sv)) {
 			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Mod 'Outfit Redress Fix' was detected. It is recommended that you disable this mod while using EngineFixesF4SE.\n");
-			logger::info("Fix aborted: OutfitRedressFix. Reason: Mod was installed: Outfit-ReDress-Fix.dll.");
+			logger::info("Fix aborted: OutfitRedressFix. Reason: Mod was installed: Outfit-ReDress-Fix.dll."sv);
 			return;
 		}
 
 		if (REL::Module::IsNG()) {
 			// NG Patch - Don't have address for this yet.
-			logger::info("Fix aborted: OutfitRedressFix. Reason: Game version was NG.");
+			logger::info("Fix aborted: OutfitRedressFix. Reason: Game version was NG."sv);
 			return;
 		}
 		else {
@@ -29,7 +29,7 @@ namespace Internal::Fixes::OutfitRedressFix
 			RegisterHook(trampoline);
 		}
 
-		logger::info("Fix installed: OutfitRedressFix");
+		logger::info("Fix installed: OutfitRedressFix"sv);
 	}
 
 	typedef int64_t(Set3DUpdateFlagSig)(RE::AIProcess*, RE::RESET_3D_FLAGS);

@@ -27,13 +27,13 @@ namespace Internal::Fixes::LeveledListCrashFix
 			logger::info("Fix aborted: LeveledListCrashFix. Reason: Fix was disabled in ini file."sv);
 			return;
 		}
-		if (std::filesystem::exists("Data/F4SE/Plugins/GLXRM_InjectionBlocker.dll"sv)) {
+		if (REX::W32::GetModuleHandleW(L"GLXRM_InjectionBlocker.dll")) {
 			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Mod 'Injection Blocker' was detected. It is recommended that you disable this mod while using EngineFixesF4SE.\n");
 			logger::warn("Fix aborted: LeveledListCrashFix. Reason: Mod was installed: GLXRM_InjectionBlocker.dll."sv);
 			return;
 		}
 
-		if (REL::Module::IsNG()) {
+		if (Config::bIsNG == true) {
 			// NG Patch
 			logger::info("Fix aborted: MagicEffectConditions. Reason: Game version was NG."sv);
 			return;

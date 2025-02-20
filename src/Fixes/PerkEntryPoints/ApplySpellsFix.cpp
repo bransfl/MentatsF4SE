@@ -20,7 +20,7 @@ namespace Internal::Fixes::PerkEntryPoints::ApplySpellsFix
 
 		// F4SE::Trampoline& trampoline = F4SE::GetTrampoline();
 
-		if (REL::Module::IsNG()) {
+		if (Config::bIsNG == true) {
 			// NG Patch
 			logger::info("Fix aborted: ApplySpellsFix. Reason: Game version was NG."sv);
 			return;

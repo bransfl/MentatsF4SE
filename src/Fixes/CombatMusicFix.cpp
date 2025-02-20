@@ -11,6 +11,11 @@ namespace Internal::Fixes::CombatMusicFix
 	{
 		logger::info("Fix installing: CombatMusicFix."sv);
 
+		if(!Config::bCombatMusicFix.GetValue()) {
+			logger::info("Fix aborted: CombatMusicFix. Reason: Fix was disabled in ini file."sv);
+			return;
+		}
+
 		RE::TESDeathEvent::GetEventSource()->RegisterSink(Events::DeathEventHandler::GetSingleton());
 
 		logger::info("Fix installed: CombatMusicFix."sv);

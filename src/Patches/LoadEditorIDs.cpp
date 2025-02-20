@@ -1,9 +1,5 @@
 #include "Internal/Patches/LoadEditorIDs.hpp"
 #include "Internal/Config/Config.hpp"
-#include <SimpleIni.h>
-#include <filesystem>
-#include <iostream>
-#include <toml.hpp>
 #include <toml11/parser.hpp>
 
 // loads editorids for usage in the console
@@ -20,11 +16,11 @@ namespace Internal::Patches::LoadEditorIDs
 
 		// check if editorids are already loaded/will be loaded by another mod
 		std::string filepath = "Data/F4SE/Plugins/";
-		if (std::filesystem::exists(filepath + "PapyrusCommonLibrary.dll")) {
+		if (REX::W32::GetModuleHandleW(L"PapyrusCommonLibrary.dll")) {
 			logger::info("LoadEditorIDs -> PapyrusCommonLibrary was installed. Aborting patch."sv);
 			return;
 		}
-		if (std::filesystem::exists(filepath + "BakaFramework.dll")) {
+		if (REX::W32::GetModuleHandleW(L"BakaFramework.dll")) {
 			const toml::value bakaToml = toml::parse(filepath + "BakaFramework.toml");
 			if ((bakaToml.at("EnableLoadingEditorIDs").as_string()) == "true") {
 				logger::info("LoadEditorIDs -> BakaFramework was installed. Aborting patch."sv);

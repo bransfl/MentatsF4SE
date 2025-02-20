@@ -1,7 +1,5 @@
 #include "Internal/Fixes/MagicEffectConditions.hpp"
 #include "Internal/Config/Config.hpp"
-#include "RE/Bethesda/Settings.hpp"
-#include <RE/Bethesda/Actor.hpp>
 
 namespace Internal::Fixes::MagicEffectConditions
 {
@@ -16,7 +14,7 @@ namespace Internal::Fixes::MagicEffectConditions
 			logger::info("Fix aborted: MagicEffectConditions. Reason: Fix was disabled in ini file."sv);
 			return;
 		}
-		if (std::filesystem::exists("Data/F4SE/Plugins/MGEFConditionFix.dll"sv)) {
+		if (REX::W32::GetModuleHandleW(L"MGEFConditionFix.dll")) {
 			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Mod 'MGEF Condition Fix' was detected. It is recommended that you disable this mod while using EngineFixesF4SE.\n");
 			logger::info("Fix aborted: MagicEffectConditions. Reason: Mod was installed: MGEFConditionFix.dll."sv);
 			return;
@@ -24,7 +22,7 @@ namespace Internal::Fixes::MagicEffectConditions
 
 		F4SE::AllocTrampoline(8 * 8);
 		F4SE::Trampoline& trampoline = F4SE::GetTrampoline();
-		if (REL::Module::IsNG()) {
+		if (Config::bIsNG == true) {
 			logger::info("Fix aborted: MagicEffectConditions. Reason: Game version was NG."sv);
 			return;
 			// NG Patch - Don't have address for this yet.

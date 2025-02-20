@@ -1,6 +1,5 @@
 #include "Internal/Fixes/TransferManyItems/DropManyItemsFix.hpp"
 #include "Internal/Config/Config.hpp"
-#include "REX/W32.hpp"
 #include "f4se/GameApi.h"
 #include <f4se_common/BranchTrampoline.h>
 #include <f4se_common/Relocation.h>
@@ -58,14 +57,14 @@ namespace Internal::Fixes::TransferManyItems::DropManyItemsFix
 			logger::info("Fix aborted: DropManyItemsFix. Reason: Fix was disabled in ini file."sv);
 			return;
 		}
-		if (std::filesystem::exists("Data/F4SE/Plugins/Drop7FFFPatch.dll")) {
+		if (REX::W32::GetModuleHandleW(L"Drop7FFFPatch.dll")) {
 			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Mod 'Drop 7FFF Fix' was detected. It is recommended that you disable this mod while using EngineFixesF4SE.\n");
 			logger::warn("Fix aborted: DropManyItemsFix. Reason: Mod was installed: Drop7FFFPatch.dll."sv);
 			return;
 		}
 
 		// i use gbranchtrampoline here since sylee used it and i'm clearly such a free thinker
-		if (REL::Module::IsNG()) {
+		if (Config::bIsNG == true) {
 			// NG Patch
 			if (!g_branchTrampoline.Create(14)) {
 				logger::warn("DropManyItems couldn't create codegen buffer"sv);

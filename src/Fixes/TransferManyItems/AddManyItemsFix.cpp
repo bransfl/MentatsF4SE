@@ -13,13 +13,13 @@ namespace Internal::Fixes::TransferManyItems::AddManyItemsFix
 			logger::info("Fix aborted: AddManyItems. Reason: Game version was NG."sv);
 			return;
 		}
-		if (std::filesystem::exists("Data/F4SE/Plugins/AddFFFFFix.dll"sv)) { // not a typo, their dll has 5 F's
+		if (REX::W32::GetModuleHandleW(L"AddFFFFFix.dll")) { // not a typo, their dll has 5 F's
 			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Mod 'Add FFFF Fix' was detected. It is recommended that you disable this mod while using EngineFixesF4SE.\n");
 			logger::warn("Fix aborted: AddManyItems. Reason: Mod was installed: AddFFFFFix.dll."sv);
 			return;
 		}
-
-		if (REL::Module::IsNG()) {
+		
+		if (Config::bIsNG == true) {
 			// NG patch
 			uint8_t buf[] = { 0x44, 0x8B, 0x44, 0x24, 0x70, 0x90 };
 			REL::safe_write(RelocationManager::s_baseAddr + 0x004AEF51, buf, sizeof(buf));

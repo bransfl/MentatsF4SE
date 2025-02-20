@@ -1,7 +1,6 @@
 #include "Internal/Fixes/CombatMusicFix.hpp"
 #include "Internal/Config/Config.hpp"
 #include "Internal/Utility/Utility.hpp"
-#include "RE/Bethesda/Events.hpp"
 
 // prevents combat music from playing when not intended to play
 namespace Internal::Fixes::CombatMusicFix

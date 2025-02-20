@@ -16,8 +16,5 @@ namespace Internal::Config
 	inline const auto bMagicEffectConditions = REX::INI::Bool{ "Fixes"sv, "bMagicEffectConditions"sv, true };
 	inline const auto bOutfitRedressFix = REX::INI::Bool{ "Fixes"sv, "bOutfitRedressFix"sv, true };
 
-	// patches
-	// n/a
-
 	void Load() noexcept;
 }

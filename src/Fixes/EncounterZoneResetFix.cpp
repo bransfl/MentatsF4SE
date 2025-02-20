@@ -19,10 +19,10 @@ namespace Internal::Fixes::EncounterZoneResetFix
 			logger::warn("Fix aborted: EncounterZoneResetFix. Reason: Mod was installed: Buffout4.dll AND game version was og"sv);
 			return;
 		}
+
+		auto& cells = RE::CellAttachDetachEventSource::CellAttachDetachEventSourceSingleton::GetSingleton();
+		cells.source.RegisterSink(Events::CellAttachDetachEventHandler::GetSingleton());
+
+		logger::info("EncounterZoneResetFix -> Fix installed.");
 	}
-
-	auto& cells = RE::CellAttachDetachEventSource::CellAttachDetachEventSourceSingleton::GetSingleton();
-	// cells.RegisterSink(Events::CellAttachDetachEventHandler::GetSingleton());
-
-	// logger::info("EncounterZoneResetFix -> Fix installed."sv);
 }

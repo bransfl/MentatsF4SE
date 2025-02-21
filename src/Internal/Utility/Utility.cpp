@@ -18,7 +18,7 @@ namespace Internal::Utility
 			script->CompileAndRun(&compiler, RE::COMPILER_NAME::kSystemWindow, nullptr);
 
 			if (!script->header.isCompiled) {
-				//logger:info("Internal::Utility::Console::ExecuteCommand: Failed to compile command \"{}\""sv, a_command);
+				logger::info("Internal::Utility::Console::ExecuteCommand: Failed to compile command \"{}\""sv, a_command);
 			}
 
 			if (a_silent == true) {

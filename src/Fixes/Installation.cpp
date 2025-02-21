@@ -11,8 +11,6 @@ namespace Internal::Fixes
 {
 	void Install() noexcept
 	{
-		logger::info("Installing fixes..."sv);
-
 		// PerkEntryPoints::ApplySpellsFix::Install(); WIP
 
 		// PerkEntryPoints::BasherFix::Install(); WIP

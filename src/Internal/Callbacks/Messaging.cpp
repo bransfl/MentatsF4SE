@@ -50,7 +50,7 @@ namespace Internal::Messaging
 
 				// LeveledListCrashFix
 				Internal::Fixes::LeveledListCrashFix::Sanitize();
-				
+
 				break;
 			}
 			default: {

@@ -4,8 +4,6 @@ namespace Internal::Patches
 {
 	void Install() noexcept
 	{
-		// logger::info("Installing patches..."sv);
-
-		// logger::info("Patches installed."sv);
+		// currently, this mod doesnt have any fixes that fall under the category of "patches"
 	}
 }

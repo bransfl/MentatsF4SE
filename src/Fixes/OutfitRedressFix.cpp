@@ -33,17 +33,23 @@ namespace Internal::Fixes::OutfitRedressFix
 	}
 
 	typedef int64_t(Set3DUpdateFlagSig)(RE::AIProcess*, RE::RESET_3D_FLAGS);
-	REL::Relocation<Set3DUpdateFlagSig> OriginalFunction;
+	REL::Relocation<Set3DUpdateFlagSig> OriginalFunction_Set3DUpdateFlag;
 
-	int64_t HookedSet3DUpdateFlag(RE::AIProcess* a_process, RE::RESET_3D_FLAGS a_flags)
+	int64_t Hook_Set3DUpdateFlag(RE::AIProcess* a_process, RE::RESET_3D_FLAGS a_flags)
 	{
+		// TODO add check to prevent this from applying to danse OR actors in power armor
+		// probably gonna have to check if currentpackage is danse's package in the helmet scene bro
+		// if (a_process->currentPackage ==) {
+		// 	return OriginalFunction_Set3DUpdateFlag(a_process, a_flags);
+		// }
+
 		a_flags = RE::RESET_3D_FLAGS::kModel;
-		return OriginalFunction(a_process, a_flags);
+		return OriginalFunction_Set3DUpdateFlag(a_process, a_flags);
 	}
 
 	void RegisterHook(F4SE::Trampoline& trampoline)
 	{
-		REL::Relocation<Set3DUpdateFlagSig> callLocation{ REL::ID(323782), 0x29 };
-		OriginalFunction = trampoline.write_call<5>(callLocation.address(), &HookedSet3DUpdateFlag);
+		REL::Relocation<Set3DUpdateFlagSig> callLocation_OG{ REL::ID(323782), 0x29 };
+		OriginalFunction_Set3DUpdateFlag = trampoline.write_call<5>(callLocation_OG.address(), &Hook_Set3DUpdateFlag);
 	}
 }

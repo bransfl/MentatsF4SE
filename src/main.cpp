@@ -45,24 +45,30 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f
 {
 	F4SE::Init(a_f4se);
 
-	// more patches/fixes are installed in Internal/Callbacks/Messaging
-	logger::info("---"sv);
+	logger::info("---------------------------------------------"sv);
+	logger::info("Config loading..."sv);
+	Internal::Config::Load();
+	logger::info("Config loaded."sv);
+
+	// more fixes are installed in Internal/Callbacks/Messaging.cpp so we register early
+	logger::info("---------------------------------------------"sv);
 	logger::info("Registering for F4SE events..."sv);
 	F4SE::GetMessagingInterface()->RegisterListener(Internal::Messaging::Callback);
 	logger::info("Registered for F4SE events."sv);
-	logger::info("---"sv);
 
-	Internal::Config::Load();
-	logger::info("---"sv);
-
+	logger::info("---------------------------------------------"sv);
+	logger::info("Installing fixes..."sv);
 	Internal::Fixes::Install();
-	logger::info("---"sv);
+	logger::info("Fixes installed."sv);
 
-	Internal::Patches::Install();
-	logger::info("---"sv);
+	// logger::info("---------------------------------------------"sv);
+	// logger::info("Patches installing..."sv);
+	// Internal::Patches::Install();
+	// logger::info("Patches installed."sv);
 
-	logger::info("Loaded"sv);
-	logger::info("---"sv);
+	logger::info("---------------------------------------------"sv);
+	logger::info("Loaded."sv);
+	logger::info("---------------------------------------------"sv);
 
 	return true;
 }

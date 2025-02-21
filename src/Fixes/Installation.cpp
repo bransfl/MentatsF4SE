@@ -2,7 +2,6 @@
 #include "Internal/Fixes/CombatMusicFix.hpp"
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
 #include "Internal/Fixes/MagicEffectConditions.hpp"
-#include "Internal/Fixes/OutfitRedressFix.hpp"
 #include "Internal/Fixes/PerkEntryPoints/ApplySpellsFix.hpp"
 #include "Internal/Fixes/TransferManyItems/AddManyItemsFix.hpp"
 #include "Internal/Fixes/TransferManyItems/DropManyItemsFix.hpp"
@@ -26,8 +25,6 @@ namespace Internal::Fixes
 		LeveledListCrashFix::Install();
 
 		// MagicEffectConditions::Install(); WIP
-
-		OutfitRedressFix::Install();
 
 		logger::info("Fixes installed."sv);
 	}

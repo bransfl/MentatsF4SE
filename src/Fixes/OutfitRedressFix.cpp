@@ -37,11 +37,13 @@ namespace Internal::Fixes::OutfitRedressFix
 
 	int64_t Hook_Set3DUpdateFlag(RE::AIProcess* a_process, RE::RESET_3D_FLAGS a_flags)
 	{
-		// TODO add check to prevent this from applying to danse OR actors in power armor
-		// probably gonna have to check if currentpackage is danse's package in the helmet scene bro
-		// if (a_process->currentPackage ==) {
-		// 	return OriginalFunction_Set3DUpdateFlag(a_process, a_flags);
-		// }
+		// intended to ensure that the danse helmet bug can't happen
+		// this is so dumb. RE::AIProcess's members are incredibly not helpful for this.
+		RE::TESPackage* DefaultStayAtSelfScene = RE::TESForm::GetFormByID<RE::TESPackage>(0x19AA2); // DefaultStayAtSelfScene
+		if (a_process->currentPackage.package == DefaultStayAtSelfScene) {
+			logger::debug("OutfitRedressFix -> Package was DefaultStayAtSelfScene, fix skipped.");
+			return OriginalFunction_Set3DUpdateFlag(a_process, a_flags);
+		}
 
 		a_flags = RE::RESET_3D_FLAGS::kModel;
 		return OriginalFunction_Set3DUpdateFlag(a_process, a_flags);

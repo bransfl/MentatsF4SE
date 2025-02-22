@@ -14,7 +14,7 @@ namespace Internal::Fixes::EncounterZoneResetFix
 			return;
 		}
 
-		// if buffout4ng is installed AND version is og AND buffout4ng's fix is enabled, abort
+		// if buffout4ng is installed AND version is og, this is not needed
 		if (REX::W32::GetModuleHandleW(L"Buffout4.dll") && !REL::Module::IsNG()) {
 			logger::warn("Fix aborted: EncounterZoneResetFix. Reason: Mod was installed: Buffout4.dll AND game version was og"sv);
 			return;

@@ -5,6 +5,7 @@
 #include "Internal/Fixes/PerkEntryPoints/ApplySpellsFix.hpp"
 #include "Internal/Fixes/TransferManyItems/AddManyItemsFix.hpp"
 #include "Internal/Fixes/TransferManyItems/DropManyItemsFix.hpp"
+#include "Internal/Fixes/EncounterZoneResetFix.hpp"
 
 namespace Internal::Fixes
 {
@@ -21,6 +22,8 @@ namespace Internal::Fixes
 		TransferManyItems::DropManyItemsFix::Install();
 
 		// CombatMusicFix is handled in Messaging.cpp
+
+		EncounterZoneResetFix::Install();
 
 		LeveledListCrashFix::Install();
 

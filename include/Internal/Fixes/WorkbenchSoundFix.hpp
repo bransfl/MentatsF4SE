@@ -25,11 +25,10 @@ namespace Internal::Fixes::WorkbenchSoundFix
 	void KillSoundPressDrill();
 	void KillSoundPressPower();
 
-	std::vector<RE::TESObjectREFR*> GetWorkbenchRefsInCell(RE::TESObjectCELL* a_cell);
+	std::vector<RE::TESObjectREFR*> GetFurnitureRefsInCell(RE::TESObjectCELL* a_cell);
 
-	bool IsValidWorkbench(int32_t formID);
-
-	void KillWorkbenchSound(RE::TESObjectREFR* workbench);
+	// checks if the given furniture is a valid workbench and optionally kills relevant sound
+	bool CheckWorkbench(RE::TESObjectREFR* furniture, bool killSound);
 
 	namespace Events
 	{
@@ -54,11 +53,10 @@ namespace Internal::Fixes::WorkbenchSoundFix
 					//			if occupied, kill sound
 					switch (*a_event.type) {
 						case RE::CellAttachDetachEvent::EVENT_TYPE::kPreDetach: {
-							std::vector<RE::TESObjectREFR*> workbenches = GetWorkbenchRefsInCell(a_event.cell);
-							if (workbenches.size() > 0) {
-								for (RE::TESObjectREFR* bench : workbenches) {
-									KillWorkbenchSound(bench);
-									logger::info("CellAttachDetachEvent sound killed"sv);
+							std::vector<RE::TESObjectREFR*> furnitures = GetFurnitureRefsInCell(a_event.cell);
+							if (furnitures.size() > 0) {
+								for (RE::TESObjectREFR* furn : furnitures) {
+									CheckWorkbench(furn, true);
 								}
 							}
 							break;
@@ -97,8 +95,9 @@ namespace Internal::Fixes::WorkbenchSoundFix
 					logger::info("TESFurnitureEvent receieved"sv);
 					if (a_event.IsExit()) {
 						RE::TESObjectREFR* bench = a_event.targetFurniture.get();
-						KillWorkbenchSound(bench);
-						logger::info("TESFurnitureEvent sound killed"sv);
+						if (bench != nullptr) {
+							CheckWorkbench(bench, true);
+						}
 					}
 
 					return RE::BSEventNotifyControl::kContinue;

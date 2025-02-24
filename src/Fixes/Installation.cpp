@@ -5,9 +5,9 @@
 #include "Internal/Fixes/CombatMusicFix.hpp"
 #include "Internal/Fixes/EncounterZoneResetFix.hpp"
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
-#include "Internal/Fixes/WorkbenchSoundFix.hpp"
 #include "Internal/Fixes/TransferManyItems/AddManyItemsFix.hpp"
 #include "Internal/Fixes/TransferManyItems/DropManyItemsFix.hpp"
+#include "Internal/Fixes/WorkbenchSoundFix.hpp"
 
 namespace Internal::Fixes
 {
@@ -32,7 +32,5 @@ namespace Internal::Fixes
 		// MagicEffectConditionsFix::Install(); WIP
 
 		WorkbenchSoundFix::Install();
-
-		logger::info("Fixes installed."sv);
 	}
 }

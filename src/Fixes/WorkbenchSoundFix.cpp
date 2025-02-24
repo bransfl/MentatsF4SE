@@ -53,25 +53,29 @@ namespace Internal::Fixes::WorkbenchSoundFix
 
 	void KillSoundSewingMachine()
 	{
+		RE::ConsoleLog::GetSingleton()->AddString("WorkbenchSoundFix KillSoundSewingMachine ran\n");
 		Utility::Console::ExecuteCommand(FixCommand_SewingMachine, true);
 	}
 
 	void KillSoundWeld()
 	{
+		RE::ConsoleLog::GetSingleton()->AddString("WorkbenchSoundFix KillSoundWeld ran\n");
 		Utility::Console::ExecuteCommand(FixCommand_Weld, true);
 	}
 
 	void KillSoundPressDrill()
 	{
+		RE::ConsoleLog::GetSingleton()->AddString("WorkbenchSoundFix KillSoundPressDrill ran\n");
 		Utility::Console::ExecuteCommand(FixCommand_PressDrill, true);
 	}
 
 	void KillSoundPressPower()
 	{
+		RE::ConsoleLog::GetSingleton()->AddString("WorkbenchSoundFix KillSoundPressPower ran\n");
 		Utility::Console::ExecuteCommand(FixCommand_PressPower, true);
 	}
 
-	std::vector<RE::TESObjectREFR*> GetWorkbenchRefsInCell(RE::TESObjectCELL* a_cell)
+	std::vector<RE::TESObjectREFR*> GetFurnitureRefsInCell(RE::TESObjectCELL* a_cell)
 	{
 		auto refs = std::vector<RE::TESObjectREFR*>();
 		if (a_cell == nullptr) {
@@ -80,9 +84,7 @@ namespace Internal::Fixes::WorkbenchSoundFix
 
 		a_cell->ForEachRef([&](RE::TESObjectREFR* a_ref) {
 			if (a_ref->GetBaseObject()->formType == RE::ENUM_FORMTYPE::kFURN) {
-				if (IsValidWorkbench(a_ref->GetBaseObject()->formID)) {
-					refs.push_back(a_ref);
-				}
+				refs.push_back(a_ref);
 			}
 			return RE::BSContainer::ForEachResult::kContinue;
 		});
@@ -90,10 +92,9 @@ namespace Internal::Fixes::WorkbenchSoundFix
 		return refs;
 	}
 
-	// todo maybe merge killworkbenchsound into here
-	bool IsValidWorkbench(int32_t formID)
+	bool CheckWorkbench(RE::TESObjectREFR* furniture, bool killSound)
 	{
-		switch (formID) {
+		switch (furniture->GetBaseObject()->formID) {
 			case 0x17B3A4: { // workbenchWeaponsA
 				return true;
 				break;
@@ -111,6 +112,8 @@ namespace Internal::Fixes::WorkbenchSoundFix
 				break;
 			}
 			case 0x12EA9B: { // WorkbenchArmorA
+				if (killSound)
+					KillSoundSewingMachine();
 				return true;
 				break;
 			}
@@ -120,38 +123,6 @@ namespace Internal::Fixes::WorkbenchSoundFix
 			}
 			default: {
 				return false;
-				break;
-			}
-		}
-	}
-
-	void KillWorkbenchSound(RE::TESObjectREFR* workbench)
-	{
-		if (workbench == nullptr) {
-			return;
-		}
-
-		switch (workbench->GetBaseObject()->formID) {
-			case 0x17B3A4: { // workbenchWeaponsA
-				break;
-			}
-			case 0x17E787: { // workbenchWeaponsB
-				break;
-			}
-			case 0x157FEB: { // WorkbenchPowerArmor
-				break;
-			}
-			case 0x13BD08: { // WorkbenchPowerArmorSmall
-				break;
-			}
-			case 0x12EA9B: { // WorkbenchArmorA
-				KillSoundSewingMachine();
-				break;
-			}
-			case 0x8674C: { // WorkshopScavengingStation
-				break;
-			}
-			default: {
 				break;
 			}
 		}

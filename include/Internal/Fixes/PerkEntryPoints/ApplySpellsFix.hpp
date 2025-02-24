@@ -1,7 +1,5 @@
 #pragma once
 
-#include "RE/Bethesda/PerkEntries.hpp"
-
 // fixes entrypoint kApplyCombatHitSpell so multiple spells can be applied at once
 namespace Internal::Fixes::PerkEntryPoints::ApplySpellsFix
 {

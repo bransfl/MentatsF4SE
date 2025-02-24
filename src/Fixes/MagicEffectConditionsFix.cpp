@@ -1,29 +1,29 @@
-#include "Internal/Fixes/MagicEffectConditions.hpp"
+#include "Internal/Fixes/MagicEffectConditionsFix.hpp"
 #include "Internal/Config/Config.hpp"
 
-namespace Internal::Fixes::MagicEffectConditions
+namespace Internal::Fixes::MagicEffectConditionsFix
 {
 	typedef void(EvaluateConditionsSig)(RE::ActiveEffect*, float, bool);
 	REL::Relocation<EvaluateConditionsSig> OriginalFunction_EvaluateConditions;
 
 	void Install() noexcept
 	{
-		logger::info("Fix installing: MagicEffectConditions."sv);
+		logger::info("Fix installing: MagicEffectConditionsFix."sv);
 
-		if (!Config::bMagicEffectConditions.GetValue()) {
-			logger::info("Fix aborted: MagicEffectConditions. Reason: Fix was disabled in ini file."sv);
+		if (!Config::bMagicEffectConditionsFix.GetValue()) {
+			logger::info("Fix aborted: MagicEffectConditionsFix. Reason: Fix was disabled in ini file."sv);
 			return;
 		}
 		if (REX::W32::GetModuleHandleW(L"MGEFConditionFix.dll")) {
 			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Mod 'MGEF Condition Fix' was detected. It is recommended that you disable this mod while using EngineFixesF4SE.\n");
-			logger::info("Fix aborted: MagicEffectConditions. Reason: Mod was installed: MGEFConditionFix.dll."sv);
+			logger::info("Fix aborted: MagicEffectConditionsFix. Reason: Mod was installed: MGEFConditionFix.dll."sv);
 			return;
 		}
 
 		F4SE::AllocTrampoline(8 * 8);
 		F4SE::Trampoline& trampoline = F4SE::GetTrampoline();
 		if (REL::Module::IsNG()) {
-			logger::info("Fix aborted: MagicEffectConditions. Reason: Game version was NG."sv);
+			logger::info("Fix aborted: MagicEffectConditionsFix. Reason: Game version was NG."sv);
 			return;
 			// NG Patch - Don't have address for this yet.
 			// REL::Relocation<uintptr_t> ptr_EvaluateConditions_NG{ REL::ID() };
@@ -35,7 +35,7 @@ namespace Internal::Fixes::MagicEffectConditions
 			OriginalFunction_EvaluateConditions = trampoline.write_branch<5>(evaluateConditionsFuncLocation.address(), &Hook_EvaluateConditions);
 		}
 
-		logger::info("Fix installed: MagicEffectConditions.");
+		logger::info("Fix installed: MagicEffectConditionsFix.");
 	}
 
 	float ActiveEffectConditionUpdateInterval()

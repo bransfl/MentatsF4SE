@@ -1,6 +1,10 @@
 #include "Internal/Fixes/SewingMachineSoundFix.hpp"
 #include "Internal/Config/Config.hpp"
 
+// SoundDescriptor:
+// EditorID = UIWorkshopSewingMachineRunLPM
+// FormID = 0019E999
+
 namespace Internal::Fixes::SewingMachineSoundFix
 {
 	void Install() noexcept

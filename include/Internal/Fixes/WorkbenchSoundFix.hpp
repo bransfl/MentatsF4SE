@@ -1,32 +1,35 @@
 #pragma once
 
+// Sounds:
+// UIWorkshopSewingMachineRunLPM [SNDR:0019E999]
+// UIWorkshopPowerArmorWeldLPM [SNDR:0022C1D3]
+// UIWorkshopDrillPressDrillLPM [SNDR:0017C8D2]
+// UIWorkshopDrillPressPowerLPM [SNDR:0017C8D3]
+
+// Workbenches:
+// workbenchWeaponsA "Weapons Workbench" [FURN:0017B3A4]
+// workbenchWeaponsB "Weapons Workbench" [FURN:0017E787]
+// WorkbenchPowerArmor "Power Armor Station" [FURN:00157FEB]
+// WorkbenchPowerArmorSmall "Power Armor Station" [FURN:0013BD08]
+// WorkbenchArmorA "Armor Workbench" [FURN:0012EA9B]
+// WorkshopScavengingStation "Scavenging Station" [FURN:0008674C]
+
 namespace Internal::Fixes::WorkbenchSoundFix
 {
 	void Install() noexcept;
 
-	void KillSounds();
+	void KillSoundsAll();
 
-	std::vector<RE::TESObjectREFR*> GetRefsInCell(RE::TESObjectCELL* a_cell)
-	{
-		if (a_cell == nullptr) {
-		}
+	void KillSoundSewingMachine();
+	void KillSoundWeld();
+	void KillSoundPressDrill();
+	void KillSoundPressPower();
 
-		auto refs = std::vector<RE::TESObjectREFR*>();
+	std::vector<RE::TESObjectREFR*> GetWorkbenchRefsInCell(RE::TESObjectCELL* a_cell);
 
-		// a_cell->ForEachRef([&](RE::TESObjectREFR* elem) {
-		// 	if (elem != nullptr) {
-		// 		refs.push_back(elem);
-		// 	}
-		// 	return RE::BSContainer::ForEachResult::kContinue;
-		// });
-		for (const auto& ref : a_cell.references) {
-			if (ref && a_callback(ref.get()) == BSContainer::ForEachResult::kStop) {
-				refs.push_back(ref);
-			}
-		}
+	bool IsValidWorkbench(int32_t formID);
 
-		return refs;
-	}
+	void KillWorkbenchSound(RE::TESObjectREFR* workbench);
 
 	namespace Events
 	{
@@ -43,12 +46,21 @@ namespace Internal::Fixes::WorkbenchSoundFix
 
 				RE::BSEventNotifyControl ProcessEvent(const RE::CellAttachDetachEvent& a_event, RE::BSTEventSource<RE::CellAttachDetachEvent>*) override
 				{
+					logger::info("CellAttachDetachEvent receieved"sv);
+
 					// idea - on predetach:
 					//	get all furn types, check for armor workbench
 					//		if found, check if occupied
 					//			if occupied, kill sound
 					switch (*a_event.type) {
 						case RE::CellAttachDetachEvent::EVENT_TYPE::kPreDetach: {
+							std::vector<RE::TESObjectREFR*> workbenches = GetWorkbenchRefsInCell(a_event.cell);
+							if (workbenches.size() > 0) {
+								for (RE::TESObjectREFR* bench : workbenches) {
+									KillWorkbenchSound(bench);
+									logger::info("CellAttachDetachEvent sound killed"sv);
+								}
+							}
 							break;
 						}
 						default: {
@@ -82,8 +94,11 @@ namespace Internal::Fixes::WorkbenchSoundFix
 
 				virtual RE::BSEventNotifyControl ProcessEvent(const RE::TESFurnitureEvent& a_event, RE::BSTEventSource<RE::TESFurnitureEvent>*) override
 				{
+					logger::info("TESFurnitureEvent receieved"sv);
 					if (a_event.IsExit()) {
-						// temp code for compiler
+						RE::TESObjectREFR* bench = a_event.targetFurniture.get();
+						KillWorkbenchSound(bench);
+						logger::info("TESFurnitureEvent sound killed"sv);
 					}
 
 					return RE::BSEventNotifyControl::kContinue;

@@ -5,7 +5,7 @@
 #include "Internal/Fixes/CombatMusicFix.hpp"
 #include "Internal/Fixes/EncounterZoneResetFix.hpp"
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
-#include "Internal/Fixes/SewingMachineSoundFix.hpp"
+#include "Internal/Fixes/WorkbenchSoundFix.hpp"
 #include "Internal/Fixes/TransferManyItems/AddManyItemsFix.hpp"
 #include "Internal/Fixes/TransferManyItems/DropManyItemsFix.hpp"
 
@@ -31,7 +31,7 @@ namespace Internal::Fixes
 
 		// MagicEffectConditionsFix::Install(); WIP
 
-		SewingMachineSoundFix::Install();
+		WorkbenchSoundFix::Install();
 
 		logger::info("Fixes installed."sv);
 	}

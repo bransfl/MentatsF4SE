@@ -1,10 +1,32 @@
 #pragma once
 
-namespace Internal::Fixes::SewingMachineSoundFix
+namespace Internal::Fixes::WorkbenchSoundFix
 {
 	void Install() noexcept;
 
-	void KillSound();
+	void KillSounds();
+
+	std::vector<RE::TESObjectREFR*> GetRefsInCell(RE::TESObjectCELL* a_cell)
+	{
+		if (a_cell == nullptr) {
+		}
+
+		auto refs = std::vector<RE::TESObjectREFR*>();
+
+		// a_cell->ForEachRef([&](RE::TESObjectREFR* elem) {
+		// 	if (elem != nullptr) {
+		// 		refs.push_back(elem);
+		// 	}
+		// 	return RE::BSContainer::ForEachResult::kContinue;
+		// });
+		for (const auto& ref : a_cell.references) {
+			if (ref && a_callback(ref.get()) == BSContainer::ForEachResult::kStop) {
+				refs.push_back(ref);
+			}
+		}
+
+		return refs;
+	}
 
 	namespace Events
 	{
@@ -63,7 +85,7 @@ namespace Internal::Fixes::SewingMachineSoundFix
 					if (a_event.IsExit()) {
 						// temp code for compiler
 					}
-					
+
 					return RE::BSEventNotifyControl::kContinue;
 				}
 

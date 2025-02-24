@@ -16,7 +16,7 @@ namespace Internal::Config
 	inline const auto bEncounterZoneFix = REX::INI::Bool{ "Fixes"sv, "bEncounterZoneFix"sv, true };
 	inline const auto bLeveledListCrashFix = REX::INI::Bool{ "Fixes"sv, "bLeveledListCrashFix"sv, true };
 	inline const auto bMagicEffectConditionsFix = REX::INI::Bool{ "Fixes"sv, "bMagicEffectConditionsFix"sv, false };
-	inline const auto bSewingMachineSoundFix = REX::INI::Bool{ "Fixes"sv, "bSewingMachineSoundFix"sv, true };
+	inline const auto bWorkbenchSoundFix = REX::INI::Bool{ "Fixes"sv, "bWorkbenchSoundFix"sv, true };
 
 	void Load() noexcept;
 }

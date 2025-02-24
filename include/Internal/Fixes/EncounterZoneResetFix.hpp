@@ -15,14 +15,6 @@ namespace Internal::Fixes::EncounterZoneResetFix
 				return std::addressof(singleton);
 			}
 
-		private:
-			CellAttachDetachEventHandler() = default;
-			CellAttachDetachEventHandler(const CellAttachDetachEventHandler&) = delete;
-			CellAttachDetachEventHandler(CellAttachDetachEventHandler&&) = delete;
-			~CellAttachDetachEventHandler() = default;
-			CellAttachDetachEventHandler& operator=(const CellAttachDetachEventHandler&) = delete;
-			CellAttachDetachEventHandler& operator=(CellAttachDetachEventHandler&&) = delete;
-
 			RE::BSEventNotifyControl ProcessEvent(const RE::CellAttachDetachEvent& a_event, RE::BSTEventSource<RE::CellAttachDetachEvent>*) override
 			{
 				switch (*a_event.type) {
@@ -42,6 +34,14 @@ namespace Internal::Fixes::EncounterZoneResetFix
 				}
 				return RE::BSEventNotifyControl::kContinue;
 			}
+
+		private:
+			CellAttachDetachEventHandler() = default;
+			CellAttachDetachEventHandler(const CellAttachDetachEventHandler&) = delete;
+			CellAttachDetachEventHandler(CellAttachDetachEventHandler&&) = delete;
+			~CellAttachDetachEventHandler() = default;
+			CellAttachDetachEventHandler& operator=(const CellAttachDetachEventHandler&) = delete;
+			CellAttachDetachEventHandler& operator=(CellAttachDetachEventHandler&&) = delete;
 		};
 	}
 }

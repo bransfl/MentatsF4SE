@@ -1,5 +1,6 @@
 #include "Internal/Fixes/CombatMusicFix.hpp"
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
+#include "Internal/Fixes/RaceChangeFix.hpp"
 #include "Internal/Fixes/WorkbenchSoundFix.hpp"
 
 namespace Internal::Messaging
@@ -24,6 +25,9 @@ namespace Internal::Messaging
 				if (Internal::Fixes::CombatMusicFix::NeedsFix()) {
 					Internal::Fixes::CombatMusicFix::Fix();
 				}
+
+				// RaceChangeFix
+				Internal::Fixes::RaceChangeFix::Install();
 
 				// WorkbenchSoundFix
 				Internal::Fixes::WorkbenchSoundFix::Install();

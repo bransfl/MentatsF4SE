@@ -5,16 +5,18 @@ namespace Internal::Fixes::PerkEntryPoints::ApplySpellsFix
 {
 	void Install() noexcept;
 
+	// RE::BGSEntryPointPerkEntry* GetEntryPoint(RE::BGSEntryPoint::ENTRY_POINT entryPoint);
+
 	class ApplySpellsFix
 	{
 	public:
 		static void ApplyCombatHitSpell(
-			REX::Enum<RE::BGSPerkEntry::EntryPoint, std::uint8_t> entryPoint,
+			RE::BGSEntryPoint::ENTRY_POINT entryPoint,
 			RE::Actor* perkOwner,
 			...);
 
 		static std::vector<void*> HandleEntryPoint(
-			REX::Enum<RE::BGSPerkEntry::EntryPoint, std::uint8_t> entryPoint,
+			RE::BGSEntryPoint::ENTRY_POINT entryPoint,
 			RE::Actor* perkOwner,
 			std::vector<RE::TESForm*> conditionFilterArguments);
 	};

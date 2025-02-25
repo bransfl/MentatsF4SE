@@ -4,7 +4,7 @@
 #include <f4se_common/BranchTrampoline.h>
 #include <f4se_common/Relocation.h>
 
-// i know this is a mess. fuck this fix.
+// i know this is a mess
 //
 // note - this mod and the original mod both have the minor issue of
 // dropping a stack of 32,766 + 1 individual item or a stack of 32,765 + 2 individual items sometimes instead of a full 32,767 stack

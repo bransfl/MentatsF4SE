@@ -32,11 +32,7 @@ namespace Internal::Fixes::WorkbenchSoundFix
 			return;
 		}
 
-		// cells event
-		auto& cells = RE::CellAttachDetachEventSource::CellAttachDetachEventSourceSingleton::GetSingleton();
-		cells.source.RegisterSink(Events::Cell::CellAttachDetachEventHandler::GetSingleton());
-		// furniture event
-		RE::TESFurnitureEvent::GetEventSource()->RegisterSink(Events::Furniture::FurnitureEventHandler::GetSingleton());
+		RE::TESFurnitureEvent::GetEventSource()->RegisterSink(Events::FurnitureEventHandler::GetSingleton());
 		logger::info("WorkbenchSoundFix -> Events registered."sv);
 
 		logger::info("Fix installed: WorkbenchSoundFix."sv);
@@ -130,14 +126,6 @@ namespace Internal::Fixes::WorkbenchSoundFix
 
 	namespace Events
 	{
-		namespace Cell
-		{
-			//
-		}
-
-		namespace Furniture
-		{
-			//
-		}
+		//
 	}
 }

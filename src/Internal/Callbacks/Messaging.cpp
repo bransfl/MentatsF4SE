@@ -27,7 +27,7 @@ namespace Internal::Messaging
 
 				// WorkbenchSoundFix
 				Internal::Fixes::WorkbenchSoundFix::Install();
-				void KillSoundsAll();
+				Internal::Fixes::WorkbenchSoundFix::KillSoundsAll();
 
 				break;
 			}

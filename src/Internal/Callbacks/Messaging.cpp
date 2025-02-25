@@ -1,5 +1,6 @@
 #include "Internal/Fixes/CombatMusicFix.hpp"
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
+#include "Internal/Fixes/WorkbenchSoundFix.hpp"
 
 namespace Internal::Messaging
 {
@@ -23,6 +24,9 @@ namespace Internal::Messaging
 				if (Internal::Fixes::CombatMusicFix::CheckNeedsFix() == true) {
 					Internal::Fixes::CombatMusicFix::Fix();
 				}
+
+				// WorkbenchSoundFix
+				Internal::Fixes::WorkbenchSoundFix::Install();
 
 				break;
 			}

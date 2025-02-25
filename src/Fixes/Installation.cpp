@@ -31,6 +31,6 @@ namespace Internal::Fixes
 
 		// MagicEffectConditionsFix::Install(); WIP
 
-		WorkbenchSoundFix::Install();
+		// WorkbenchSoundFix is handled in Messaging.cpp
 	}
 }

@@ -9,7 +9,7 @@
 
 namespace Internal::Fixes::LeveledListCrashFix
 {
-	// typedefs
+	// typedefs for function signature and original function declaration
 	typedef void(mem_LeveledItemAddFormSig)(RE::BSScript::IVirtualMachine*, uint32_t, RE::TESLevItem*, RE::TESForm*, uint32_t, uint32_t);
 	REL::Relocation<mem_LeveledItemAddFormSig> OriginalFunction_LeveledItemAddForm;
 	DetourXS itemHook;
@@ -28,7 +28,7 @@ namespace Internal::Fixes::LeveledListCrashFix
 			return;
 		}
 		if (REX::W32::GetModuleHandleW(L"GLXRM_InjectionBlocker.dll")) {
-			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Mod 'Injection Blocker' was detected. It is recommended that you disable this mod while using EngineFixesF4SE.\n");
+			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Fix aborted: LeveledListCrashFix. Reason: Mod 'Injection Blocker' was detected. This fix is not necessary with this mod installed.\n");
 			logger::warn("Fix aborted: LeveledListCrashFix. Reason: Mod was installed: GLXRM_InjectionBlocker.dll."sv);
 			return;
 		}
@@ -107,7 +107,7 @@ namespace Internal::Fixes::LeveledListCrashFix
 			if (!entry) {
 				logger::warn("LeveledListCrashFix -> Null form found: {} at: {}. This is a problem, do not ignore it.", entry->GetFormEditorID(), i);
 			}
-			++i;
+			i++;
 		}
 
 		logger::info("LeveledListCrashFix -> DebugLeveledList finished."sv);
@@ -150,7 +150,7 @@ namespace Internal::Fixes::LeveledListCrashFix
 	int8_t GetNumEntries(RE::TESLeveledList* leveledList)
 	{
 		int8_t ret = leveledList->baseListCount + leveledList->scriptListCount;
-		logger::debug("LeveledListCrashFix -> GetNumEntries for TODO_NAME_HERE resulted in {}", ret);
+		logger::debug("LeveledListCrashFix -> GetNumEntries for LeveledList TODO_NAME_HERE resulted in {}", ret);
 		return ret;
 	}
 

@@ -10,7 +10,7 @@ namespace Internal::Config
 	// TransferManyItems folder
 	inline const auto bAddManyItemsFix = REX::INI::Bool{ "Fixes"sv, "bAddManyItemsFix"sv, false };
 	inline const auto bDropManyItemsFix = REX::INI::Bool{ "Fixes"sv, "bDropManyItemsFix"sv, false };
-	// Normal folder
+	// Main folder
 	inline const auto bCombatMusicFix = REX::INI::Bool{ "Fixes"sv, "bCombatMusicFix"sv, false };
 	inline const auto bEncounterZoneFix = REX::INI::Bool{ "Fixes"sv, "bEncounterZoneFix"sv, false };
 	inline const auto bLeveledListCrashFix = REX::INI::Bool{ "Fixes"sv, "bLeveledListCrashFix"sv, false };

@@ -2,12 +2,10 @@
 
 // #include "Internal/Fixes/MagicEffectConditionsFix.hpp"
 // #include "Internal/Fixes/PerkEntryPoints/ApplySpellsFix.hpp"
-#include "Internal/Fixes/CombatMusicFix.hpp"
 #include "Internal/Fixes/EncounterZoneResetFix.hpp"
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
 #include "Internal/Fixes/TransferManyItems/AddManyItemsFix.hpp"
 #include "Internal/Fixes/TransferManyItems/DropManyItemsFix.hpp"
-// #include "Internal/Fixes/WorkbenchSoundFix.hpp"
 
 namespace Internal::Fixes
 {
@@ -29,6 +27,6 @@ namespace Internal::Fixes
 
 		// MagicEffectConditionsFix::Install(); WIP
 
-		// WorkbenchSoundFix is handled in Messaging.cpp. WIP
+		// WorkbenchSoundFix is handled in Messaging.cpp
 	}
 }

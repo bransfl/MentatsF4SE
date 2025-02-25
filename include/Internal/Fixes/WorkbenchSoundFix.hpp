@@ -14,24 +14,16 @@
 // WorkbenchArmorA "Armor Workbench" [FURN:0012EA9B]
 // WorkshopScavengingStation "Scavenging Station" [FURN:0008674C]
 
-// not finished or working consistently, disabled for now
 namespace Internal::Fixes::WorkbenchSoundFix
 {
-	inline constexpr std::string_view examineMenu = "ExamineMenu";
-
 	void Install() noexcept;
 
-	void KillSoundsAll();
-
-	void KillSoundSewingMachine();
-	void KillSoundWeld();
-	void KillSoundPressDrill();
-	void KillSoundPressPower();
+	void FixWorkbenchSound(RE::TESObjectREFR* a_workbench);
 
 	std::vector<RE::TESObjectREFR*> GetFurnitureRefsInCell(RE::TESObjectCELL* a_cell);
 
 	// checks if the given furniture is a valid workbench and optionally kills relevant sound
-	bool CheckWorkbench(RE::TESObjectREFR* furniture, bool killSound);
+	bool IsWorkbench(RE::TESObjectREFR* a_furniture);
 
 	namespace Events
 	{
@@ -47,16 +39,20 @@ namespace Internal::Fixes::WorkbenchSoundFix
 			virtual RE::BSEventNotifyControl ProcessEvent(const RE::TESFurnitureEvent& a_event, RE::BSTEventSource<RE::TESFurnitureEvent>*) override
 			{
 				logger::info("WorkbenchSoundFix -> TESFurnitureEvent receieved"sv);
+
 				if (a_event.IsExit()) {
 					logger::info("WorkbenchSoundFix -> TESFurnitureEvent receieved, was exit type"sv);
 
-					bool bChecked = CheckWorkbench(a_event.targetFurniture.get(), true);
+					bool bChecked = IsWorkbench(a_event.targetFurniture.get());
 					if (bChecked) {
-						logger::info("WorkbenchSoundFix -> bChecked = true");
+						logger::info("WorkbenchSoundFix -> bChecked = true"sv);
 					}
 					else {
-						logger::info("WorkbenchSoundFix -> bChecked = false");
+						logger::info("WorkbenchSoundFix -> bChecked = false. return"sv);
+						return RE::BSEventNotifyControl::kContinue;
 					}
+
+					FixWorkbenchSound(a_event.targetFurniture.get());
 				}
 
 				return RE::BSEventNotifyControl::kContinue;
@@ -83,6 +79,8 @@ namespace Internal::Fixes::WorkbenchSoundFix
 			{
 				logger::info("WorkbenchSoundFix -> ActorCellEvent receieved"sv);
 
+				// disabled for now since it might not be necessary
+
 				auto eventActor = a_event.actor.get().get();
 				if (eventActor != RE::PlayerCharacter::GetSingleton()) {
 					logger::info("WorkbenchSoundFix -> actor was not player - return"sv);
@@ -90,20 +88,11 @@ namespace Internal::Fixes::WorkbenchSoundFix
 				}
 				logger::info("WorkbenchSoundFix -> actor was player"sv);
 
-				auto ui = RE::UI::GetSingleton();
-				if (!ui) {
-					logger::info("WorkbenchSoundFix -> ui was null - return"sv);
-					return RE::BSEventNotifyControl::kContinue;
-				}
-
-				// ExamineMenu is weapons, armor, and power armor workbenches, as far as I know.
-				// CookingMenu is when you access the Chem Workbench or Cooking stations.
-				if (ui->GetMenuOpen(examineMenu)) {
-					logger::info("WorkbenchSoundFix -> ExamineMenu was not open - return"sv);
-					return RE::BSEventNotifyControl::kContinue;
-				}
-
-				KillSoundsAll();
+				// auto ui = RE::UI::GetSingleton();
+				// if (!ui) {
+				// 	logger::info("WorkbenchSoundFix -> ui was null - return"sv);
+				// 	return RE::BSEventNotifyControl::kContinue;
+				// }
 
 				return RE::BSEventNotifyControl::kContinue;
 			}
@@ -117,5 +106,3 @@ namespace Internal::Fixes::WorkbenchSoundFix
 		};
 	}
 }
-// auto ui = RE::UI::GetSingleton();
-// 			if (ui && (ui->IsMenuOpen(RE::LoadingMenu::MENU_NAME)

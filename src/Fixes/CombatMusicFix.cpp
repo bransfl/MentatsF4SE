@@ -43,14 +43,14 @@ namespace Internal::Fixes::CombatMusicFix
 		}
 	}
 
-	bool CheckNeedsFix()
+	bool NeedsFix()
 	{
 		bool ret = false;	// setup this way for logging
 		auto playerCharacter = RE::PlayerCharacter::GetSingleton();
 		if (playerCharacter && !playerCharacter->IsInCombat()) {
 			ret = true;
 		}
-		logger::info("CombatMusicFix -> CheckNeedsFix() -> ret={}"sv, ret);
+		logger::info("CombatMusicFix -> NeedsFix() -> ret={}"sv, ret);
 		return ret;
 	}
 }

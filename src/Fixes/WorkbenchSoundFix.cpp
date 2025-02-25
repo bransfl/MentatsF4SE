@@ -18,10 +18,7 @@
 
 namespace Internal::Fixes::WorkbenchSoundFix
 {
-	static inline constexpr std::string_view FixCommand_SewingMachine = "ForceKillSound 1698201"sv;
-	static inline constexpr std::string_view FixCommand_Weld = "ForceKillSound 2277843"sv;
-	static inline constexpr std::string_view FixCommand_PressDrill = "ForceKillSound 1558738"sv;
-	static inline constexpr std::string_view FixCommand_PressPower = "ForceKillSound 1558739"sv;
+	const auto furnitureExitEvent = RE::BSFixedString("furnitureExitSlave");
 
 	void Install() noexcept
 	{
@@ -42,29 +39,11 @@ namespace Internal::Fixes::WorkbenchSoundFix
 		logger::info("Fix installed: WorkbenchSoundFix."sv);
 	}
 
-	void KillSoundsAll()
+	void FixWorkbenchSound(RE::TESObjectREFR* a_workbench)
 	{
-		Utility::Console::ExecuteCommand("ForceKillSound"sv, true);
-	}
-
-	void KillSoundSewingMachine()
-	{
-		Utility::Console::ExecuteCommand(FixCommand_SewingMachine, true);
-	}
-
-	void KillSoundWeld()
-	{
-		Utility::Console::ExecuteCommand(FixCommand_Weld, true);
-	}
-
-	void KillSoundPressDrill()
-	{
-		Utility::Console::ExecuteCommand(FixCommand_PressDrill, true);
-	}
-
-	void KillSoundPressPower()
-	{
-		Utility::Console::ExecuteCommand(FixCommand_PressPower, true);
+		// send furnitureExitEvent animation event to a_workbench to kill animations/sound
+		a_workbench->NotifyAnimationGraphImpl("furnitureExitSlave");
+		logger::info("WorkbenchSoundFix -> FixWorkbenchSound ran"sv);
 	}
 
 	std::vector<RE::TESObjectREFR*> GetFurnitureRefsInCell(RE::TESObjectCELL* a_cell)
@@ -84,10 +63,11 @@ namespace Internal::Fixes::WorkbenchSoundFix
 		return refs;
 	}
 
-	bool CheckWorkbench(RE::TESObjectREFR* furniture, bool killSound)
+	// this should probably check WorkbenchData to support modded stuff. or a workbench keyword
+	bool IsWorkbench(RE::TESObjectREFR* a_furniture)
 	{
 		bool ret = false;
-		switch (furniture->GetBaseObject()->formID) {
+		switch (a_furniture->GetBaseObject()->formID) {
 			case 0x17B3A4: { // workbenchWeaponsA
 				ret = true;
 				break;
@@ -115,9 +95,6 @@ namespace Internal::Fixes::WorkbenchSoundFix
 			default: {
 				break;
 			}
-		}
-		if (killSound && ret) {
-			KillSoundsAll();
 		}
 		return ret;
 	}

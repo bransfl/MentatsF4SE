@@ -51,14 +51,14 @@ namespace Internal::Fixes::TransferManyItems::DropManyItemsFix
 
 	void Install() noexcept
 	{
-		logger::info("Fix installing: DropManyItems."sv);
+		logger::info("Fix installing: DropManyItemsFix."sv);
 
 		if (!Config::bDropManyItemsFix.GetValue()) {
 			logger::info("Fix aborted: DropManyItemsFix. Reason: Fix was disabled in ini file."sv);
 			return;
 		}
 		if (REX::W32::GetModuleHandleW(L"Drop7FFFPatch.dll")) {
-			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Mod 'Drop 7FFF Fix' was detected. It is recommended that you disable this mod while using EngineFixesF4SE.\n");
+			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Fix aborted: DropManyItemsFix. Reason: Mod 'Drop 7FFF Fix' was detected. This fix is not necessary with this mod installed.\n");
 			logger::warn("Fix aborted: DropManyItemsFix. Reason: Mod was installed: Drop7FFFPatch.dll."sv);
 			return;
 		}
@@ -67,7 +67,7 @@ namespace Internal::Fixes::TransferManyItems::DropManyItemsFix
 		if (REL::Module::IsNG()) {
 			// NG Patch
 			if (!g_branchTrampoline.Create(14)) {
-				logger::warn("DropManyItems couldn't create codegen buffer"sv);
+				logger::warn("DropManyItemsFix couldn't create codegen buffer"sv);
 				return;
 			}
 			g_branchTrampoline.Write5Call(DropItemIntoWorld_Dest_NG.GetUIntPtr(), (uintptr_t)Hook_DropItemIntoWorld_NG);
@@ -75,13 +75,13 @@ namespace Internal::Fixes::TransferManyItems::DropManyItemsFix
 		else {
 			// OG Patch
 			if (!g_branchTrampoline.Create(14)) {
-				logger::warn("DropManyItems couldn't create codegen buffer"sv);
+				logger::warn("DropManyItemsFix couldn't create codegen buffer"sv);
 				return;
 			}
 			g_branchTrampoline.Write5Call(DropItemIntoWorld_Dest.GetUIntPtr(), (uintptr_t)Hook_DropItemIntoWorld_OG);
 		}
 
-		logger::info("Fix installed: DropManyItems."sv);
+		logger::info("Fix installed: DropManyItemsFix."sv);
 	}
 
 	// og hook
@@ -98,7 +98,6 @@ namespace Internal::Fixes::TransferManyItems::DropManyItemsFix
 			ExtraDataList_CopyList(extra, list);
 
 			ExtraDataList_SetCount(list, 0x7FFF);
-			// SetRefCount(list, 0x7FFF); do this one OR ExtraDataList_SetCount
 
 			DropItemIntoWorld_Original(refr, handle, item, 0x7FFF, container, pa, pb, list);
 
@@ -108,7 +107,8 @@ namespace Internal::Fixes::TransferManyItems::DropManyItemsFix
 			}
 		}
 
-		ExtraDataList_SetCount(extra, static_cast<int16_t>(count)); // seems to req direct conversion from 32 to 16
+		// seems to req direct conversion from 32 to 16 for some awful reason
+		ExtraDataList_SetCount(extra, static_cast<int16_t>(count));
 
 		DropItemIntoWorld_Original(refr, handle, item, count, container, pa, pb, extra);
 		return handle;
@@ -128,7 +128,6 @@ namespace Internal::Fixes::TransferManyItems::DropManyItemsFix
 			ExtraDataList_CopyList_NG(extra, list);
 
 			ExtraDataList_SetCount_NG(list, 0x7FFF);
-			// SetRefCount(list, 0x7FFF); do this one OR ExtraDataList_SetCount
 
 			DropItemIntoWorld_Original_NG(refr, handle, item, 0x7FFF, container, pa, pb, list);
 
@@ -138,12 +137,14 @@ namespace Internal::Fixes::TransferManyItems::DropManyItemsFix
 			}
 		}
 
-		ExtraDataList_SetCount_NG(extra, static_cast<int16_t>(count)); // seems to req direct conversion from 32 to 16
+		// seems to req direct conversion from 32 to 16 for some awful reason
+		ExtraDataList_SetCount_NG(extra, static_cast<int16_t>(count));
 
 		DropItemIntoWorld_Original_NG(refr, handle, item, count, container, pa, pb, extra);
 		return handle;
 	}
 
+	// todo - update to use this
 	// functions as ExtraDataList_SetCount, but doesnt req addresses and still works on all versions
 	// note - comment out the addresses for ExtraDataList_SetCount once luca verifies this
 	void SetRefCount(RE::TESObjectREFR* a_itemRef, std::int16_t a_count)

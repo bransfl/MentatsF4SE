@@ -7,20 +7,20 @@ namespace Internal::Fixes::TransferManyItems::AddManyItemsFix
 
 	void Install() noexcept
 	{
-		logger::info("Fix installing: AddManyItems."sv);
+		logger::info("Fix installing: AddManyItemsFix."sv);
 
 		if (!Config::bAddManyItemsFix.GetValue()) {
-			logger::info("Fix aborted: AddManyItems. Reason: Game version was NG."sv);
+			logger::info("Fix aborted: AddManyItemsFix. Reason: Game version was NG."sv);
 			return;
 		}
 		if (REX::W32::GetModuleHandleW(L"AddFFFFFix.dll")) { // not a typo, their dll has 5 F's
-			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Mod 'Add FFFF Fix' was detected. It is recommended that you disable this mod while using EngineFixesF4SE.\n");
-			logger::warn("Fix aborted: AddManyItems. Reason: Mod was installed: AddFFFFFix.dll."sv);
+			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Fix aborted: AddManyItemsFix. Reason: Mod 'Add FFFF Fix' was detected. This fix is not necessary with this mod installed.\n");
+			logger::warn("Fix aborted: AddManyItemsFix. Reason: Mod was installed: AddFFFFFix.dll."sv);
 			return;
 		}
-		
+
 		if (REL::Module::IsNG()) {
-			// NG patch
+			// NG patch - buf[4] is different
 			uint8_t buf[] = { 0x44, 0x8B, 0x44, 0x24, 0x70, 0x90 };
 			REL::safe_write(RelocationManager::s_baseAddr + 0x004AEF51, buf, sizeof(buf));
 		}
@@ -30,7 +30,7 @@ namespace Internal::Fixes::TransferManyItems::AddManyItemsFix
 			REL::safe_write(RelocationManager::s_baseAddr + 0x003FBF3E, buf, sizeof(buf));
 		}
 
-		logger::info("Fix installed: AddManyItems."sv);
+		logger::info("Fix installed: AddManyItemsFix."sv);
 	}
 }
 

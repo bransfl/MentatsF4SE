@@ -18,10 +18,10 @@
 
 namespace Internal::Fixes::WorkbenchSoundFix
 {
-	static inline constexpr std::string_view FixCommand_SewingMachine = "ForceKillSound 0019E999"sv;
-	static inline constexpr std::string_view FixCommand_Weld = "ForceKillSound 0022C1D3"sv;
-	static inline constexpr std::string_view FixCommand_PressDrill = "ForceKillSound 0017C8D2"sv;
-	static inline constexpr std::string_view FixCommand_PressPower = "ForceKillSound 0017C8D3"sv;
+	static inline constexpr std::string_view FixCommand_SewingMachine = "ForceKillSound 1698201"sv;
+	static inline constexpr std::string_view FixCommand_Weld = "ForceKillSound 2277843"sv;
+	static inline constexpr std::string_view FixCommand_PressDrill = "ForceKillSound 1558738"sv;
+	static inline constexpr std::string_view FixCommand_PressPower = "ForceKillSound 1558739"sv;
 
 	void Install() noexcept
 	{
@@ -33,18 +33,35 @@ namespace Internal::Fixes::WorkbenchSoundFix
 		}
 
 		RE::TESFurnitureEvent::GetEventSource()->RegisterSink(Events::FurnitureEventHandler::GetSingleton());
+
+		// Events::ActorCellEventHandler* cellHandler = Events::ActorCellEventHandler::GetSingleton();
+		// RE::PlayerCharacter::GetSingleton()->RegisterSink( RE::BGSActorCellEvent(cellHandler));
 		logger::info("WorkbenchSoundFix -> Events registered."sv);
 
 		logger::info("Fix installed: WorkbenchSoundFix."sv);
 	}
 
+	// 	void CellEventHandler::RegisterSink()
+	// {
+	// 	auto PC = RE::PlayerCharacter::GetSingleton();
+
+	// 	if (!PC)
+	// 	{
+	// 		logger::error("Not Player Character handler Found!");
+	// 		return;
+	// 	}
+
+	// 	static CellEventHandler Cell_handler;
+
+	// 	PC->AddEventSink(&Cell_handler);
+
+	// 	logger::info("Register Cell Event Sink!");
+	// }
+
 	void KillSoundsAll()
 	{
 		RE::ConsoleLog::GetSingleton()->AddString("WorkbenchSoundFix KillSounds ran\n");
-		KillSoundSewingMachine();
-		KillSoundWeld();
-		KillSoundPressDrill();
-		KillSoundPressPower();
+		Utility::Console::ExecuteCommand("ForceKillSound"sv, true);
 	}
 
 	void KillSoundSewingMachine()

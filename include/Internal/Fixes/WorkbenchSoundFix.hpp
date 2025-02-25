@@ -46,7 +46,7 @@ namespace Internal::Fixes::WorkbenchSoundFix
 			virtual RE::BSEventNotifyControl ProcessEvent(const RE::TESFurnitureEvent& a_event, RE::BSTEventSource<RE::TESFurnitureEvent>*) override
 			{
 				logger::info("WorkbenchSoundFix -> TESFurnitureEvent receieved"sv);
-				if (a_event.type == RE::TESFurnitureEvent::FurnitureEventType::kExit) {
+				if (a_event.IsExit()) {
 					logger::info("WorkbenchSoundFix -> TESFurnitureEvent receieved, was exit type"sv);
 
 					bool bChecked = CheckWorkbench(a_event.targetFurniture.get(), true);

@@ -17,6 +17,7 @@ namespace Internal::Messaging
 				break;
 			}
 			case F4SE::MessagingInterface::kPreLoadGame: {
+				Internal::Fixes::WorkbenchSoundFix::KillSoundsAll();
 				break;
 			}
 			case F4SE::MessagingInterface::kPostLoadGame: {

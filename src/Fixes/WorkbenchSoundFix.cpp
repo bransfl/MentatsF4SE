@@ -34,57 +34,36 @@ namespace Internal::Fixes::WorkbenchSoundFix
 
 		RE::TESFurnitureEvent::GetEventSource()->RegisterSink(Events::FurnitureEventHandler::GetSingleton());
 
-		// Events::ActorCellEventHandler* cellHandler = Events::ActorCellEventHandler::GetSingleton();
-		// RE::PlayerCharacter::GetSingleton()->RegisterSink( RE::BGSActorCellEvent(cellHandler));
+		auto* cellHandler = Events::ActorCellEventHandler::GetSingleton();
+		// pray for me bro
+		RE::PlayerCharacter::GetSingleton()->RE::BSTEventSource<RE::BGSActorCellEvent>::RegisterSink(cellHandler);
 		logger::info("WorkbenchSoundFix -> Events registered."sv);
 
 		logger::info("Fix installed: WorkbenchSoundFix."sv);
 	}
 
-	// 	void CellEventHandler::RegisterSink()
-	// {
-	// 	auto PC = RE::PlayerCharacter::GetSingleton();
-
-	// 	if (!PC)
-	// 	{
-	// 		logger::error("Not Player Character handler Found!");
-	// 		return;
-	// 	}
-
-	// 	static CellEventHandler Cell_handler;
-
-	// 	PC->AddEventSink(&Cell_handler);
-
-	// 	logger::info("Register Cell Event Sink!");
-	// }
-
 	void KillSoundsAll()
 	{
-		RE::ConsoleLog::GetSingleton()->AddString("WorkbenchSoundFix KillSounds ran\n");
 		Utility::Console::ExecuteCommand("ForceKillSound"sv, true);
 	}
 
 	void KillSoundSewingMachine()
 	{
-		RE::ConsoleLog::GetSingleton()->AddString("WorkbenchSoundFix KillSoundSewingMachine ran\n");
 		Utility::Console::ExecuteCommand(FixCommand_SewingMachine, true);
 	}
 
 	void KillSoundWeld()
 	{
-		RE::ConsoleLog::GetSingleton()->AddString("WorkbenchSoundFix KillSoundWeld ran\n");
 		Utility::Console::ExecuteCommand(FixCommand_Weld, true);
 	}
 
 	void KillSoundPressDrill()
 	{
-		RE::ConsoleLog::GetSingleton()->AddString("WorkbenchSoundFix KillSoundPressDrill ran\n");
 		Utility::Console::ExecuteCommand(FixCommand_PressDrill, true);
 	}
 
 	void KillSoundPressPower()
 	{
-		RE::ConsoleLog::GetSingleton()->AddString("WorkbenchSoundFix KillSoundPressPower ran\n");
 		Utility::Console::ExecuteCommand(FixCommand_PressPower, true);
 	}
 
@@ -107,38 +86,40 @@ namespace Internal::Fixes::WorkbenchSoundFix
 
 	bool CheckWorkbench(RE::TESObjectREFR* furniture, bool killSound)
 	{
+		bool ret = false;
 		switch (furniture->GetBaseObject()->formID) {
 			case 0x17B3A4: { // workbenchWeaponsA
-				return true;
+				ret = true;
 				break;
 			}
 			case 0x17E787: { // workbenchWeaponsB
-				return true;
+				ret = true;
 				break;
 			}
 			case 0x157FEB: { // WorkbenchPowerArmor
-				return true;
+				ret = true;
 				break;
 			}
 			case 0x13BD08: { // WorkbenchPowerArmorSmall
-				return true;
+				ret = true;
 				break;
 			}
 			case 0x12EA9B: { // WorkbenchArmorA
-				if (killSound)
-					KillSoundSewingMachine();
-				return true;
+				ret = true;
 				break;
 			}
 			case 0x8674C: { // WorkshopScavengingStation
-				return true;
+				ret = true;
 				break;
 			}
 			default: {
-				return false;
 				break;
 			}
 		}
+		if (killSound && ret) {
+			KillSoundsAll();
+		}
+		return ret;
 	}
 
 	namespace Events

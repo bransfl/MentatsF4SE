@@ -35,7 +35,7 @@ namespace Internal::Fixes::LeveledListCrashFix
 
 		if (REL::Module::IsNG()) {
 			// NG Patch
-			logger::info("Fix aborted: MagicEffectConditions. Reason: Game version was NG."sv);
+			logger::info("Fix aborted: LeveledListCrashFix. Reason: Game version was NG."sv);
 			return;
 		}
 		else {

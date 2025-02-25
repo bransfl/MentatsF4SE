@@ -18,8 +18,6 @@
 
 namespace Internal::Fixes::WorkbenchSoundFix
 {
-	const auto furnitureExitEvent = RE::BSFixedString("furnitureExitSlave");
-
 	void Install() noexcept
 	{
 		logger::info("Fix installing: WorkbenchSoundFix."sv);
@@ -41,6 +39,10 @@ namespace Internal::Fixes::WorkbenchSoundFix
 
 	void FixWorkbenchSound(RE::TESObjectREFR* a_workbench)
 	{
+		if (a_workbench == nullptr) {
+			logger::info("WorkbenchSoundFix -> a_workbench was nullptr"sv);
+			return;
+		}
 		// send furnitureExitEvent animation event to a_workbench to kill animations/sound
 		a_workbench->NotifyAnimationGraphImpl("furnitureExitSlave");
 		logger::info("WorkbenchSoundFix -> FixWorkbenchSound ran"sv);
@@ -63,40 +65,39 @@ namespace Internal::Fixes::WorkbenchSoundFix
 		return refs;
 	}
 
-	// this should probably check WorkbenchData to support modded stuff. or a workbench keyword
+	// todo - this should probably check WorkbenchData to support modded stuff. or a workbench keyword
 	bool IsWorkbench(RE::TESObjectREFR* a_furniture)
 	{
-		bool ret = false;
 		switch (a_furniture->GetBaseObject()->formID) {
 			case 0x17B3A4: { // workbenchWeaponsA
-				ret = true;
+				return true;
 				break;
 			}
 			case 0x17E787: { // workbenchWeaponsB
-				ret = true;
+				return true;
 				break;
 			}
 			case 0x157FEB: { // WorkbenchPowerArmor
-				ret = true;
+				return true;
 				break;
 			}
 			case 0x13BD08: { // WorkbenchPowerArmorSmall
-				ret = true;
+				return true;
 				break;
 			}
 			case 0x12EA9B: { // WorkbenchArmorA
-				ret = true;
+				return true;
 				break;
 			}
 			case 0x8674C: { // WorkshopScavengingStation
-				ret = true;
+				return true;
 				break;
 			}
 			default: {
+				return false;
 				break;
 			}
 		}
-		return ret;
 	}
 
 	namespace Events

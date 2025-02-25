@@ -7,7 +7,7 @@
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
 #include "Internal/Fixes/TransferManyItems/AddManyItemsFix.hpp"
 #include "Internal/Fixes/TransferManyItems/DropManyItemsFix.hpp"
-#include "Internal/Fixes/WorkbenchSoundFix.hpp"
+// #include "Internal/Fixes/WorkbenchSoundFix.hpp"
 
 namespace Internal::Fixes
 {
@@ -16,8 +16,6 @@ namespace Internal::Fixes
 		// PerkEntryPoints::ApplySpellsFix::Install(); WIP
 
 		// PerkEntryPoints::BasherFix::Install(); WIP
-
-		// PerkEntryPoints::CastSpellsFix::Install(); WIP
 
 		TransferManyItems::AddManyItemsFix::Install();
 
@@ -31,6 +29,6 @@ namespace Internal::Fixes
 
 		// MagicEffectConditionsFix::Install(); WIP
 
-		// WorkbenchSoundFix is handled in Messaging.cpp
+		// WorkbenchSoundFix is handled in Messaging.cpp. WIP
 	}
 }

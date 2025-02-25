@@ -14,6 +14,7 @@
 // WorkbenchArmorA "Armor Workbench" [FURN:0012EA9B]
 // WorkshopScavengingStation "Scavenging Station" [FURN:0008674C]
 
+// not finished or working consistently, disabled for now
 namespace Internal::Fixes::WorkbenchSoundFix
 {
 	inline constexpr std::string_view examineMenu = "ExamineMenu";

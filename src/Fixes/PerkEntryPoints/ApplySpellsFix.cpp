@@ -4,15 +4,10 @@
 // fixes entrypoint kApplyCombatHitSpell so multiple spells can be applied at once
 namespace Internal::Fixes::PerkEntryPoints::ApplySpellsFix
 {
-
-	void ApplyCombatHitSpell(REX::Enum<RE::BGSPerkEntry::EntryPoint, std::uint8_t> entryPoint,
-		RE::Actor* perkOwner,
-		...);
-
 	void Install() noexcept
 	{
 		logger::info("Fix installing: ApplySpellsFix."sv);
-		
+
 		if (!Config::bApplySpellsFix.GetValue()) {
 			logger::info("Fix aborted: ApplySpellsFix. Reason: Fix was disabled in ini file."sv);
 			return;
@@ -33,50 +28,37 @@ namespace Internal::Fixes::PerkEntryPoints::ApplySpellsFix
 
 		logger::info("Fix installed: ApplySpellsFix."sv);
 	}
-
-	// TODO
-	// void ApplyCombatHitSpell(REX::Enum<RE::BGSPerkEntry::EntryPoint, std::uint8_t> entryPoint, RE::Actor* perkOwner, ...)
-	// {
-	// 	std::va_list variadicArguments;
-	// 	va_start(variadicArguments, perkOwner);
-
-	// 	// auto* weapon = va_arg(variadicArguments, RE::TESObjectWEAP*);
-	// 	// auto* target = va_arg(variadicArguments, RE::Actor*);
-	// 	// auto** result = va_arg(variadicArguments, RE::SpellItem**);
-
-	// 	va_end(variadicArguments);
-
-	// 	// auto combatHitSpellItems = ApplySpellsFix::HandleEntryPoint(entryPoint, perkOwner, std::vector<RE::TESForm*>{ perkOwner, weapon, target });
-
-	// 	// for (auto* combatHitSpellItem : combatHitSpellItems) {
-	// 	// 	if (combatHitSpellItem) {
-	// 	// 		// static_cast<RE::SpellItem*>(combatHitSpellItem)->Cast(perkOwner, target);
-	// 	// 	}
-	// 	// }
-	// }
-
-	// TODO
-	// std::vector<void*> HandleEntryPoint(
-	// 	REX::Enum<RE::BGSPerkEntry::EntryPoint, std::uint8_t> entryPoint,
-	// 	RE::Actor* perkOwner,
-	// 	std::vector<RE::TESForm*> conditionFilterArguments)
-	// {
-	// 	kSetFatigueToAPMult since it is the highest enum value
-	// 	if (entryPoint.underlying() <= std::to_underlying(RE::BGSEntryPoint::ENTRY_POINT::kSetFatigueToAPMult)) {
-	// 		if (perkOwner && perkOwner->HasPerkEntries(entryPoint.underlying())) {
-	// 			//unk04 is likely since it's the only uint32_t in perkEntries.hpp OR std::uint8_t numArgs;
-	// 			if (conditionFilterArguments.size() == RE::BGSEntryPoint::ENTRY_POINT(entryPoint)) {
-	// 				std::vector<void*> entryPointFunctionArguments = { std::numeric_limits<std::uint8_t>::max(), nullptr };
-	// 			}
-	// 		}
-	// 	}
-	// 	return {};
-	// }
 }
 
-// Skyrim::BGSEntryPoint::GetEntryPoint(entryPoint)->entryPointFunctionType.get()
+// scrambled bugs code:
 
-// std::vector<void*> ApplySpellsFix::HandleEntryPoint(
+// /* Apply Combat Hit Spell
+// 	* Perk Owner
+// 	* Weapon
+// 	* Target */
+// void ApplySpells::ApplyCombatHitSpell(Utility::Enumeration<Skyrim::BGSEntryPoint::EntryPoint, std::uint32_t> entryPoint, Skyrim::Actor* perkOwner, ...)
+// {
+// 	std::va_list variadicArguments;
+// 	va_start(variadicArguments, perkOwner);
+
+// 	auto*  weapon = va_arg(variadicArguments, Skyrim::TESObjectWEAP*);
+// 	auto*  target = va_arg(variadicArguments, Skyrim::Actor*);
+// 	auto** result = va_arg(variadicArguments, Skyrim::SpellItem**);
+
+// 	va_end(variadicArguments);
+
+// 	auto combatHitSpellItems = ApplySpells::HandleEntryPoint(entryPoint, perkOwner, std::vector<Skyrim::TESForm*>{ perkOwner, weapon, target });
+
+// 	for (auto* combatHitSpellItem : combatHitSpellItems)
+// 	{
+// 		if (combatHitSpellItem)
+// 		{
+// 			static_cast<Skyrim::SpellItem*>(combatHitSpellItem)->Apply(target, ApplySpells::castSpells_ ? perkOwner : target);
+// 		}
+// 	}
+// }
+
+// std::vector<void*> ApplySpells::HandleEntryPoint(
 // 	Utility::Enumeration<Skyrim::BGSEntryPoint::EntryPoint, std::uint32_t> entryPoint,
 // 	Skyrim::Actor*                                                         perkOwner,
 // 	std::vector<Skyrim::TESForm*>                                          conditionFilterArguments)

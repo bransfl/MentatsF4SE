@@ -1,6 +1,6 @@
 #include "Internal/Fixes/CombatMusicFix.hpp"
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
-#include "Internal/Fixes/WorkbenchSoundFix.hpp"
+// #include "Internal/Fixes/WorkbenchSoundFix.hpp"
 
 namespace Internal::Messaging
 {
@@ -17,7 +17,6 @@ namespace Internal::Messaging
 				break;
 			}
 			case F4SE::MessagingInterface::kPreLoadGame: {
-				Internal::Fixes::WorkbenchSoundFix::KillSoundsAll();
 				break;
 			}
 			case F4SE::MessagingInterface::kPostLoadGame: {
@@ -27,8 +26,8 @@ namespace Internal::Messaging
 				}
 
 				// WorkbenchSoundFix
-				Internal::Fixes::WorkbenchSoundFix::Install();
-				Internal::Fixes::WorkbenchSoundFix::KillSoundsAll();
+				// Internal::Fixes::WorkbenchSoundFix::Install();
+				// Internal::Fixes::WorkbenchSoundFix::KillSoundsAll();
 
 				break;
 			}

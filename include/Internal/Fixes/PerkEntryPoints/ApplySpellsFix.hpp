@@ -5,7 +5,9 @@ namespace Internal::Fixes::PerkEntryPoints::ApplySpellsFix
 {
 	void Install() noexcept;
 
-	// RE::BGSEntryPointPerkEntry* GetEntryPoint(RE::BGSEntryPoint::ENTRY_POINT entryPoint);
+	// would be in BGSEntryPoint.hpp (or PerkEntries.hpp?)
+	static RE::BGSEntryPointPerkEntry* GetEntryPoint(RE::BGSEntryPoint::ENTRY_POINT entryPoint);
+	static RE::BGSEntryPointPerkEntry* GetEntryPoints();
 
 	class ApplySpellsFix
 	{

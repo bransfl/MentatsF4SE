@@ -43,6 +43,42 @@ namespace Internal::Fixes::PerkEntryPoints::ApplySpellsFix
 		logger::info("Fix installed: ApplySpellsFix."sv);
 	}
 
+	// these likely dont work yet
+	static RE::BGSEntryPointPerkEntry* GetEntryPoint(RE::BGSEntryPoint::ENTRY_POINT entryPoint)
+	{
+		return std::addressof(GetEntryPoints()[std::to_underlying(entryPoint)]);
+	}
+
+	static RE::BGSEntryPointPerkEntry* GetEntryPoints()
+	{
+		// inline constexpr REL::RelocationID BGSEntryPointPerkEntry{ 928907, 2767025 };
+		if (REL::Module::IsNG()) {
+			REL::Relocation<uintptr_t> BGSEntryPointPerkEntry_Location{ REL::ID(2767025) };
+			auto* singleton{ reinterpret_cast<RE::BGSEntryPointPerkEntry*>(BGSEntryPointPerkEntry_Location.address()) };
+			return singleton;
+		}
+		else {
+			REL::Relocation<uintptr_t> BGSEntryPointPerkEntry_Location{ REL::ID(928907) };
+			auto* singleton{ reinterpret_cast<RE::BGSEntryPointPerkEntry*>(BGSEntryPointPerkEntry_Location.address()) };
+			return singleton;
+		}
+	}
+
+	// 	namespace Skyrim
+	// {
+	// 	BGSEntryPoint* BGSEntryPoint::GetEntryPoint(Utility::Enumeration<EntryPoint, std::uint32_t> entryPoint)
+	// 	{
+	// 		return std::addressof(BGSEntryPoint::GetEntryPoints()[entryPoint.underlying()]);
+	// 	}
+
+	// 	BGSEntryPoint* BGSEntryPoint::GetEntryPoints()
+	// 	{
+	// 		auto* singleton{ reinterpret_cast<BGSEntryPoint*>(Addresses::BGSEntryPoint::EntryPoints()) };
+
+	// 		return singleton;
+	// 	}
+	// }
+
 	void ApplySpellsFix::ApplyCombatHitSpell(RE::BGSEntryPoint::ENTRY_POINT entryPoint,
 		RE::Actor* perkOwner,
 		...)
@@ -60,11 +96,17 @@ namespace Internal::Fixes::PerkEntryPoints::ApplySpellsFix
 		for (auto* spellItem : spellItemsList) {
 			if (spellItem) {
 				// cast here
+				// static_cast<Skyrim::SpellItem*>(combatHitSpellItem)->Apply(target, ApplySpells::castSpells_ ? perkOwner : target);
+				//static_cast<RE::SpellItem*>(spellItem)->Cast(perkOwner, target, perkOwner, /* add vm here? */);
 			}
 		}
+		// bool Cast(TESObjectREFR* caster, TESObjectREFR* target, Actor* anyActor, BSScript::IVirtualMachine* vm)
+		// {
+		// 	using func_t = decltype(&SpellItem::Cast);
+		// 	static REL::Relocation<func_t> func{ REL::ID(1511987) };
+		// 	return func(this, caster, target, anyActor, vm);
+		// }
 	}
-
-	// static BGSEntryPoint* GetEntryPoint(Utility::Enumeration<EntryPoint, std::uint32_t> entryPoint);
 
 	// vanilla func
 	// inline void HandleEntryPoint(ENTRY_POINT a_entryPoint, Actor* a_perkOwner, Args... a_args)
@@ -82,23 +124,46 @@ namespace Internal::Fixes::PerkEntryPoints::ApplySpellsFix
 		RE::Actor* perkOwner,
 		std::vector<RE::TESForm*> conditionFilterArguments)
 	{
-		// last enum type is (kSetFatigueToAPMult = 0x9D), so we can try 0x9E for kTotal's equivalent
-		uint8_t entryPointValue = static_cast<uint8_t>(std::to_underlying(entryPoint));
+		uint8_t entryPointUnderlying = static_cast<uint8_t>(std::to_underlying(entryPoint));
 
-		if (entryPointValue < 0x9D) {
-			if (perkOwner && perkOwner->HasPerkEntries(entryPointValue)) {
-				// conditionFilterArgumentCount is likely either (std::uint8_t numArgs, or std::uint8_t unk03;
-				// if (conditionFilterArguments.size() == entryPoint.numArgs) {
-				// 	std::vector<void*> entryPointFunctionArgs = { std::numeric_limits<std::uint8_t>::max(), nullptr };
-				// }
+		// last enum type is (kSetFatigueToAPMult = 0x9D), so we can probably try 0x9E for skyrim's kTotal's equivalent
+		if (entryPointUnderlying < 0x9D) {
+			if (perkOwner && perkOwner->HasPerkEntries(entryPointUnderlying)) {
+				// conditionFilterArgumentCount is likely either (std::uint8_t numArgs, or std::uint8_t unk03 (guessed due to uint8_t)
+				if (conditionFilterArguments.size() == GetEntryPoint(entryPoint)->entryData.numArgs) {
+					std::vector<void*> entryPointFunctionArgs = { std::numeric_limits<uint8_t>::max(), nullptr };
+
+					// RE::PerkEntryVisitor handlePerkEntryVistor = HandlePerkEntryVisitor(
+					// 	(GetEntryPoint(entryPoint).function),
+					// 	conditionFilterArguments.data(),
+					// 	entryPointFunctionArgs.data(),
+					// 	perkOwner,
+					// 	static_cast<uint8_t>(conditionFilterArguments.size()),
+					// 	static_cast<uint8_t>(entryPointFunctionArgs.size()));
+
+					// perkOwner->ForEachPerkEntry(entryPoint, handleEntryPointVisitor);
+
+					std::erase(entryPointFunctionArgs, nullptr);
+
+					return entryPointFunctionArgs;
+				}
 			}
 		}
 
 		return {};
 	}
+
 }
 
 // scrambled bugs code:
+
+// HandleEntryPointVisitor(
+// 	Utility::Enumeration<BGSEntryPointFunction::EntryPointFunctionType, std::uint32_t> entryPointFunctionType,
+// 	TESForm**                                                                          conditionFilterArguments,
+// 	void**                                                                             entryPointFunctionArguments,
+// 	Actor*                                                                             perkOwner,
+// 	std::uint8_t                                                                       conditionFilterArgumentCount,
+// 	std::uint8_t                                                                       entryPointFunctionArgumentCount);
 
 // std::vector<void*> ApplySpells::HandleEntryPoint(
 // 	Utility::Enumeration<Skyrim::BGSEntryPoint::EntryPoint, std::uint32_t> entryPoint,

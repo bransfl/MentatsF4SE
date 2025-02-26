@@ -26,6 +26,15 @@ namespace Internal::Fixes::RaceChangeFix
 			return;
 		}
 
+		Fix();
+
+		logger::info("RaceChangeFix -> Fix installed."sv);
+	}
+
+	void Fix()
+	{
+		logger::info("RaceChangeFix -> Fix running..."sv);
+
 		const auto player = RE::PlayerCharacter::GetSingleton();
 		if (!player) {
 			logger::info("Fix aborted: RaceChangeFix. Reason: Player was null."sv);
@@ -33,6 +42,6 @@ namespace Internal::Fixes::RaceChangeFix
 		}
 		player->charGenRace = player->race;
 
-		logger::info("RaceChangeFix -> Fix installed."sv);
+		logger::info("RaceChangeFix -> Fix ran."sv);
 	}
 }

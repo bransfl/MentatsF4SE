@@ -30,7 +30,7 @@ namespace Internal::Messaging
 				Internal::Fixes::RaceChangeFix::Install();
 
 				// WorkbenchSoundFix
-				Internal::Fixes::WorkbenchSoundFix::Install();
+				// Internal::Fixes::WorkbenchSoundFix::Install();
 
 				break;
 			}

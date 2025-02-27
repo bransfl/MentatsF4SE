@@ -4,7 +4,7 @@ namespace Internal::Config
 {
 	// default is false in case a fix is removed from the ini for any reason
 
-	// PerkEntryPoints folder
+	// FIXES
 	inline const auto bApplySpellsFix = REX::INI::Bool{ "Fixes"sv, "bApplySpellsFix"sv, false };
 
 	inline const auto bBasherFix = REX::INI::Bool{ "Fixes"sv, "bBasherFix"sv, false };
@@ -25,6 +25,9 @@ namespace Internal::Config
 	inline const auto bRaceChangeFix = REX::INI::Bool{ "Fixes"sv, "bRaceChangeFix"sv, false };
 
 	inline const auto bWorkbenchSoundFix = REX::INI::Bool{ "Fixes"sv, "bWorkbenchSoundFix"sv, false };
+
+	// WARNINGS
+	inline const auto bDupeAddonNodesWarning = REX::INI::Bool{ "Warnings"sv, "bDupeAddonNodesWarning"sv, false };
 
 	void Load() noexcept;
 }

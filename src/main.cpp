@@ -2,6 +2,7 @@
 #include "Internal/Config/Config.hpp"
 #include "Internal/Fixes/Installation.hpp"
 #include "Internal/Patches/Installation.hpp"
+#include "Internal/Warnings/Installation.hpp"
 
 F4SE_EXPORT constinit auto F4SEPlugin_Version = []() noexcept {
 	auto data = F4SE::PluginVersionData();
@@ -57,7 +58,7 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f
 	logger::info("Registered for F4SE events."sv);
 
 	logger::info("---------------------------------------------"sv);
-	logger::info("Installing fixes..."sv);
+	logger::info("Fixes installing..."sv);
 	Internal::Fixes::Install();
 	logger::info("Fixes installed."sv);
 
@@ -65,6 +66,11 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f
 	// logger::info("Patches installing..."sv);
 	// Internal::Patches::Install();
 	// logger::info("Patches installed."sv);
+
+	logger::info("---------------------------------------------"sv);
+	logger::info("Installing warnings..."sv);
+	Internal::Warnings::Install();
+	logger::info("Warnings installed."sv);
 
 	logger::info("---------------------------------------------"sv);
 	logger::info("Loaded."sv);

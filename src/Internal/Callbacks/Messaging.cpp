@@ -2,6 +2,7 @@
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
 #include "Internal/Fixes/RaceChangeFix.hpp"
 #include "Internal/Fixes/WorkbenchSoundFix.hpp"
+#include "Internal/Warnings/DupeAddonNodesWarning.hpp"
 
 namespace Internal::Messaging
 {
@@ -32,6 +33,9 @@ namespace Internal::Messaging
 				// WorkbenchSoundFix
 				// Internal::Fixes::WorkbenchSoundFix::Install();
 
+				// DupeAddonNodesWarnings
+				Internal::Warnings::DupeAddonNodesWarning::ClearNodeMap();
+
 				break;
 			}
 			case F4SE::MessagingInterface::kPreSaveGame: {
@@ -58,6 +62,9 @@ namespace Internal::Messaging
 
 				// LeveledListCrashFix
 				Internal::Fixes::LeveledListCrashFix::Sanitize();
+
+				// DupeAddonNodesWarnings
+				Internal::Warnings::DupeAddonNodesWarning::Install();
 
 				break;
 			}

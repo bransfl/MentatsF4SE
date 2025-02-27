@@ -44,7 +44,10 @@ namespace Internal::Fixes::RaceChangeFix
 			logger::info("Fix aborted: RaceChangeFix. Reason: Player was null."sv);
 			return;
 		}
-		player->charGenRace = player->race;
+		
+		if (player->charGenRace != player->race) {
+			player->charGenRace = player->race;
+		}
 
 		logger::info("RaceChangeFix -> Fix ran."sv);
 	}

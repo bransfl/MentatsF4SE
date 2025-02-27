@@ -27,36 +27,40 @@ namespace Internal::Fixes::WorkbenchSoundFix
 			return;
 		}
 
+		// furniture
 		RE::TESFurnitureEvent::GetEventSource()->RegisterSink(Events::FurnitureEventHandler::GetSingleton());
-
+		// cells
 		auto* cellHandler = Events::ActorCellEventHandler::GetSingleton();
-		// pray for me bro
 		RE::PlayerCharacter::GetSingleton()->RE::BSTEventSource<RE::BGSActorCellEvent>::RegisterSink(cellHandler);
 		logger::info("WorkbenchSoundFix -> Events registered."sv);
 
 		logger::info("Fix installed: WorkbenchSoundFix."sv);
 	}
 
-	void FixWorkbenchSound(RE::TESObjectREFR* a_workbench)
+	void FixWorkbenchSound(RE::TESFurniture* a_workbench)
 	{
 		if (a_workbench == nullptr) {
 			logger::info("WorkbenchSoundFix -> a_workbench was nullptr"sv);
 			return;
 		}
+		// this might need to be passed as TESObjectREFR to recieve anim graph events, need to test
+
 		// send furnitureExitEvent animation event to a_workbench to kill animations/sound
-		a_workbench->NotifyAnimationGraphImpl("furnitureExitSlave");
+		// todo - try sending the event to the player, and try sending it with StopSound SoundEditorID
+		// a_workbench->NotifyAnimationGraphImpl("furnitureExitSlave");
 		logger::info("WorkbenchSoundFix -> FixWorkbenchSound ran"sv);
 	}
 
 	std::vector<RE::TESObjectREFR*> GetFurnitureRefsInCell(RE::TESObjectCELL* a_cell)
 	{
 		auto refs = std::vector<RE::TESObjectREFR*>();
+
 		if (a_cell == nullptr) {
 			return refs;
 		}
 
 		a_cell->ForEachRef([&](RE::TESObjectREFR* a_ref) {
-			if (a_ref->GetBaseObject()->formType == RE::ENUM_FORMTYPE::kFURN) {
+			if (a_ref && (a_ref->GetBaseObject()->formType == RE::ENUM_FORMTYPE::kFURN)) {
 				refs.push_back(a_ref);
 			}
 			return RE::BSContainer::ForEachResult::kContinue;
@@ -65,39 +69,14 @@ namespace Internal::Fixes::WorkbenchSoundFix
 		return refs;
 	}
 
-	// todo - this should probably check WorkbenchData to support modded stuff. or a workbench keyword
-	bool IsWorkbench(RE::TESObjectREFR* a_furniture)
+	// checks if the given furniture is a valid workbench
+	bool IsWorkbench(RE::TESFurniture* a_furniture)
 	{
-		switch (a_furniture->GetBaseObject()->formID) {
-			case 0x17B3A4: { // workbenchWeaponsA
-				return true;
-				break;
-			}
-			case 0x17E787: { // workbenchWeaponsB
-				return true;
-				break;
-			}
-			case 0x157FEB: { // WorkbenchPowerArmor
-				return true;
-				break;
-			}
-			case 0x13BD08: { // WorkbenchPowerArmorSmall
-				return true;
-				break;
-			}
-			case 0x12EA9B: { // WorkbenchArmorA
-				return true;
-				break;
-			}
-			case 0x8674C: { // WorkshopScavengingStation
-				return true;
-				break;
-			}
-			default: {
-				return false;
-				break;
-			}
+		if (!a_furniture) {
+			return false;
 		}
+
+		return a_furniture->wbData.type != RE::WorkbenchData::Type::kNone;
 	}
 
 	namespace Events

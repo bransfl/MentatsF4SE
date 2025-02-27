@@ -18,12 +18,12 @@ namespace Internal::Fixes::WorkbenchSoundFix
 {
 	void Install() noexcept;
 
-	void FixWorkbenchSound(RE::TESObjectREFR* a_workbench);
+	void FixWorkbenchSound(RE::TESFurniture* a_workbench);
 
 	std::vector<RE::TESObjectREFR*> GetFurnitureRefsInCell(RE::TESObjectCELL* a_cell);
 
-	// checks if the given furniture is a valid workbench and optionally kills relevant sound
-	bool IsWorkbench(RE::TESObjectREFR* a_furniture);
+	// checks if the given furniture is a valid workbench
+	bool IsWorkbench(RE::TESFurniture* a_furniture);
 
 	namespace Events
 	{
@@ -43,7 +43,8 @@ namespace Internal::Fixes::WorkbenchSoundFix
 				if (a_event.IsExit()) {
 					logger::info("WorkbenchSoundFix -> TESFurnitureEvent receieved, was exit type"sv);
 
-					bool bChecked = IsWorkbench(a_event.targetFurniture.get());
+					RE::TESFurniture* a_furniture = a_event.targetFurniture.get()->As<RE::TESFurniture>();
+					bool bChecked = IsWorkbench(a_furniture);
 					if (bChecked) {
 						logger::info("WorkbenchSoundFix -> bChecked = true"sv);
 					}
@@ -52,7 +53,7 @@ namespace Internal::Fixes::WorkbenchSoundFix
 						return RE::BSEventNotifyControl::kContinue;
 					}
 
-					FixWorkbenchSound(a_event.targetFurniture.get());
+					FixWorkbenchSound(a_furniture);
 				}
 
 				return RE::BSEventNotifyControl::kContinue;

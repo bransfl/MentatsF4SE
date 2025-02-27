@@ -33,17 +33,21 @@ namespace Internal::Warnings::DupeAddonNodesWarning
 			}
 
 			addonNode = addonNode->As<RE::BGSAddonNode>();
+			if (!addonNode) {
+				continue;
+			}
+
 			nodesChecked++;
 			const auto res = nodeMap.insert(std::make_pair(addonNode->index, addonNode));
 
 			if (!res.second) {
-				const auto current = (*res.first).second;
-				if (current != addonNode && current->formID != addonNode->formID) {
+				const auto currentNode = (*res.first).second;
+				if (currentNode != addonNode && currentNode->formID != addonNode->formID) {
 					nodeErrors++;
-					std::string_view modNameCurrent = GetModName(current, false);
+					std::string_view modNameCurrent = GetModName(currentNode, false);
 					std::string_view modNameAddonNode = GetModName(addonNode, false);
 					logger::warn(FMT_STRING("DupeAddonNodesWarning -> Duplicate AddonNode Index found at FormID {:08X} in plugin {} AND FormID {:08X} in plugin {}, the index was {}."),
-						current->formID, modNameCurrent, addonNode->formID, modNameAddonNode, addonNode->index);
+						currentNode->formID, modNameCurrent, addonNode->formID, modNameAddonNode, addonNode->index);
 					RE::ConsoleLog::GetSingleton()->AddString("EngineFixesF4SE -> DupeAddonNodesWarning -> An AddonNode duplicate index was found, check the log for more information.\n");
 				}
 			}

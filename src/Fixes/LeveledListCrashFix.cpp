@@ -125,7 +125,7 @@ namespace Internal::Fixes::LeveledListCrashFix
 
 		auto dataHandler = RE::TESDataHandler::GetSingleton();
 		auto& formArray = dataHandler->GetFormArray<RE::TESLevItem>();
-		uint32_t listsChecked = 0;
+		uint16_t listsChecked = 0;
 		bool foundBadLL = false;
 
 		for (auto* form : formArray) {

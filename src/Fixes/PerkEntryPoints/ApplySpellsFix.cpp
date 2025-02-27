@@ -87,14 +87,13 @@ namespace Internal::Fixes::PerkEntryPoints::ApplySpellsFix
 
 		if (entryPointUnderlying < 0x9D) {
 			if (perkOwner && perkOwner->HasPerkEntries(entryPointUnderlying)) {
-				
+
 				// conditionFilterArgumentCount is likely either (std::uint8_t numArgs, or std::uint8_t unk03 (guessed due to uint8_t)
 				if (conditionFilterArguments.size() == GetEntryPoint(entryPoint)->entryData.numArgs) {
 					std::vector<void*> entryPointFunctionArgs = { std::numeric_limits<uint8_t>::max(), nullptr };
-
 					// RE::HandleEntryPointVisitor handlePerkEntryVisitor = RE::HandleEntryPointVisitor(
 					// 	perkOwner,
-					// 	(GetEntryPoint(entryPoint)->entryData.function),
+					// 	(GetEntryPoint(entryPoint)->functionData->GetType()),
 					// 	(conditionFilterArguments.empty() ? nullptr : conditionFilterArguments.data()),
 					// 	(entryPointFunctionArgs.empty() ? nullptr : entryPointFunctionArgs.data()),
 					// 	static_cast<uint8_t>(conditionFilterArguments.size()),

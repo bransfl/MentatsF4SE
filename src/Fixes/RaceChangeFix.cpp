@@ -12,18 +12,22 @@ namespace Internal::Fixes::RaceChangeFix
 			return;
 		}
 
-		// Race Changer
-		if (REX::W32::GetModuleHandleW(L"RaceChanger.dll")) {
-			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Fix aborted: RaceChangeFix. Reason: Mod 'Race Changer' was detected. This fix is not necessary with this mod installed.\n");
-			logger::warn("Fix aborted: RaceChangeFix. Reason: Mod was installed: RaceChanger.dll."sv);
-			return;
+		// check for existing fix mods
+		if (REL::Module::IsNG()) {
+			// Race Changer NG
+			if (REX::W32::GetModuleHandleW(L"f4se-race-changer.dll")) {
+				RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Fix aborted: RaceChangeFix. Reason: Mod 'Race Changer NG' was detected. This fix is not necessary with this mod installed.\n");
+				logger::warn("Fix aborted: RaceChangeFix. Reason: Mod was installed: f4se-race-changer.dll."sv);
+				return;
+			}
 		}
-
-		// Race Changer NG
-		if (REX::W32::GetModuleHandleW(L"f4se-race-changer.dll")) {
-			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Fix aborted: RaceChangeFix. Reason: Mod 'Race Changer NG' was detected. This fix is not necessary with this mod installed.\n");
-			logger::warn("Fix aborted: RaceChangeFix. Reason: Mod was installed: f4se-race-changer.dll."sv);
-			return;
+		else {
+			// Race Changer
+			if (REX::W32::GetModuleHandleW(L"RaceChanger.dll")) {
+				RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Fix aborted: RaceChangeFix. Reason: Mod 'Race Changer' was detected. This fix is not necessary with this mod installed.\n");
+				logger::warn("Fix aborted: RaceChangeFix. Reason: Mod was installed: RaceChanger.dll."sv);
+				return;
+			}
 		}
 
 		Fix();

@@ -113,44 +113,6 @@ namespace Internal::Fixes::LeveledListCrashFix
 		logger::info("LeveledListCrashFix -> DebugLeveledList finished."sv);
 	}
 
-	// checks all leveledlists to report if any leveledlists have >255 entries
-	void Sanitize()
-	{
-		logger::info("LeveledListCrashFix -> Sanitizing LeveledLists"sv);
-		
-		if (!Config::bLeveledListCrashFix_SanitizeLists.GetValue()) {
-			logger::info("Operation aborted: LeveledListCrashFix_SanitizeLists. Reason: Process was disabled in ini file."sv);
-			return;
-		}
-
-		auto dataHandler = RE::TESDataHandler::GetSingleton();
-		auto& formArray = dataHandler->GetFormArray<RE::TESLevItem>();
-		uint16_t listsChecked = 0;
-		bool foundBadLL = false;
-
-		for (auto* form : formArray) {
-			listsChecked++;
-			auto* leveledList = form->As<RE::TESLeveledList>();
-			if (!leveledList) {
-				continue;
-			}
-			int8_t numEntries = GetNumEntries(leveledList);
-			if (!(numEntries == 0 || numEntries == 255)) {
-				continue;
-			}
-			if (numEntries <= 255) {
-				continue;
-			}
-
-			logger::info("LeveledListCrashFix::Sanitizer -> LeveledList {} has {} entries", form->GetFormEditorID(), numEntries);
-			foundBadLL = true;
-		}
-		if (foundBadLL) {
-			logger::warn("LeveledListCrashFix::Sanitizer -> Warning: At least 1 leveled list has over 255 entries in the plugin record. Check the log at Documents/My Games/Fallout4/F4SE/EngineFixesF4SE.log"sv);
-		}
-		logger::info("LeveledListCrashFix::Sanitizer -> listsChecked={}", listsChecked);
-	}
-
 	// returns the total amount of leveledlist entries
 	int8_t GetNumEntries(RE::TESLeveledList* leveledList)
 	{

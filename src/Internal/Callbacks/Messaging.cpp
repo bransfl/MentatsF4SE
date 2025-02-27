@@ -3,6 +3,7 @@
 #include "Internal/Fixes/RaceChangeFix.hpp"
 #include "Internal/Fixes/WorkbenchSoundFix.hpp"
 #include "Internal/Warnings/DupeAddonNodesWarning.hpp"
+#include "Internal/Warnings/LeveledListEntryCountWarning.hpp"
 
 namespace Internal::Messaging
 {
@@ -60,11 +61,11 @@ namespace Internal::Messaging
 				// CombatMusicFix
 				Internal::Fixes::CombatMusicFix::Install();
 
-				// LeveledListCrashFix
-				Internal::Fixes::LeveledListCrashFix::Sanitize();
-
 				// DupeAddonNodesWarnings
 				Internal::Warnings::DupeAddonNodesWarning::Install();
+
+				// LeveledListEntryCountWarning
+				Internal::Warnings::LeveledListEntryCountWarning::CheckLeveledLists();
 
 				break;
 			}

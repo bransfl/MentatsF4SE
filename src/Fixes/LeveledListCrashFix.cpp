@@ -117,6 +117,11 @@ namespace Internal::Fixes::LeveledListCrashFix
 	void Sanitize()
 	{
 		logger::info("LeveledListCrashFix -> Sanitizing LeveledLists"sv);
+		
+		if (!Config::bLeveledListCrashFix_SanitizeLists.GetValue()) {
+			logger::info("Operation aborted: LeveledListCrashFix_SanitizeLists. Reason: Process was disabled in ini file."sv);
+			return;
+		}
 
 		auto dataHandler = RE::TESDataHandler::GetSingleton();
 		auto& formArray = dataHandler->GetFormArray<RE::TESLevItem>();

@@ -12,9 +12,6 @@ namespace Internal::Fixes::LeveledListCrashFix
 	// reports null forms in leveledlists
 	void DebugLeveledList(RE::TESLeveledList* a_list);
 
-	// reports invalid leveledlists entries or leveledlists with >255 entries
-	void Sanitize();
-
 	// returns the total amount of leveledlist entries
 	int8_t GetNumEntries(RE::TESLeveledList* leveledList);
 

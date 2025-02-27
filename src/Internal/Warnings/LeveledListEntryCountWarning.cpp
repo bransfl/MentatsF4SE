@@ -37,7 +37,7 @@ namespace Internal::Warnings::LeveledListEntryCountWarning
 		if (foundBadLL) {
 			logger::warn("LeveledListEntryCountWarning -> Warning: At least 1 leveled list has over 255 entries in the plugin record. Check the log at Documents/My Games/Fallout4/F4SE/EngineFixesF4SE.log"sv);
 		}
-		logger::info("LeveledListEntryCountWarning -> listsChecked={}", listsChecked);
+		logger::info("LeveledListEntryCountWarning -> ListsChecked: {}", listsChecked);
 	}
 
 	// returns the total amount of leveledlist entries

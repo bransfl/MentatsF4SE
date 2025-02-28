@@ -57,11 +57,10 @@ namespace Internal::Fixes::MagicEffectConditionsFix
 			return;
 		}
 
-		// note - the idea is that fire and forget (chems) should follow vanilla behavior for addictions this needs to be tested
-		// maybe put this below the check for ->flags.all too. try with and without returning original func
+		// note - the idea is that fire and forget (chems) should follow vanilla behavior for addictions. this needs to be tested
+		// ideally, this should check if AlchemyItem's addictionItem is not null, or if addictionChance is >0.0
 		if (activeEffect->spell->GetCastingType() == RE::MagicSystem::CastingType::kFireAndForget) {
-			logger::info("MagicEffectConditions -> activeEffect's CastingType was kFireAndForget. Return original func."sv);
-			// return OriginalFunction_EvaluateConditions(activeEffect, elapsedTimeDelta, forceUpdate);
+			logger::debug("MagicEffectConditions -> activeEffect's CastingType was kFireAndForget. Return original func."sv);
 			return;
 		}
 

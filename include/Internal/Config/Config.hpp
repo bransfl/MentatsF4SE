@@ -2,6 +2,8 @@
 
 namespace Internal::Config
 {
+	void Load() noexcept;
+
 	// default is false in case a fix is removed from the ini for any reason
 
 	// FIXES
@@ -15,7 +17,7 @@ namespace Internal::Config
 
 	inline const auto bCombatMusicFix = REX::INI::Bool{ "Fixes"sv, "bCombatMusicFix"sv, false };
 
-	inline const auto bEncounterZoneFix = REX::INI::Bool{ "Fixes"sv, "bEncounterZoneFix"sv, false };
+	inline const auto bEncounterZoneResetFix = REX::INI::Bool{ "Fixes"sv, "bEncounterZoneResetFix"sv, false };
 
 	inline const auto bGrenadeMovementSpeedFix = REX::INI::Bool{ "Fixes"sv, "bGrenadeMovementSpeedFix"sv, false };
 
@@ -34,6 +36,4 @@ namespace Internal::Config
 	inline const auto bDupeAddonNodesWarning = REX::INI::Bool{ "Warnings"sv, "bDupeAddonNodesWarning"sv, false };
 
 	inline const auto bLeveledListEntryCountWarning = REX::INI::Bool{ "Warnings"sv, "bLeveledListEntryCountWarning"sv, false };
-
-	void Load() noexcept;
 }

@@ -60,7 +60,9 @@ namespace Internal::Warnings::DupeAddonNodesWarning
 	{
 		logger::info("DupeAddonNodesWarning -> Clearing node map..."sv);
 
-		nodeMap.clear();
+		if (!nodeMap.empty()) {
+			nodeMap.clear();
+		}
 
 		logger::info("DupeAddonNodesWarning -> Node map cleared."sv);
 	}

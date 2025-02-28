@@ -1,7 +1,7 @@
 #include "Internal/Fixes/Installation.hpp"
-
 #include "Internal/Fixes/EncounterZoneResetFix.hpp"
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
+#include "Internal/Fixes/MagicEffectConditionsFix.hpp"
 #include "Internal/Fixes/TransferManyItems/AddManyItemsFix.hpp"
 #include "Internal/Fixes/TransferManyItems/DropManyItemsFix.hpp"
 
@@ -25,7 +25,7 @@ namespace Internal::Fixes
 
 		LeveledListCrashFix::Install();
 
-		// MagicEffectConditionsFix::Install(); WIP
+		MagicEffectConditionsFix::Install();
 
 		// WorkbenchSoundFix is handled in Messaging
 	}

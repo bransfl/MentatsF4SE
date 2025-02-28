@@ -71,7 +71,7 @@ namespace Internal::Fixes::LeveledListCrashFix
 	// the hooks
 	void Hook_LeveledItemAddForm(RE::BSScript::IVirtualMachine* a_vm, std::uint32_t a_stackID, RE::TESLevItem* a_leveledItemList, RE::TESForm* a_formToAdd, uint32_t a_level, uint32_t a_count)
 	{
-		logger::info("LeveledListCrashFix -> Hook_LeveledItemAddForm ran for {}: numEntries={}", a_leveledItemList->As<RE::TESForm>()->GetFormEditorID(), GetNumEntries(a_leveledItemList->As<RE::TESLeveledList>()));
+		logger::debug("LeveledListCrashFix -> Hook_LeveledItemAddForm ran for {}: numEntries={}", a_leveledItemList->As<RE::TESForm>()->GetFormEditorID(), GetNumEntries(a_leveledItemList->As<RE::TESLeveledList>()));
 		if (GetNumEntries(a_leveledItemList->As<RE::TESLeveledList>()) > 254) {
 			DebugLeveledList(a_leveledItemList->As<RE::TESLeveledList>());
 			logger::warn("LeveledListCrashFix -> Full item leveledlist found: {}", a_leveledItemList->GetFormEditorID());
@@ -85,7 +85,7 @@ namespace Internal::Fixes::LeveledListCrashFix
 
 	void Hook_LeveledActorAddForm(RE::BSScript::IVirtualMachine* a_vm, std::uint32_t a_stackID, RE::TESLevCharacter* a_leveledCharacterList, RE::TESForm* a_formToAdd, uint32_t a_level)
 	{
-		logger::info("LeveledListCrashFix -> Hook_LeveledActorAddForm ran for {}: numEntries={}", a_leveledCharacterList->As<RE::TESForm>()->GetFormEditorID(), GetNumEntries(a_leveledCharacterList->As<RE::TESLeveledList>()));
+		logger::debug("LeveledListCrashFix -> Hook_LeveledActorAddForm ran for {}: numEntries={}", a_leveledCharacterList->As<RE::TESForm>()->GetFormEditorID(), GetNumEntries(a_leveledCharacterList->As<RE::TESLeveledList>()));
 		if (GetNumEntries(a_leveledCharacterList->As<RE::TESLeveledList>()) > 254) {
 			DebugLeveledList(a_leveledCharacterList->As<RE::TESLeveledList>());
 			logger::warn("LeveledListCrashFix -> Full actor leveledlist found: {}", a_leveledCharacterList->GetFormEditorID());

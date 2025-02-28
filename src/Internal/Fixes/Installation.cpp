@@ -17,14 +17,16 @@ namespace Internal::Fixes
 
 		TransferManyItems::DropManyItemsFix::Install();
 
-		// CombatMusicFix is handled in Messaging.cpp
+		// CombatMusicFix is handled in Messaging
 
 		EncounterZoneResetFix::Install();
+
+		// GrenadeMovementSpeedFix is handled in Messaging
 
 		LeveledListCrashFix::Install();
 
 		// MagicEffectConditionsFix::Install(); WIP
 
-		// WorkbenchSoundFix is handled in Messaging.cpp
+		// WorkbenchSoundFix is handled in Messaging
 	}
 }

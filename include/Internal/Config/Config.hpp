@@ -17,6 +17,8 @@ namespace Internal::Config
 
 	inline const auto bEncounterZoneFix = REX::INI::Bool{ "Fixes"sv, "bEncounterZoneFix"sv, false };
 
+	inline const auto bGrenadeMovementSpeedFix = REX::INI::Bool{ "Fixes"sv, "bGrenadeMovementSpeedFix"sv, false };
+
 	inline const auto bLeveledListCrashFix = REX::INI::Bool{ "Fixes"sv, "bLeveledListCrashFix"sv, false };
 
 	inline const auto bMagicEffectConditionsFix = REX::INI::Bool{ "Fixes"sv, "bMagicEffectConditionsFix"sv, false };
@@ -24,6 +26,9 @@ namespace Internal::Config
 	inline const auto bRaceChangeFix = REX::INI::Bool{ "Fixes"sv, "bRaceChangeFix"sv, false };
 
 	inline const auto bWorkbenchSoundFix = REX::INI::Bool{ "Fixes"sv, "bWorkbenchSoundFix"sv, false };
+
+	// PATCHES
+	// n/a
 
 	// WARNINGS
 	inline const auto bDupeAddonNodesWarning = REX::INI::Bool{ "Warnings"sv, "bDupeAddonNodesWarning"sv, false };

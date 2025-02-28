@@ -49,22 +49,26 @@ namespace Internal::Fixes::MagicEffectConditionsFix
 		}
 	}
 
-	// the hook
-	// this is over-annotated because luca and i are confused
+	// the hook. this is over-annotated because luca and i are confused
 	void Hook_EvaluateConditions(RE::ActiveEffect* activeEffect, float elapsedTimeDelta, bool forceUpdate)
 	{
-		// if conditions are missing or empty (?)
 		if (activeEffect->conditionStatus == RE::ActiveEffect::ConditionStatus::kNotAvailable) {
 			logger::debug("MagicEffectConditions -> activeEffect's ConditionStatus was kNotAvailable. Return."sv);
 			return;
 		}
 
-		// note - if fire and forget (chems) call og func maybe?
+		// note - the idea is that fire and forget (chems) should follow vanilla behavior for addictions this needs to be tested
+		// maybe put this below the check for ->flags.all too. try with and without returning original func
+		if (activeEffect->spell->GetCastingType() == RE::MagicSystem::CastingType::kFireAndForget) {
+			logger::info("MagicEffectConditions -> activeEffect's CastingType was kFireAndForget. Return original func."sv);
+			// return OriginalFunction_EvaluateConditions(activeEffect, elapsedTimeDelta, forceUpdate);
+			return;
+		}
 
 		// if (all effect conditions are true OR this is a displacement spell) AND (the target is valid AND the target's object is valid)
 		if ((activeEffect->flags.all(RE::ActiveEffect::Flags::kHasConditions) || activeEffect->displacementSpell) && activeEffect->target && activeEffect->target->GetTargetStatsObject()) {
 
-			// store the auxillary timer on the unused member pad94
+			// store the auxillary timer on the unused member variable pad94
 			auto& conditionUpdateTime = reinterpret_cast<float&>(activeEffect->pad94);
 
 			if (!forceUpdate) {

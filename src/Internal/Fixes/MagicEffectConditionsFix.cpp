@@ -49,7 +49,7 @@ namespace Internal::Fixes::MagicEffectConditionsFix
 		}
 	}
 
-	// the hook. this is over-annotated because luca and i are confused
+	// the hook
 	void Hook_EvaluateConditions(RE::ActiveEffect* activeEffect, float elapsedTimeDelta, bool forceUpdate)
 	{
 		if (activeEffect->conditionStatus == RE::ActiveEffect::ConditionStatus::kNotAvailable) {
@@ -57,46 +57,51 @@ namespace Internal::Fixes::MagicEffectConditionsFix
 			return;
 		}
 
-		// note - the idea is that fire and forget (chems) should follow vanilla behavior for addictions. this needs to be tested
-		// ideally, this should check if AlchemyItem's addictionItem is not null, or if addictionChance is >0.0
+		// we check this to fix the addiction bug in the original mod
 		if (activeEffect->spell->GetCastingType() == RE::MagicSystem::CastingType::kFireAndForget) {
-			logger::debug("MagicEffectConditions -> activeEffect's CastingType was kFireAndForget. Return original func."sv);
-			return;
+			RE::TESForm* form = RE::TESForm::GetFormByID(activeEffect->spell->GetFormID());
+			if (!form)
+				return;
+
+			RE::AlchemyItem* potion = form->As<RE::AlchemyItem>();
+			if (!potion)
+				return;
+
+			// logger::debug(FMT_STRING("activeEffect was FaF potion. GetFormID()={:08X}, EditorId={}"), potion->GetFormID(), potion->GetFormEditorID());
+
+			if (potion->data.addictionChance > 0.0 || potion->data.addictionItem != nullptr) {
+				// logger::debug(FMT_STRING("activeEffect potion WAS addictive. addiction: {}"), potion->data.addictionName);
+				return;
+			}
 		}
 
 		// if (all effect conditions are true OR this is a displacement spell) AND (the target is valid AND the target's object is valid)
 		if ((activeEffect->flags.all(RE::ActiveEffect::Flags::kHasConditions) || activeEffect->displacementSpell) && activeEffect->target && activeEffect->target->GetTargetStatsObject()) {
 
-			// store the auxillary timer on the unused member variable pad94
+			// auxillary timer
 			auto& conditionUpdateTime = reinterpret_cast<float&>(activeEffect->pad94);
 
 			if (!forceUpdate) {
 				if (activeEffect->elapsedSeconds <= 0.0F) {
-					// set the auxillary timer to the amt of the effect has been active
 					reinterpret_cast<float&>(activeEffect->pad94) = elapsedTimeDelta;
-					logger::debug("MagicEffectConditions -> activeEffect's pad94 was set to elapsedTimeDelta"sv);
 					return;
 				}
 
 				if (conditionUpdateTime > 0.0F && conditionUpdateTime < ActiveEffectConditionUpdateInterval()) {
 					reinterpret_cast<float&>(activeEffect->pad94) += elapsedTimeDelta;
-					logger::debug("MagicEffectConditions -> activeEffect's pad94 had elapsedTimeDelta added."sv);
 					return;
 				}
 			}
 
 			if (activeEffect->effect->conditions.IsTrue(activeEffect->target->GetTargetStatsObject(), activeEffect->caster.get().get()) && !activeEffect->CheckDisplacementSpellOnTarget()) {
 				activeEffect->conditionStatus = RE::ActiveEffect::ConditionStatus::kTrue;
-				logger::debug("MagicEffectConditions -> activeEffect's ConditionStatus was set to kTrue"sv);
 			}
 			else {
 				activeEffect->conditionStatus = RE::ActiveEffect::ConditionStatus::kFalse;
-				logger::debug("MagicEffectConditions -> activeEffect's ConditionStatus was set to kFalse"sv);
 			}
 		}
 		else {
 			activeEffect->conditionStatus = RE::ActiveEffect::ConditionStatus::kNotAvailable;
-			logger::debug("MagicEffectConditions -> activeEffect's ConditionStatus was set to kNotAvailable"sv);
 		}
 	}
 }

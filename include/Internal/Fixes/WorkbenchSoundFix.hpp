@@ -6,24 +6,16 @@
 // UIWorkshopDrillPressDrillLPM [SNDR:0017C8D2]
 // UIWorkshopDrillPressPowerLPM [SNDR:0017C8D3]
 
-// Workbenches:
-// workbenchWeaponsA "Weapons Workbench" [FURN:0017B3A4]
-// workbenchWeaponsB "Weapons Workbench" [FURN:0017E787]
-// WorkbenchPowerArmor "Power Armor Station" [FURN:00157FEB]
-// WorkbenchPowerArmorSmall "Power Armor Station" [FURN:0013BD08]
-// WorkbenchArmorA "Armor Workbench" [FURN:0012EA9B]
-// WorkshopScavengingStation "Scavenging Station" [FURN:0008674C]
-
 namespace Internal::Fixes::WorkbenchSoundFix
 {
 	void Install() noexcept;
 
-	void FixWorkbenchSound(RE::TESFurniture* a_workbench);
-
-	std::vector<RE::TESObjectREFR*> GetFurnitureRefsInCell(RE::TESObjectCELL* a_cell);
+	void FixWorkbenchSound();
 
 	// checks if the given furniture is a valid workbench
 	bool IsWorkbench(RE::TESFurniture* a_furniture);
+
+	bool IsPlayerCompanion(RE::Actor* a_actor);
 
 	namespace Events
 	{
@@ -41,19 +33,15 @@ namespace Internal::Fixes::WorkbenchSoundFix
 				logger::info("WorkbenchSoundFix -> TESFurnitureEvent receieved"sv);
 
 				if (a_event.IsExit()) {
-					logger::info("WorkbenchSoundFix -> TESFurnitureEvent receieved, was exit type"sv);
-
 					RE::TESFurniture* a_furniture = a_event.targetFurniture.get()->As<RE::TESFurniture>();
-					bool bChecked = IsWorkbench(a_furniture);
-					if (bChecked) {
-						logger::info("WorkbenchSoundFix -> bChecked = true"sv);
-					}
-					else {
-						logger::info("WorkbenchSoundFix -> bChecked = false. return"sv);
+					if (!a_furniture)
 						return RE::BSEventNotifyControl::kContinue;
-					}
 
-					FixWorkbenchSound(a_furniture);
+					bool bIsWorkbench = IsWorkbench(a_furniture);
+					if (!bIsWorkbench)
+						return RE::BSEventNotifyControl::kContinue;
+
+					FixWorkbenchSound();
 				}
 
 				return RE::BSEventNotifyControl::kContinue;
@@ -80,20 +68,21 @@ namespace Internal::Fixes::WorkbenchSoundFix
 			{
 				logger::info("WorkbenchSoundFix -> ActorCellEvent receieved"sv);
 
-				// disabled for now since it might not be necessary
-
 				auto eventActor = a_event.actor.get().get();
 				if (eventActor != RE::PlayerCharacter::GetSingleton()) {
-					logger::info("WorkbenchSoundFix -> actor was not player - return"sv);
 					return RE::BSEventNotifyControl::kContinue;
 				}
-				logger::info("WorkbenchSoundFix -> actor was player"sv);
 
-				// auto ui = RE::UI::GetSingleton();
-				// if (!ui) {
-				// 	logger::info("WorkbenchSoundFix -> ui was null - return"sv);
-				// 	return RE::BSEventNotifyControl::kContinue;
-				// }
+				auto ui = RE::UI::GetSingleton();
+				if (!ui) {
+					return RE::BSEventNotifyControl::kContinue;
+				}
+				if (ui->GetMenuOpen("ExamineMenu"sv) || ui->GetMenuOpen("CookingMenu"sv)) {
+					logger::info("WorkbenchSoundFix -> ui had relevant menu open, return"sv);
+					return RE::BSEventNotifyControl::kContinue;
+				}
+
+				FixWorkbenchSound();
 
 				return RE::BSEventNotifyControl::kContinue;
 			}

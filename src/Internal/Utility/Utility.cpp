@@ -5,7 +5,7 @@ namespace Internal::Utility
 	namespace Console
 	{
 		// runs a console command
-		void ExecuteCommand(std::string_view a_command, bool a_silent)
+		void ExecuteCommand(std::string_view a_command, RE::TESObjectREFR* a_targetRef, bool a_silent)
 		{
 			auto* log = RE::ConsoleLog::GetSingleton();
 			auto compiler = RE::ScriptCompiler();
@@ -15,7 +15,7 @@ namespace Internal::Utility
 			auto buffer = log->buffer;
 
 			script->SetText(a_command);
-			script->CompileAndRun(&compiler, RE::COMPILER_NAME::kSystemWindow, nullptr);
+			script->CompileAndRun(&compiler, RE::COMPILER_NAME::kSystemWindow, a_targetRef);
 
 			if (!script->header.isCompiled) {
 				logger::info("Internal::Utility::Console::ExecuteCommand: Failed to compile command \"{}\""sv, a_command);

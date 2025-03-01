@@ -2,22 +2,18 @@
 #include "Internal/Config/Config.hpp"
 #include "Internal/Utility/Utility.hpp"
 
-// Sounds:
+// SoundDescriptors:
 // UIWorkshopSewingMachineRunLPM [SNDR:0019E999]
 // UIWorkshopPowerArmorWeldLPM [SNDR:0022C1D3]
 // UIWorkshopDrillPressDrillLPM [SNDR:0017C8D2]
 // UIWorkshopDrillPressPowerLPM [SNDR:0017C8D3]
 
-// Workbenches:
-// workbenchWeaponsA "Weapons Workbench" [FURN:0017B3A4]
-// workbenchWeaponsB "Weapons Workbench" [FURN:0017E787]
-// WorkbenchPowerArmor "Power Armor Station" [FURN:00157FEB]
-// WorkbenchPowerArmorSmall "Power Armor Station" [FURN:0013BD08]
-// WorkbenchArmorA "Armor Workbench" [FURN:0012EA9B]
-// WorkshopScavengingStation "Scavenging Station" [FURN:0008674C]
-
 namespace Internal::Fixes::WorkbenchSoundFix
 {
+	std::string_view fixCommandArmorWorkbench = "RecvAnimEvent \"SoundStop\" \"UIWorkshopSewingMachineRunLPM\"";
+
+	RE::TESFaction* followerFaction = nullptr;
+
 	void Install() noexcept
 	{
 		logger::info("Fix installing: WorkbenchSoundFix."sv);
@@ -34,39 +30,16 @@ namespace Internal::Fixes::WorkbenchSoundFix
 		RE::PlayerCharacter::GetSingleton()->RE::BSTEventSource<RE::BGSActorCellEvent>::RegisterSink(cellHandler);
 		logger::info("WorkbenchSoundFix -> Events registered."sv);
 
+		followerFaction = (RE::TESFaction*)RE::TESForm::GetFormByID(0x23C01);
+
 		logger::info("Fix installed: WorkbenchSoundFix."sv);
 	}
 
-	void FixWorkbenchSound(RE::TESFurniture* a_workbench)
+	void FixWorkbenchSound()
 	{
-		if (a_workbench == nullptr) {
-			logger::info("WorkbenchSoundFix -> a_workbench was nullptr"sv);
-			return;
-		}
-		// this might need to be passed as TESObjectREFR to recieve anim graph events, need to test
+		Utility::Console::ExecuteCommand(fixCommandArmorWorkbench, RE::PlayerCharacter::GetSingleton(), true);
 
-		// send furnitureExitEvent animation event to a_workbench to kill animations/sound
-		// todo - try sending the event to the player, and try sending it with StopSound SoundEditorID
-		// a_workbench->NotifyAnimationGraphImpl("furnitureExitSlave");
 		logger::info("WorkbenchSoundFix -> FixWorkbenchSound ran"sv);
-	}
-
-	std::vector<RE::TESObjectREFR*> GetFurnitureRefsInCell(RE::TESObjectCELL* a_cell)
-	{
-		auto refs = std::vector<RE::TESObjectREFR*>();
-
-		if (a_cell == nullptr) {
-			return refs;
-		}
-
-		a_cell->ForEachRef([&](RE::TESObjectREFR* a_ref) {
-			if (a_ref && (a_ref->GetBaseObject()->formType == RE::ENUM_FORMTYPE::kFURN)) {
-				refs.push_back(a_ref);
-			}
-			return RE::BSContainer::ForEachResult::kContinue;
-		});
-
-		return refs;
 	}
 
 	// checks if the given furniture is a valid workbench

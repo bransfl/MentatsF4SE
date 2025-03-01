@@ -1,9 +1,9 @@
 #include "Internal/Fixes/RaceChangeFix.hpp"
 #include "Internal/Config/Config.hpp"
 
-namespace Internal::Fixes::RaceChangeFix
+namespace Internal::Fixes
 {
-	void Install() noexcept
+	void RaceChangeFix::Install() noexcept
 	{
 		logger::info("RaceChangeFix -> Fix installing..."sv);
 
@@ -35,7 +35,7 @@ namespace Internal::Fixes::RaceChangeFix
 		logger::info("RaceChangeFix -> Fix installed."sv);
 	}
 
-	void Fix()
+	void RaceChangeFix::Fix()
 	{
 		logger::info("RaceChangeFix -> Fix running..."sv);
 
@@ -44,7 +44,7 @@ namespace Internal::Fixes::RaceChangeFix
 			logger::info("Fix aborted: RaceChangeFix. Reason: Player was null."sv);
 			return;
 		}
-		
+
 		if (player->charGenRace != player->race) {
 			player->charGenRace = player->race;
 		}

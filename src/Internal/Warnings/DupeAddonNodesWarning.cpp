@@ -62,15 +62,22 @@ namespace Internal::Warnings::DupeAddonNodesWarning
 
 		if (!nodeMap.empty()) {
 			nodeMap.clear();
+			logger::info("DupeAddonNodesWarning -> Node map cleared."sv);
 		}
-
-		logger::info("DupeAddonNodesWarning -> Node map cleared."sv);
+		else {
+			logger::info("DupeAddonNodesWarning -> Node was already cleared."sv);
+		}
 	}
 
 	std::string_view GetModName(RE::TESForm* a_form, bool a_lastModified)
 	{
 		const auto index = a_lastModified ? -1 : 0;
 		const auto* file = a_form->GetFile(index);
-		return file ? file->filename : "MODNAME_NOT_FOUND"sv;
+		if (file) {
+			return file->filename;
+		}
+		else {
+			return "MODNAME_NOT_FOUND"sv;
+		}
 	}
 }

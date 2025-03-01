@@ -19,14 +19,13 @@ namespace Internal::Warnings::LeveledListEntryCountWarning
 
 		for (auto* form : formArray) {
 			listsChecked++;
+
 			auto* leveledList = form->As<RE::TESLeveledList>();
 			if (!leveledList) {
 				continue;
 			}
+
 			int8_t numEntries = GetNumEntries(leveledList);
-			if (!(numEntries == 0 || numEntries == 255)) {
-				continue;
-			}
 			if (numEntries <= 255) {
 				continue;
 			}

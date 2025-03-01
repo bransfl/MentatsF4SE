@@ -1,10 +1,14 @@
 #pragma once
 
-namespace Internal::Fixes::MagicEffectConditionsFix
+namespace Internal::Fixes
 {
-	void Install() noexcept;
+	class MagicEffectConditionsFix
+	{
+	public:
+		static void Install() noexcept;
 
-	static float ActiveEffectConditionUpdateInterval();
-
-	static void Hook_EvaluateConditions(RE::ActiveEffect* activeEffect, float elapsedTimeDelta, bool forceUpdate);
+	private:
+		static float ActiveEffectConditionUpdateInterval();
+		static void Hook_EvaluateConditions(RE::ActiveEffect* activeEffect, float elapsedTimeDelta, bool forceUpdate);
+	};
 }

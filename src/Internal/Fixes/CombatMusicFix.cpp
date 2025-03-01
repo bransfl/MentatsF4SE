@@ -5,12 +5,11 @@
 // prevents combat music from playing when not intended to play
 namespace Internal::Fixes::CombatMusicFix
 {
-
 	void Install() noexcept
 	{
 		logger::info("Fix installing: CombatMusicFix."sv);
 
-		if(!Config::bCombatMusicFix.GetValue()) {
+		if (!Config::bCombatMusicFix.GetValue()) {
 			logger::info("Fix aborted: CombatMusicFix. Reason: Fix was disabled in ini file."sv);
 			return;
 		}
@@ -45,12 +44,12 @@ namespace Internal::Fixes::CombatMusicFix
 
 	bool NeedsFix()
 	{
-		bool ret = false;	// setup this way for logging
+		bool needsFix = false; // setup this way for logging
 		auto playerCharacter = RE::PlayerCharacter::GetSingleton();
 		if (playerCharacter && !playerCharacter->IsInCombat()) {
-			ret = true;
+			needsFix = true;
 		}
-		logger::info("CombatMusicFix -> NeedsFix() -> ret={}"sv, ret);
-		return ret;
+		logger::info(FMT_STRING("CombatMusicFix -> NeedsFix: {}"), needsFix);
+		return needsFix;
 	}
 }

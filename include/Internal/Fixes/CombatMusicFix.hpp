@@ -31,6 +31,14 @@ namespace Internal::Fixes::CombatMusicFix
 
 				return RE::BSEventNotifyControl::kContinue;
 			}
+
+		private:
+			DeathEventHandler() = default;
+			DeathEventHandler(const DeathEventHandler&) = delete;
+			DeathEventHandler(DeathEventHandler&&) = delete;
+			~DeathEventHandler() = default;
+			DeathEventHandler& operator=(const DeathEventHandler&) = delete;
+			DeathEventHandler& operator=(DeathEventHandler&&) = delete;
 		};
 	}
 }

@@ -1,12 +1,14 @@
 #include "Internal/Fixes/MagicEffectConditionsFix.hpp"
 #include "Internal/Config/Config.hpp"
 
-namespace Internal::Fixes::MagicEffectConditionsFix
+namespace Internal::Fixes
 {
 	typedef void(EvaluateConditionsSig)(RE::ActiveEffect*, float, bool);
-	REL::Relocation<EvaluateConditionsSig> OriginalFunction_EvaluateConditions;
+	REL::Relocation<EvaluateConditionsSig> OriginalFunction_EvaluateConditions_OG;
+	REL::Relocation<EvaluateConditionsSig> OriginalFunction_EvaluateConditions_NG;
+	static RE::Setting* conditionUpdateInterval;
 
-	void Install() noexcept
+	void MagicEffectConditionsFix::Install() noexcept
 	{
 		logger::info("Fix installing: MagicEffectConditionsFix."sv);
 
@@ -20,29 +22,30 @@ namespace Internal::Fixes::MagicEffectConditionsFix
 			return;
 		}
 
-		F4SE::AllocTrampoline(8 * 8);
+		F4SE::AllocTrampoline(64);
 		F4SE::Trampoline& trampoline = F4SE::GetTrampoline();
+
 		if (REL::Module::IsNG()) {
 			logger::info("Fix aborted: MagicEffectConditionsFix. Reason: Game version was NG."sv);
 			return;
 			// NG Patch - Don't have address for this yet.
 			// REL::Relocation<uintptr_t> ptr_EvaluateConditions_NG{ REL::ID() };
-			// trampoline.write_branch<5>(ptr_EvaluateConditions_NG.address(), &EvaluateConditions); TODO
+			// OriginalFunction_EvaluateConditions_NG = trampoline.write_branch<5>(ptr_EvaluateConditions_NG.address(), &Hook_EvaluateConditions);
 		}
 		else {
 			// OG Patch
-			REL::Relocation<uintptr_t> evaluateConditionsFuncLocation{ REL::ID(1228998) };
-			OriginalFunction_EvaluateConditions = trampoline.write_branch<5>(evaluateConditionsFuncLocation.address(), &Hook_EvaluateConditions);
+			REL::Relocation<uintptr_t> ptr_EvaluateConditions_OG{ REL::ID(1228998) };
+			OriginalFunction_EvaluateConditions_OG = trampoline.write_branch<5>(ptr_EvaluateConditions_OG.address(), &Hook_EvaluateConditions);
 		}
 
 		logger::info("Fix installed: MagicEffectConditionsFix.");
 	}
 
-	float ActiveEffectConditionUpdateInterval()
+	float MagicEffectConditionsFix::ActiveEffectConditionUpdateInterval()
 	{
-		static RE::Setting* conditionInterval = RE::GameSettingCollection::GetSingleton()->GetSetting("fActiveEffectConditionUpdateInterval"sv);
-		if (conditionInterval->GetFloat() > 0.001F) {
-			return conditionInterval->GetFloat();
+		conditionUpdateInterval = RE::GameSettingCollection::GetSingleton()->GetSetting("fActiveEffectConditionUpdateInterval"sv);
+		if (conditionUpdateInterval->GetFloat() > 0.001F) {
+			return conditionUpdateInterval->GetFloat();
 		}
 		else {
 			return 1.0F;
@@ -50,7 +53,7 @@ namespace Internal::Fixes::MagicEffectConditionsFix
 	}
 
 	// the hook
-	void Hook_EvaluateConditions(RE::ActiveEffect* activeEffect, float elapsedTimeDelta, bool forceUpdate)
+	void MagicEffectConditionsFix::Hook_EvaluateConditions(RE::ActiveEffect* activeEffect, float elapsedTimeDelta, bool forceUpdate)
 	{
 		if (activeEffect->conditionStatus == RE::ActiveEffect::ConditionStatus::kNotAvailable) {
 			logger::debug("MagicEffectConditions -> activeEffect's ConditionStatus was kNotAvailable. Return."sv);
@@ -68,7 +71,6 @@ namespace Internal::Fixes::MagicEffectConditionsFix
 				return;
 
 			// logger::debug(FMT_STRING("activeEffect was FaF potion. GetFormID()={:08X}, EditorId={}"), potion->GetFormID(), potion->GetFormEditorID());
-
 			if (potion->data.addictionChance > 0.0 || potion->data.addictionItem != nullptr) {
 				// logger::debug(FMT_STRING("activeEffect potion WAS addictive. addiction: {}"), potion->data.addictionName);
 				return;
@@ -93,7 +95,8 @@ namespace Internal::Fixes::MagicEffectConditionsFix
 				}
 			}
 
-			if (activeEffect->effect->conditions.IsTrue(activeEffect->target->GetTargetStatsObject(), activeEffect->caster.get().get()) && !activeEffect->CheckDisplacementSpellOnTarget()) {
+			RE::TESObjectREFR* caster = activeEffect->caster.get().get(); // note - this might need to be target?
+			if (activeEffect->effect->conditions.IsTrue(activeEffect->target->GetTargetStatsObject(), caster) && !activeEffect->CheckDisplacementSpellOnTarget()) {
 				activeEffect->conditionStatus = RE::ActiveEffect::ConditionStatus::kTrue;
 			}
 			else {

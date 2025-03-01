@@ -4,6 +4,8 @@
 // unequips and reequips the player's grenade on save load to fix a semi-common movement speed bug
 namespace Internal::Fixes::GrenadeMovementSpeedFix
 {
+	RE::BGSEquipSlot* grenadeSlot;
+
 	void Install() noexcept
 	{
 		logger::info("Fix installing: GrenadeMovementSpeedFix.");
@@ -23,8 +25,13 @@ namespace Internal::Fixes::GrenadeMovementSpeedFix
 		// on save load
 
 		// auto* player = RE::PlayerCharacter::GetSingleton();
-		// if (!player)
+		// if (!player) {
 		// 	return;
+		// }
+
+		// if(!player->currentProcess->middleHigh) {
+		// 	return;
+		// }
 
 		// // check if grenade bipedslot has an item and player has >0 of the grenades in their inventory
 		// bool hasGrenade = false;
@@ -39,39 +46,36 @@ namespace Internal::Fixes::GrenadeMovementSpeedFix
 		// 	return;
 		// }
 
+		// //grenadeSlot = (RE::BGSEquipSlot*)RE::TESForm::GetFormByID(0x46AAC);
+
 		// const RE::EquippedItem& equippedGrenadeItem = player->currentProcess->middleHigh->equippedItems[2];
 		// RE::TESObjectWEAP* equippedGrenadeForm = equippedGrenadeItem.item.object->As<RE::TESObjectWEAP>();
+		// //logger::info(FMT_STRING("equippedGrenadeForm: {}"), equippedGrenadeForm->GetFormEditorID());
 
 		// uint32_t grenadeCount;
 		// player->GetItemCount(grenadeCount, equippedGrenadeForm, true);
 		// logger::info("GrenadeMovementSpeedFix - GrenadeCount = {}", grenadeCount);
-		// if(grenadeCount == 0)
+		// if(grenadeCount == 0) {
 		// 	return;
+		// }
 
 		// auto* equipManager = RE::ActorEquipManager::GetSingleton();
-		// if(!equipManager)
+		// if(!equipManager) {
 		// 	return;
+		// }
 
-		//  unequip the grenade item
-		// equipManager->UnequipObject();
-
-		// logger::info("a_slot={}", equippedGrenadeItem.item, 1000, equippedGrenadeItem.equipSlot);
-
-		// reequip the grenade item
-		// equipManager->EquipObject();
-
-		// bool bUnequip = equipManager->UnequipObject(
-		// 	player,
-		// 	&equippedGrenadeItem.item,
-		// 	grenadeCount,
-		// 	equippedGrenadeItem.equipSlot,
-		// 	0,
-		// 	true,
-		// 	true,
-		// 	true,
-		// 	true,
-		// 	nullptr);
-		// logger::info("GrenadeMovementSpeedFix = bUnequip = {}", bUnequip);
+		// // bool bUnequip = equipManager->UnequipObject(
+		// // 	player,
+		// // 	&equippedGrenadeItem.item,
+		// // 	grenadeCount,
+		// // 	equippedGrenadeItem.equipSlot,
+		// // 	0,
+		// // 	true,
+		// // 	true,
+		// // 	true,
+		// // 	true,
+		// // 	grenadeSlot);
+		// // logger::info("GrenadeMovementSpeedFix = bUnequip = {}", bUnequip);
 	}
 }
 

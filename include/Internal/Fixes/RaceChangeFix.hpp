@@ -1,8 +1,12 @@
 #pragma once
 
-namespace Internal::Fixes::RaceChangeFix
+namespace Internal::Fixes
 {
-	void Install() noexcept;
+	class RaceChangeFix
+	{
+	public:
+		static void Install() noexcept;
 
-	void Fix();
+		static void Fix();
+	};
 }

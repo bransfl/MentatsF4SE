@@ -20,7 +20,7 @@ namespace Internal::Fixes::TransferManyItems
 		}
 
 		if (REL::Module::IsNG()) {
-			// NG patch - buf[4] is different
+			// NG patch
 			uint8_t buf[] = { 0x44, 0x8B, 0x44, 0x24, 0x70, 0x90 };
 			REL::safe_write(RelocationManager::s_baseAddr + 0x004AEF51, buf, sizeof(buf));
 		}

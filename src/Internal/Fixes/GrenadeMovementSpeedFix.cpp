@@ -8,7 +8,7 @@ namespace Internal::Fixes
 
 	void GrenadeMovementSpeedFix::Install() noexcept
 	{
-		logger::info("Fix installing: GrenadeMovementSpeedFix.");
+		logger::info("Fix installing: GrenadeMovementSpeedFix."sv);
 
 		if (!Config::bGrenadeMovementSpeedFix.GetValue()) {
 			logger::info("Fix aborted: GrenadeMovementSpeedFix. Reason: Fix was disabled in ini file."sv);
@@ -17,7 +17,7 @@ namespace Internal::Fixes
 
 		Fix();
 
-		logger::info("Fix installed: GrenadeMovementSpeedFix.");
+		logger::info("Fix installed: GrenadeMovementSpeedFix."sv);
 	}
 
 	void GrenadeMovementSpeedFix::Fix()

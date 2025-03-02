@@ -23,6 +23,6 @@ namespace Internal::Fixes
 		auto& cells = RE::CellAttachDetachEventSource::CellAttachDetachEventSourceSingleton::GetSingleton();
 		cells.source.RegisterSink(EncounterZoneResetFix::CellAttachDetachEventHandler::GetSingleton());
 
-		logger::info("EncounterZoneResetFix -> Fix installed.");
+		logger::info("EncounterZoneResetFix -> Fix installed."sv);
 	}
 }

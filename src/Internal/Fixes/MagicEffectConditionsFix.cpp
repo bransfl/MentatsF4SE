@@ -37,7 +37,7 @@ namespace Internal::Fixes
 			OriginalFunction_EvaluateConditions_OG = trampoline.write_branch<5>(ptr_EvaluateConditions_OG.address(), &Hook_EvaluateConditions);
 		}
 
-		logger::info("Fix installed: MagicEffectConditionsFix.");
+		logger::info("Fix installed: MagicEffectConditionsFix."sv);
 	}
 
 	float MagicEffectConditionsFix::ActiveEffectConditionUpdateInterval()
@@ -54,7 +54,7 @@ namespace Internal::Fixes
 	void MagicEffectConditionsFix::Hook_EvaluateConditions(RE::ActiveEffect* activeEffect, float elapsedTimeDelta, bool forceUpdate)
 	{
 		if (activeEffect->conditionStatus == RE::ActiveEffect::ConditionStatus::kNotAvailable) {
-			logger::debug("MagicEffectConditions -> activeEffect's ConditionStatus was kNotAvailable. Return."sv);
+			// logger::debug("MagicEffectConditions -> activeEffect's ConditionStatus was kNotAvailable. Return."sv);
 			return;
 		}
 

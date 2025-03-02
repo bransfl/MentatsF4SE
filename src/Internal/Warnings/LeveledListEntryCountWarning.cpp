@@ -6,7 +6,7 @@ namespace Internal::Warnings
 {
 	void LeveledListEntryCountWarning::CheckLeveledLists()
 	{
-		logger::info("LeveledListEntryCountWarning -> Checking LeveledLists"sv);
+		logger::info("LeveledListEntryCountWarning -> Warning installing..."sv);
 
 		if (!Config::bLeveledListEntryCountWarning.GetValue()) {
 			logger::info("Warning aborted: LeveledListEntryCountWarning. Reason: Process was disabled in ini file."sv);
@@ -18,10 +18,10 @@ namespace Internal::Warnings
 		uint16_t listsChecked = 0;
 		bool foundBadLL = false;
 
-		for (auto* form : formArray) {
+		for (auto* levItem : formArray) {
 			listsChecked++;
 
-			auto* leveledList = form->As<RE::TESLeveledList>();
+			auto* leveledList = levItem->As<RE::TESLeveledList>();
 			if (!leveledList) {
 				continue;
 			}
@@ -30,12 +30,15 @@ namespace Internal::Warnings
 				continue;
 			}
 
-			logger::info("LeveledListEntryCountWarning-> LeveledList {} has {} entries", form->GetFormID(), numEntries);
+			logger::info(FMT_STRING("LeveledListEntryCountWarning-> LeveledList (FormID: {:08X}, EditorID: {}) has {} entries."),
+				levItem->GetFormID(), levItem->GetFormEditorID(), numEntries);
 			foundBadLL = true;
 		}
 		if (foundBadLL) {
-			logger::warn("LeveledListEntryCountWarning -> Warning: At least 1 leveled list has over 255 entries in the plugin record. Check the log at Documents/My Games/Fallout4/F4SE/EngineFixesF4SE.log"sv);
+			RE::ConsoleLog::GetSingleton()->AddString("EngineFixesF4SE -> LeveledListEntryCountWarning -> Warning: At least 1 leveled list has over 255 entries. Check the log at Documents/My Games/Fallout4/F4SE/EngineFixesF4SE.log\n");
 		}
-		logger::info("LeveledListEntryCountWarning -> ListsChecked: {}", listsChecked);
+		logger::info(FMT_STRING("LeveledListEntryCountWarning -> ListsChecked: {}"), listsChecked);
+
+		logger::info("LeveledListEntryCountWarning -> Warning installed."sv);
 	}
 }

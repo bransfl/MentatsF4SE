@@ -34,7 +34,7 @@ namespace Internal::Fixes
 	// please (just) stop the music!
 	void CombatMusicFix::Fix()
 	{
-		logger::info("CombatMusicFix -> Fix ran.");
+		logger::info("CombatMusicFix -> Fix ran."sv);
 		// todo - make this asynchronous and add a 3-5 second delay so it doesnt instantly end
 		for (const auto& command : StopCombatMusicCommands) {
 			Utility::ExecuteCommand(command, nullptr, true);

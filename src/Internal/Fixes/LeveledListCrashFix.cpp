@@ -98,7 +98,7 @@ namespace Internal::Fixes
 	{
 		logger::info(FMT_STRING("Caught problematic insertion of (FormID: {:08X}, EditorID: {}) into item LeveledList (FormID: {:08X}, EditorID: {})"),
 			a_form->GetFormID(), a_form->GetFormEditorID(), a_list->GetFormID(), a_list->GetFormEditorID());
-		logger::info("The form has not been inserted. For ease of review, here are the current contents of the list:\n");
+		logger::info("The form has not been inserted. For ease of review, here are the current contents of the list:\n"sv);
 
 		int i = 1;
 		for (auto& entry : LeveledListCrashFix::GetEntries(a_list)) {
@@ -117,7 +117,7 @@ namespace Internal::Fixes
 	{
 		logger::info(FMT_STRING("Caught problematic insertion of (FormID: {:08X}, EditorID: {}) into actor LeveledList (FormID: {:08X}, EditorID: {})"),
 			a_form->GetFormID(), a_form->GetFormEditorID(), a_list->GetFormID(), a_list->GetFormEditorID());
-		logger::info("The form has not been inserted. For ease of review, here are the current contents of the list:\n");
+		logger::info("The form has not been inserted. For ease of review, here are the current contents of the list:\n"sv);
 
 		int i = 1;
 		for (auto& entry : LeveledListCrashFix::GetEntries(a_list)) {

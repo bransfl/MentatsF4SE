@@ -2,10 +2,10 @@
 #include "Internal/Config/Config.hpp"
 #include "f4se_common/Relocation.h"
 
-namespace Internal::Fixes::TransferManyItems::AddManyItemsFix
+namespace Internal::Fixes::TransferManyItems
 {
 
-	void Install() noexcept
+	void AddManyItemsFix::Install() noexcept
 	{
 		logger::info("Fix installing: AddManyItemsFix."sv);
 

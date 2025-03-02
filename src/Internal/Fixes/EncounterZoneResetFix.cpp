@@ -3,9 +3,9 @@
 
 // only needed for NG, Buffout4NG covers this for OG
 // if alandtse updates Buffout4NG to include this for NG, this fix will be deprecated and removed
-namespace Internal::Fixes::EncounterZoneResetFix
+namespace Internal::Fixes
 {
-	void Install() noexcept
+	void EncounterZoneResetFix::Install() noexcept
 	{
 		logger::info("EncounterZoneResetFix -> Fix installing..."sv);
 
@@ -21,7 +21,7 @@ namespace Internal::Fixes::EncounterZoneResetFix
 		}
 
 		auto& cells = RE::CellAttachDetachEventSource::CellAttachDetachEventSourceSingleton::GetSingleton();
-		cells.source.RegisterSink(Events::CellAttachDetachEventHandler::GetSingleton());
+		cells.source.RegisterSink(EncounterZoneResetFix::CellAttachDetachEventHandler::GetSingleton());
 
 		logger::info("EncounterZoneResetFix -> Fix installed.");
 	}

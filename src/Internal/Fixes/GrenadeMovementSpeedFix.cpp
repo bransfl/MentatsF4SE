@@ -2,11 +2,11 @@
 #include "Internal/Config/Config.hpp"
 
 // unequips and reequips the player's grenade on save load to fix a semi-common movement speed bug
-namespace Internal::Fixes::GrenadeMovementSpeedFix
+namespace Internal::Fixes
 {
 	RE::BGSEquipSlot* grenadeSlot;
 
-	void Install() noexcept
+	void GrenadeMovementSpeedFix::Install() noexcept
 	{
 		logger::info("Fix installing: GrenadeMovementSpeedFix.");
 
@@ -20,7 +20,7 @@ namespace Internal::Fixes::GrenadeMovementSpeedFix
 		logger::info("Fix installed: GrenadeMovementSpeedFix.");
 	}
 
-	void Fix()
+	void GrenadeMovementSpeedFix::Fix()
 	{
 		// on save load
 

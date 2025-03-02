@@ -9,47 +9,40 @@
 // note - this mod and the original mod both have the minor issue of
 // dropping a stack of 32,766 + 1 individual item or a stack of 32,765 + 2 individual items sometimes instead of a full 32,767 stack
 // when you drop a LOT of items, but it's better than voiding all of your stuff and having negative items
-namespace Internal::Fixes::TransferManyItems::DropManyItemsFix
+namespace Internal::Fixes::TransferManyItems
 {
 	typedef uint32_t* (*_DropItemIntoWorld)(RE::TESObjectREFR*, uint32_t*, RE::TESBoundObject*, int32_t, RE::TESObjectREFR*, RE::NiPoint3*, RE::NiPoint3*, RE::ExtraDataList*);
 
 	// OG typedef/address
-	//
 	// NG typedef/address
 
 	RelocAddr<_DropItemIntoWorld> DropItemIntoWorld_Original(0x003FA580);
-	//
 	RelocAddr<_DropItemIntoWorld> DropItemIntoWorld_Original_NG(0x004AD7E0);
 
 	RelocPtr<void> DropItemIntoWorld_Dest(0x003F9BEB);
-	//
 	RelocPtr<void> DropItemIntoWorld_Dest_NG(0x003F9BEB);
 
 	typedef RE::ExtraDataList* (*_ExtraDataList_ctor_OG)(void*);
 	RelocAddr<_ExtraDataList_ctor_OG> ExtraDataList_ctor_OG(0x00080750);
-	//
 	typedef RE::ExtraDataList* (*_ExtraDataList_ctor_NG)(void*);
 	RelocAddr<_ExtraDataList_ctor_NG> ExtraDataList_ctor_NG(0x0021E420);
 
 	typedef void (*_ExtraDataList_dtor)(RE::ExtraDataList*);
 	RelocAddr<_ExtraDataList_dtor> ExtraDataList_dtor(0x00080790);
-	//
 	typedef void (*_ExtraDataList_dtor_NG)(RE::ExtraDataList*);
 	RelocAddr<_ExtraDataList_dtor_NG> ExtraDataList_dtor_NG(0x0021E460);
 
 	typedef void (*_ExtraDataList_CopyList)(RE::ExtraDataList*, RE::ExtraDataList*);
 	RelocAddr<_ExtraDataList_CopyList> ExtraDataList_CopyList(0x00082240);
-	//
 	typedef void (*_ExtraDataList_CopyList_NG)(RE::ExtraDataList*, RE::ExtraDataList*);
 	RelocAddr<_ExtraDataList_CopyList_NG> ExtraDataList_CopyList_NG(0x002214C0);
 
 	typedef void (*_ExtraDataList_SetCount)(RE::ExtraDataList*, int16_t);
 	RelocAddr<_ExtraDataList_SetCount> ExtraDataList_SetCount(0x00086FB0);
-	//
 	typedef void (*_ExtraDataList_SetCount_NG)(RE::ExtraDataList*, int16_t);
 	RelocAddr<_ExtraDataList_SetCount_NG> ExtraDataList_SetCount_NG(0x00226F00);
 
-	void Install() noexcept
+	void DropManyItemsFix::Install() noexcept
 	{
 		logger::info("Fix installing: DropManyItemsFix."sv);
 
@@ -85,7 +78,7 @@ namespace Internal::Fixes::TransferManyItems::DropManyItemsFix
 	}
 
 	// og hook
-	uint32_t* Hook_DropItemIntoWorld_OG(RE::TESObjectREFR* refr, uint32_t* handle, RE::TESBoundObject* item, int32_t count, RE::TESObjectREFR* container, RE::NiPoint3* pa, RE::NiPoint3* pb, RE::ExtraDataList* extra)
+	uint32_t* DropManyItemsFix::Hook_DropItemIntoWorld_OG(RE::TESObjectREFR* refr, uint32_t* handle, RE::TESBoundObject* item, int32_t count, RE::TESObjectREFR* container, RE::NiPoint3* pa, RE::NiPoint3* pb, RE::ExtraDataList* extra)
 	{
 
 		while (count >= 0x8000) {
@@ -115,7 +108,7 @@ namespace Internal::Fixes::TransferManyItems::DropManyItemsFix
 	}
 
 	// ng hook
-	uint32_t* Hook_DropItemIntoWorld_NG(RE::TESObjectREFR* refr, uint32_t* handle, RE::TESBoundObject* item, int32_t count, RE::TESObjectREFR* container, RE::NiPoint3* pa, RE::NiPoint3* pb, RE::ExtraDataList* extra)
+	uint32_t* DropManyItemsFix::Hook_DropItemIntoWorld_NG(RE::TESObjectREFR* refr, uint32_t* handle, RE::TESBoundObject* item, int32_t count, RE::TESObjectREFR* container, RE::NiPoint3* pa, RE::NiPoint3* pb, RE::ExtraDataList* extra)
 	{
 
 		while (count >= 0x8000) {
@@ -147,7 +140,7 @@ namespace Internal::Fixes::TransferManyItems::DropManyItemsFix
 	// todo - update to use this
 	// functions as ExtraDataList_SetCount, but doesnt req addresses and still works on all versions
 	// note - comment out the addresses for ExtraDataList_SetCount once luca verifies this
-	void SetRefCount(RE::TESObjectREFR* a_itemRef, std::int16_t a_count)
+	void DropManyItemsFix::SetRefCount(RE::TESObjectREFR* a_itemRef, std::int16_t a_count)
 	{
 		if (!a_itemRef) {
 			return;

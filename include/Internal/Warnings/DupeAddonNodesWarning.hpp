@@ -1,12 +1,14 @@
 #pragma once
 
-namespace Internal::Warnings::DupeAddonNodesWarning
+namespace Internal::Warnings
 {
-	void Install() noexcept;
+	class DupeAddonNodesWarning
+	{
+	public:
+		static void Install() noexcept;
 
-	void CheckDupeAddonNodes();
+		static void CheckDupeAddonNodes();
 
-	void ClearNodeMap();
-
-	std::string_view GetModName(RE::TESForm* a_form, bool a_lastModified);
+		static void ClearNodeMap();
+	};
 }

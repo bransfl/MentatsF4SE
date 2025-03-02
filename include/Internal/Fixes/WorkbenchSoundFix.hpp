@@ -6,19 +6,20 @@
 // UIWorkshopDrillPressDrillLPM [SNDR:0017C8D2]
 // UIWorkshopDrillPressPowerLPM [SNDR:0017C8D3]
 
-namespace Internal::Fixes::WorkbenchSoundFix
+namespace Internal::Fixes
 {
-	void Install() noexcept;
-
-	void FixWorkbenchSound();
-
-	// checks if the given furniture is a valid workbench
-	bool IsWorkbench(RE::TESFurniture* a_furniture);
-
-	bool IsPlayerCompanion(RE::Actor* a_actor);
-
-	namespace Events
+	class WorkbenchSoundFix
 	{
+	public:
+		static void Install() noexcept;
+
+		static void FixWorkbenchSound();
+
+		// checks if the given furniture is a valid workbench
+		static bool IsWorkbench(RE::TESFurniture* a_furniture);
+
+		static bool IsPlayerCompanion(RE::Actor* a_actor);
+
 		class FurnitureEventHandler : public RE::BSTEventSink<RE::TESFurnitureEvent>
 		{
 		public:
@@ -94,5 +95,5 @@ namespace Internal::Fixes::WorkbenchSoundFix
 			ActorCellEventHandler& operator=(const ActorCellEventHandler&) = delete;
 			ActorCellEventHandler& operator=(ActorCellEventHandler&&) = delete;
 		};
-	}
+	};
 }

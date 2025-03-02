@@ -1,11 +1,12 @@
 #include "Internal/Warnings/DupeAddonNodesWarning.hpp"
 #include "Internal/Config/Config.hpp"
+#include "Internal/Utility/Utility.hpp"
 
-namespace Internal::Warnings::DupeAddonNodesWarning
+namespace Internal::Warnings
 {
 	std::unordered_map<std::uint32_t, RE::BGSAddonNode*> nodeMap;
 
-	void Install() noexcept
+	void DupeAddonNodesWarning::Install() noexcept
 	{
 		logger::info("Warning installing: DupeAddonNodesWarning."sv);
 
@@ -19,9 +20,8 @@ namespace Internal::Warnings::DupeAddonNodesWarning
 		logger::info("Warning installed: DupeAddonNodesWarning."sv);
 	}
 
-	void CheckDupeAddonNodes()
+	void DupeAddonNodesWarning::CheckDupeAddonNodes()
 	{
-
 		auto dataHandler = RE::TESDataHandler::GetSingleton();
 		auto& formArray = dataHandler->GetFormArray<RE::BGSAddonNode>();
 		uint32_t nodesChecked = 0;
@@ -44,8 +44,8 @@ namespace Internal::Warnings::DupeAddonNodesWarning
 				const auto currentNode = (*res.first).second;
 				if (currentNode != addonNode && currentNode->formID != addonNode->formID) {
 					nodeErrors++;
-					std::string_view modNameCurrent = GetModName(currentNode, false);
-					std::string_view modNameAddonNode = GetModName(addonNode, false);
+					std::string_view modNameCurrent = Utility::GetModName(currentNode, false);
+					std::string_view modNameAddonNode = Utility::GetModName(addonNode, false);
 					logger::warn(FMT_STRING("DupeAddonNodesWarning -> Duplicate AddonNode Index found at FormID {:08X} in plugin {} AND FormID {:08X} in plugin {}, the index was {}."),
 						currentNode->formID, modNameCurrent, addonNode->formID, modNameAddonNode, addonNode->index);
 					RE::ConsoleLog::GetSingleton()->AddString("EngineFixesF4SE -> DupeAddonNodesWarning -> An AddonNode duplicate index was found, check the log for more information.\n");
@@ -56,7 +56,7 @@ namespace Internal::Warnings::DupeAddonNodesWarning
 		logger::info(FMT_STRING("DupeAddonNodesWarning -> CheckDupeAddonNodes finished, NodesChecked: {}, NodeErrors: {}"), nodesChecked, nodeErrors);
 	}
 
-	void ClearNodeMap()
+	void DupeAddonNodesWarning::ClearNodeMap()
 	{
 		logger::info("DupeAddonNodesWarning -> Clearing node map..."sv);
 
@@ -66,18 +66,6 @@ namespace Internal::Warnings::DupeAddonNodesWarning
 		}
 		else {
 			logger::info("DupeAddonNodesWarning -> Node was already cleared."sv);
-		}
-	}
-
-	std::string_view GetModName(RE::TESForm* a_form, bool a_lastModified)
-	{
-		const auto index = a_lastModified ? -1 : 0;
-		const auto* file = a_form->GetFile(index);
-		if (file) {
-			return file->filename;
-		}
-		else {
-			return "MODNAME_NOT_FOUND"sv;
 		}
 	}
 }

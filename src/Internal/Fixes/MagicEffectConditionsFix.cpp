@@ -22,15 +22,14 @@ namespace Internal::Fixes
 			return;
 		}
 
+		conditionUpdateInterval = RE::GameSettingCollection::GetSingleton()->GetSetting("fActiveEffectConditionUpdateInterval"sv);
 		F4SE::AllocTrampoline(64);
 		F4SE::Trampoline& trampoline = F4SE::GetTrampoline();
 
 		if (REL::Module::IsNG()) {
-			logger::info("Fix aborted: MagicEffectConditionsFix. Reason: Game version was NG."sv);
-			return;
-			// NG Patch - Don't have address for this yet.
-			// REL::Relocation<uintptr_t> ptr_EvaluateConditions_NG{ REL::ID() };
-			// OriginalFunction_EvaluateConditions_NG = trampoline.write_branch<5>(ptr_EvaluateConditions_NG.address(), &Hook_EvaluateConditions);
+			// NG Patch
+			REL::Relocation<uintptr_t> ptr_EvaluateConditions_NG{ REL::ID(2226003) };
+			OriginalFunction_EvaluateConditions_NG = trampoline.write_branch<5>(ptr_EvaluateConditions_NG.address(), &Hook_EvaluateConditions);
 		}
 		else {
 			// OG Patch
@@ -43,7 +42,7 @@ namespace Internal::Fixes
 
 	float MagicEffectConditionsFix::ActiveEffectConditionUpdateInterval()
 	{
-		conditionUpdateInterval = RE::GameSettingCollection::GetSingleton()->GetSetting("fActiveEffectConditionUpdateInterval"sv);
+
 		if (conditionUpdateInterval->GetFloat() > 0.001F) {
 			return conditionUpdateInterval->GetFloat();
 		}

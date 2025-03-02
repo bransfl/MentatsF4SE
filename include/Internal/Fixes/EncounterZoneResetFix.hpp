@@ -1,11 +1,12 @@
 #pragma once
 
-namespace Internal::Fixes::EncounterZoneResetFix
+namespace Internal::Fixes
 {
-	void Install() noexcept;
-
-	namespace Events
+	class EncounterZoneResetFix
 	{
+	public:
+		static void Install() noexcept;
+
 		class CellAttachDetachEventHandler : public RE::BSTEventSink<RE::CellAttachDetachEvent>
 		{
 		public:
@@ -43,5 +44,5 @@ namespace Internal::Fixes::EncounterZoneResetFix
 			CellAttachDetachEventHandler& operator=(const CellAttachDetachEventHandler&) = delete;
 			CellAttachDetachEventHandler& operator=(CellAttachDetachEventHandler&&) = delete;
 		};
-	}
+	};
 }

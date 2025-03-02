@@ -8,13 +8,13 @@
 // UIWorkshopDrillPressDrillLPM [SNDR:0017C8D2]
 // UIWorkshopDrillPressPowerLPM [SNDR:0017C8D3]
 
-namespace Internal::Fixes::WorkbenchSoundFix
+namespace Internal::Fixes
 {
 	std::string_view fixCommandArmorWorkbench = "RecvAnimEvent \"SoundStop\" \"UIWorkshopSewingMachineRunLPM\"";
 
 	RE::TESFaction* followerFaction = nullptr;
 
-	void Install() noexcept
+	void WorkbenchSoundFix::Install() noexcept
 	{
 		logger::info("Fix installing: WorkbenchSoundFix."sv);
 
@@ -24,9 +24,9 @@ namespace Internal::Fixes::WorkbenchSoundFix
 		}
 
 		// furniture
-		RE::TESFurnitureEvent::GetEventSource()->RegisterSink(Events::FurnitureEventHandler::GetSingleton());
+		RE::TESFurnitureEvent::GetEventSource()->RegisterSink(WorkbenchSoundFix::FurnitureEventHandler::GetSingleton());
 		// cells
-		auto* cellHandler = Events::ActorCellEventHandler::GetSingleton();
+		auto* cellHandler = WorkbenchSoundFix::ActorCellEventHandler::GetSingleton();
 		RE::PlayerCharacter::GetSingleton()->RE::BSTEventSource<RE::BGSActorCellEvent>::RegisterSink(cellHandler);
 		logger::info("WorkbenchSoundFix -> Events registered."sv);
 
@@ -35,15 +35,15 @@ namespace Internal::Fixes::WorkbenchSoundFix
 		logger::info("Fix installed: WorkbenchSoundFix."sv);
 	}
 
-	void FixWorkbenchSound()
+	void WorkbenchSoundFix::FixWorkbenchSound()
 	{
-		Utility::Console::ExecuteCommand(fixCommandArmorWorkbench, RE::PlayerCharacter::GetSingleton(), true);
+		Utility::ExecuteCommand(fixCommandArmorWorkbench, RE::PlayerCharacter::GetSingleton(), true);
 
 		logger::info("WorkbenchSoundFix -> FixWorkbenchSound ran"sv);
 	}
 
 	// checks if the given furniture is a valid workbench
-	bool IsWorkbench(RE::TESFurniture* a_furniture)
+	bool WorkbenchSoundFix::IsWorkbench(RE::TESFurniture* a_furniture)
 	{
 		if (!a_furniture) {
 			return false;
@@ -52,8 +52,11 @@ namespace Internal::Fixes::WorkbenchSoundFix
 		return a_furniture->wbData.type != RE::WorkbenchData::Type::kNone;
 	}
 
-	namespace Events
+	bool WorkbenchSoundFix::IsPlayerCompanion(RE::Actor* a_actor)
 	{
-		//
+		if (!a_actor) {
+			return false;
+		}
+		return false; // TODO
 	}
 }

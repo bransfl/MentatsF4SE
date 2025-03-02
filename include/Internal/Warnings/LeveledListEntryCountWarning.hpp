@@ -1,8 +1,10 @@
 #pragma once
 
-namespace Internal::Warnings::LeveledListEntryCountWarning
+namespace Internal::Warnings
 {
-	void CheckLeveledLists();
-
-	int8_t GetNumEntries(RE::TESLeveledList* leveledList);
+	class LeveledListEntryCountWarning
+	{
+	public:
+		static void CheckLeveledLists();
+	};
 }

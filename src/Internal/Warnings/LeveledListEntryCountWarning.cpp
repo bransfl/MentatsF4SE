@@ -1,9 +1,10 @@
 #include "Internal/Warnings/LeveledListEntryCountWarning.hpp"
 #include "Internal/Config/Config.hpp"
+#include "Internal/Utility/Utility.hpp"
 
-namespace Internal::Warnings::LeveledListEntryCountWarning
+namespace Internal::Warnings
 {
-	void CheckLeveledLists()
+	void LeveledListEntryCountWarning::CheckLeveledLists()
 	{
 		logger::info("LeveledListEntryCountWarning -> Checking LeveledLists"sv);
 
@@ -24,8 +25,7 @@ namespace Internal::Warnings::LeveledListEntryCountWarning
 			if (!leveledList) {
 				continue;
 			}
-
-			int8_t numEntries = GetNumEntries(leveledList);
+			int8_t numEntries = Utility::GetNumEntries(leveledList);
 			if (numEntries <= 255) {
 				continue;
 			}
@@ -37,13 +37,5 @@ namespace Internal::Warnings::LeveledListEntryCountWarning
 			logger::warn("LeveledListEntryCountWarning -> Warning: At least 1 leveled list has over 255 entries in the plugin record. Check the log at Documents/My Games/Fallout4/F4SE/EngineFixesF4SE.log"sv);
 		}
 		logger::info("LeveledListEntryCountWarning -> ListsChecked: {}", listsChecked);
-	}
-
-	// returns the total amount of leveledlist entries
-	int8_t GetNumEntries(RE::TESLeveledList* leveledList)
-	{
-		int8_t ret = leveledList->baseListCount + leveledList->scriptListCount;
-		logger::debug(FMT_STRING("LeveledListEntryCountWarning -> GetNumEntries for LeveledList NAME_HERE resulted in {}"), ret);
-		return ret;
 	}
 }

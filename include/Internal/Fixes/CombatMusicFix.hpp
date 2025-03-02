@@ -1,17 +1,16 @@
 #pragma once
-#pragma warning(push)
-#pragma warning(disable : 4100) // for a_event
 
-namespace Internal::Fixes::CombatMusicFix
+namespace Internal::Fixes
 {
-	void Install() noexcept;
-
-	void Fix();
-
-	bool NeedsFix();
-
-	namespace Events
+	class CombatMusicFix
 	{
+	public:
+		static void Install() noexcept;
+
+		static void Fix();
+
+		static bool NeedsFix();
+
 		class DeathEventHandler : public RE::BSTEventSink<RE::TESDeathEvent>
 		{
 		public:
@@ -24,6 +23,10 @@ namespace Internal::Fixes::CombatMusicFix
 			virtual RE::BSEventNotifyControl ProcessEvent(const RE::TESDeathEvent& a_event, RE::BSTEventSource<RE::TESDeathEvent>*) override
 			{
 				logger::info("CombatMusicFix -> Event recieved.");
+
+				if (a_event.actorDying == nullptr || a_event.actorKiller == nullptr) {
+					return RE::BSEventNotifyControl::kContinue;
+				}
 
 				if (NeedsFix()) {
 					Fix();
@@ -40,7 +43,5 @@ namespace Internal::Fixes::CombatMusicFix
 			DeathEventHandler& operator=(const DeathEventHandler&) = delete;
 			DeathEventHandler& operator=(DeathEventHandler&&) = delete;
 		};
-	}
+	};
 }
-
-#pragma warning(pop)

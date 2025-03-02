@@ -4,7 +4,8 @@
 // unequips and reequips the player's grenade on save load to fix a semi-common movement speed bug
 namespace Internal::Fixes
 {
-	RE::BGSEquipSlot* grenadeSlot;
+	// RE::BGSEquipSlot* grenadeSlot;
+	// grenadeSlot = (RE::BGSEquipSlot*)RE::TESForm::GetFormByID(0x46AAC);
 
 	void GrenadeMovementSpeedFix::Install() noexcept
 	{
@@ -22,60 +23,63 @@ namespace Internal::Fixes
 
 	void GrenadeMovementSpeedFix::Fix()
 	{
-		// on save load
+		// TODO NOT FINISHED YET
+		return;
 
-		// auto* player = RE::PlayerCharacter::GetSingleton();
-		// if (!player) {
-		// 	return;
-		// }
+		auto* player = RE::PlayerCharacter::GetSingleton();
+		if (!player) {
+			return;
+		}
 
-		// if(!player->currentProcess->middleHigh) {
-		// 	return;
-		// }
+		// check if grenade bipedslot has an item and player has >0 of the grenades in their inventory
+		bool hasGrenade = false;
+		player->currentProcess->middleHigh->equippedItemsLock.lock();
+		for (auto it = player->currentProcess->middleHigh->equippedItems.begin(); it != player->currentProcess->middleHigh->equippedItems.end(); ++it) {
+			if (it->equipIndex.index == 2) {
+				hasGrenade = true;
+				break;
+			}
+		}
+		player->currentProcess->middleHigh->equippedItemsLock.unlock();
 
-		// // check if grenade bipedslot has an item and player has >0 of the grenades in their inventory
-		// bool hasGrenade = false;
-		// for (auto it = player->currentProcess->middleHigh->equippedItems.begin(); it != player->currentProcess->middleHigh->equippedItems.end(); ++it) {
-		// 	if (it->equipIndex.index == 2) {
-		// 		hasGrenade = true;
-		// 		break;
-		// 	}
-		// }
-		// logger::info("GrenadeMovementSpeedFix -> HasGrenade: {}.", hasGrenade);
-		// if (!hasGrenade) {
-		// 	return;
-		// }
+		logger::info(FMT_STRING("GrenadeMovementSpeedFix -> HasGrenade: {}."), hasGrenade);
+		if (!hasGrenade) {
+			return;
+		}
 
-		// //grenadeSlot = (RE::BGSEquipSlot*)RE::TESForm::GetFormByID(0x46AAC);
+		const RE::EquippedItem& equippedGrenadeItem = player->currentProcess->middleHigh->equippedItems[2];
+		RE::TESForm* grenadeForm = equippedGrenadeItem.item.object;
+		if (!grenadeForm) {
+			logger::info(FMT_STRING("GrenadeMovementSpeedFix -> grenadeForm was none"));
+			return;
+		}
+		RE::TESObjectWEAP* grenadeWeapon = grenadeForm->As<RE::TESObjectWEAP>();
+		if (!grenadeWeapon) {
+			logger::info(FMT_STRING("GrenadeMovementSpeedFix -> grenadeWeapon was none"));
+			return;
+		}
 
-		// const RE::EquippedItem& equippedGrenadeItem = player->currentProcess->middleHigh->equippedItems[2];
-		// RE::TESObjectWEAP* equippedGrenadeForm = equippedGrenadeItem.item.object->As<RE::TESObjectWEAP>();
-		// //logger::info(FMT_STRING("equippedGrenadeForm: {}"), equippedGrenadeForm->GetFormEditorID());
+		uint32_t grenadeCount = 0;
+		player->GetItemCount(grenadeCount, grenadeWeapon, false);
 
-		// uint32_t grenadeCount;
-		// player->GetItemCount(grenadeCount, equippedGrenadeForm, true);
-		// logger::info("GrenadeMovementSpeedFix - GrenadeCount = {}", grenadeCount);
-		// if(grenadeCount == 0) {
-		// 	return;
-		// }
+		auto* equipManager = RE::ActorEquipManager::GetSingleton();
+		if (!equipManager) {
+			return;
+		}
 
-		// auto* equipManager = RE::ActorEquipManager::GetSingleton();
-		// if(!equipManager) {
-		// 	return;
-		// }
-
-		// // bool bUnequip = equipManager->UnequipObject(
-		// // 	player,
-		// // 	&equippedGrenadeItem.item,
-		// // 	grenadeCount,
-		// // 	equippedGrenadeItem.equipSlot,
-		// // 	0,
-		// // 	true,
-		// // 	true,
-		// // 	true,
-		// // 	true,
-		// // 	grenadeSlot);
-		// // logger::info("GrenadeMovementSpeedFix = bUnequip = {}", bUnequip);
+		logger::info(FMT_STRING("GrenadeMovementSpeedFix -> Unequipping grenade..."));
+		equipManager->UnequipObject(
+			/* a_actor */ player,
+			/* a_object */ &equippedGrenadeItem.item,
+			/* a_number */ grenadeCount,
+			/* a_slot */ equippedGrenadeItem.equipSlot,
+			/* a_stackID */ 0,
+			/* a_queueEquip */ true,
+			/* a_forceEquip */ true,
+			/* a_playSounds */ false,
+			/* a_applyNow */ true,
+			/* a_slotBeingReplaced */ nullptr);
+		logger::info(FMT_STRING("GrenadeMovementSpeedFix -> Unequipped grenade."));
 	}
 }
 

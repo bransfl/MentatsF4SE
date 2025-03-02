@@ -6,7 +6,6 @@ namespace Internal::Fixes
 	typedef void(EvaluateConditionsSig)(RE::ActiveEffect*, float, bool);
 	REL::Relocation<EvaluateConditionsSig> OriginalFunction_EvaluateConditions_OG;
 	REL::Relocation<EvaluateConditionsSig> OriginalFunction_EvaluateConditions_NG;
-	static RE::Setting* conditionUpdateInterval;
 
 	void MagicEffectConditionsFix::Install() noexcept
 	{
@@ -22,7 +21,6 @@ namespace Internal::Fixes
 			return;
 		}
 
-		conditionUpdateInterval = RE::GameSettingCollection::GetSingleton()->GetSetting("fActiveEffectConditionUpdateInterval"sv);
 		F4SE::AllocTrampoline(64);
 		F4SE::Trampoline& trampoline = F4SE::GetTrampoline();
 
@@ -42,7 +40,7 @@ namespace Internal::Fixes
 
 	float MagicEffectConditionsFix::ActiveEffectConditionUpdateInterval()
 	{
-
+		RE::Setting* conditionUpdateInterval = RE::GameSettingCollection::GetSingleton()->GetSetting("fActiveEffectConditionUpdateInterval"sv);
 		if (conditionUpdateInterval->GetFloat() > 0.001F) {
 			return conditionUpdateInterval->GetFloat();
 		}

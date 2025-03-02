@@ -5,7 +5,6 @@
 // prevents combat music from playing when not intended to play
 namespace Internal::Fixes
 {
-	// console commands to run to stop all combat music
 	static inline constexpr std::array StopCombatMusicCommands = {
 		"RemoveMusic MUSzCombat"sv,
 		"RemoveMusic MUSzCombatBoss"sv,

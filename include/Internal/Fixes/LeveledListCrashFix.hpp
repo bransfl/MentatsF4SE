@@ -7,10 +7,7 @@ namespace Internal::Fixes
 	public:
 		// installs the fix
 		static void Install() noexcept;
-
-		// the hooks
-		// void Hook_AddScriptAddedLeveledObject(RE::TESLeveledList* a_this, RE::TESForm* a_owner, uint16_t a_level, uint16_t a_count, RE::TESForm* a_form);
-
+		
 		// logs any invalid forms within an item leveledlist
 		static void DebugLeveledListItem(RE::TESLevItem* a_list, RE::TESForm* a_form);
 

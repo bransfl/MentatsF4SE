@@ -25,7 +25,6 @@ namespace Internal::Config
 
 	inline const auto bMagicEffectConditionsFix = REX::INI::Bool{ "Fixes"sv, "bMagicEffectConditionsFix"sv, false };
 
-	inline const auto bRaceChangeFix = REX::INI::Bool{ "Fixes"sv, "bRaceChangeFix"sv, false };
 
 	inline const auto bWorkbenchSoundFix = REX::INI::Bool{ "Fixes"sv, "bWorkbenchSoundFix"sv, false };
 

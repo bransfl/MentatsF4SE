@@ -2,7 +2,6 @@
 
 namespace Internal::Utility
 {
-	// runs a console command
 	void ExecuteCommand(std::string_view a_command, RE::TESObjectREFR* a_targetRef, bool a_silent)
 	{
 		auto* log = RE::ConsoleLog::GetSingleton();
@@ -25,7 +24,6 @@ namespace Internal::Utility
 		delete script;
 	}
 
-	// returns the name of the mod that a_form is from
 	std::string_view GetModName(RE::TESForm* a_form, bool a_lastModified)
 	{
 		const auto index = a_lastModified ? -1 : 0;
@@ -38,7 +36,6 @@ namespace Internal::Utility
 		}
 	}
 
-	// returns the total amount of leveledlist entries
 	int8_t GetNumEntries(RE::TESLeveledList* leveledList)
 	{
 		if (!leveledList) {

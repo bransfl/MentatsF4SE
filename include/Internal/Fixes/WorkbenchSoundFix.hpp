@@ -11,13 +11,16 @@ namespace Internal::Fixes
 	class WorkbenchSoundFix
 	{
 	public:
+		// installs the fix
 		static void Install() noexcept;
 
-		static void FixWorkbenchSound();
+		// stops the goddamned sewing machine sound
+		static void FixWorkbenchSounds(RE::TESObjectREFR* a_workbenchUser);
 
 		// checks if the given furniture is a valid workbench
 		static bool IsWorkbench(RE::TESFurniture* a_furniture);
 
+		// checks if the given actor is a valid companion
 		static bool IsPlayerCompanion(RE::Actor* a_actor);
 
 		class FurnitureEventHandler : public RE::BSTEventSink<RE::TESFurnitureEvent>
@@ -38,11 +41,11 @@ namespace Internal::Fixes
 					if (!a_furniture)
 						return RE::BSEventNotifyControl::kContinue;
 
-					bool bIsWorkbench = IsWorkbench(a_furniture);
-					if (!bIsWorkbench)
+					if (!IsWorkbench(a_furniture)) {
 						return RE::BSEventNotifyControl::kContinue;
+					}
 
-					FixWorkbenchSound();
+					FixWorkbenchSounds(a_event.actor.get());
 				}
 
 				return RE::BSEventNotifyControl::kContinue;
@@ -69,8 +72,7 @@ namespace Internal::Fixes
 			{
 				logger::info("WorkbenchSoundFix -> ActorCellEvent receieved"sv);
 
-				auto eventActor = a_event.actor.get().get();
-				if (eventActor != RE::PlayerCharacter::GetSingleton()) {
+				if (a_event.actor.get().get() != RE::PlayerCharacter::GetSingleton()) {
 					return RE::BSEventNotifyControl::kContinue;
 				}
 
@@ -83,7 +85,7 @@ namespace Internal::Fixes
 					return RE::BSEventNotifyControl::kContinue;
 				}
 
-				FixWorkbenchSound();
+				FixWorkbenchSounds(a_event.actor.get().get());
 
 				return RE::BSEventNotifyControl::kContinue;
 			}

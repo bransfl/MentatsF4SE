@@ -6,8 +6,10 @@ namespace Internal::Fixes
 	class GrenadeMovementSpeedFix
 	{
 	public:
+		// installs the fix
 		static void Install() noexcept;
 
+		// reequips the player's grenade to reset movement speed
 		static void Fix();
 	};
 }

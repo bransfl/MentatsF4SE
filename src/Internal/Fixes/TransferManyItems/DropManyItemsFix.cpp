@@ -77,7 +77,6 @@ namespace Internal::Fixes::TransferManyItems
 		logger::info("Fix installed: DropManyItemsFix."sv);
 	}
 
-	// og hook
 	uint32_t* DropManyItemsFix::Hook_DropItemIntoWorld_OG(RE::TESObjectREFR* refr, uint32_t* handle, RE::TESBoundObject* item, int32_t count, RE::TESObjectREFR* container, RE::NiPoint3* pa, RE::NiPoint3* pb, RE::ExtraDataList* extra)
 	{
 
@@ -107,7 +106,6 @@ namespace Internal::Fixes::TransferManyItems
 		return handle;
 	}
 
-	// ng hook
 	uint32_t* DropManyItemsFix::Hook_DropItemIntoWorld_NG(RE::TESObjectREFR* refr, uint32_t* handle, RE::TESBoundObject* item, int32_t count, RE::TESObjectREFR* container, RE::NiPoint3* pa, RE::NiPoint3* pb, RE::ExtraDataList* extra)
 	{
 

@@ -5,6 +5,7 @@ namespace Internal::Fixes
 	class EncounterZoneResetFix
 	{
 	public:
+		// installs the fix
 		static void Install() noexcept;
 
 		class CellAttachDetachEventHandler : public RE::BSTEventSink<RE::CellAttachDetachEvent>

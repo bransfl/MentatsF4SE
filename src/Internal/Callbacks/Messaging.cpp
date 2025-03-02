@@ -1,7 +1,6 @@
 #include "Internal/Fixes/CombatMusicFix.hpp"
 #include "Internal/Fixes/GrenadeMovementSpeedFix.hpp"
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
-#include "Internal/Fixes/RaceChangeFix.hpp"
 #include "Internal/Fixes/WorkbenchSoundFix.hpp"
 #include "Internal/Warnings/DupeAddonNodesWarning.hpp"
 #include "Internal/Warnings/LeveledListEntryCountWarning.hpp"
@@ -32,12 +31,9 @@ namespace Internal::Messaging
 				// GrenadeMovementSpeedFix
 				Internal::Fixes::GrenadeMovementSpeedFix::Install();
 
-				// RaceChangeFix
-				Internal::Fixes::RaceChangeFix::Install();
-
 				// WorkbenchSoundFix
 				Internal::Fixes::WorkbenchSoundFix::Install();
-				Internal::Fixes::WorkbenchSoundFix::FixWorkbenchSound();
+				Internal::Fixes::WorkbenchSoundFix::FixWorkbenchSounds(RE::PlayerCharacter::GetSingleton());
 
 				// DupeAddonNodesWarnings
 				Internal::Warnings::DupeAddonNodesWarning::ClearNodeMap();

@@ -10,9 +10,14 @@
 
 namespace Internal::Fixes
 {
-	std::string_view fixCommandArmorWorkbench = "RecvAnimEvent \"SoundStop\" \"UIWorkshopSewingMachineRunLPM\"";
+	static inline constexpr std::array FixWorkbenchSoundCommands = {
+		"RecvAnimEvent \"SoundStop\" \"UIWorkshopSewingMachineRunLPM\""sv,
+		"RecvAnimEvent \"SoundStop\" \"UIWorkshopPowerArmorWeldLPM\""sv,
+		"RecvAnimEvent \"SoundStop\" \"UIWorkshopDrillPressDrillLPM\""sv,
+		"RecvAnimEvent \"SoundStop\" \"UIWorkshopDrillPressPowerLPM\""sv,
+	};
 
-	RE::TESFaction* followerFaction = nullptr;
+	// RE::TESFaction* followerFaction = nullptr;	// todo - unused until i can figure out how to get the player's companions
 
 	void WorkbenchSoundFix::Install() noexcept
 	{
@@ -23,26 +28,26 @@ namespace Internal::Fixes
 			return;
 		}
 
-		// furniture
 		RE::TESFurnitureEvent::GetEventSource()->RegisterSink(WorkbenchSoundFix::FurnitureEventHandler::GetSingleton());
-		// cells
+
 		auto* cellHandler = WorkbenchSoundFix::ActorCellEventHandler::GetSingleton();
 		RE::PlayerCharacter::GetSingleton()->RE::BSTEventSource<RE::BGSActorCellEvent>::RegisterSink(cellHandler);
 		logger::info("WorkbenchSoundFix -> Events registered."sv);
 
-		followerFaction = (RE::TESFaction*)RE::TESForm::GetFormByID(0x23C01);
+		// followerFaction = (RE::TESFaction*)RE::TESForm::GetFormByID(0x23C01);
 
 		logger::info("Fix installed: WorkbenchSoundFix."sv);
 	}
 
-	void WorkbenchSoundFix::FixWorkbenchSound()
+	void WorkbenchSoundFix::FixWorkbenchSounds(RE::TESObjectREFR* a_workbenchUser)
 	{
-		Utility::ExecuteCommand(fixCommandArmorWorkbench, RE::PlayerCharacter::GetSingleton(), true);
+		logger::info("WorkbenchSoundFix -> FixWorkbenchSounds ran"sv);
 
-		logger::info("WorkbenchSoundFix -> FixWorkbenchSound ran"sv);
+		for (const auto& command : FixWorkbenchSoundCommands) {
+			Utility::ExecuteCommand(command, a_workbenchUser, true);
+		}
 	}
 
-	// checks if the given furniture is a valid workbench
 	bool WorkbenchSoundFix::IsWorkbench(RE::TESFurniture* a_furniture)
 	{
 		if (!a_furniture) {

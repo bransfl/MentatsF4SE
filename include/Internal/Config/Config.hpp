@@ -25,7 +25,6 @@ namespace Internal::Config
 
 	inline const auto bMagicEffectConditionsFix = REX::TOML::Bool{ "Fixes"sv, "bMagicEffectConditionsFix"sv, false };
 
-
 	inline const auto bWorkbenchSoundFix = REX::TOML::Bool{ "Fixes"sv, "bWorkbenchSoundFix"sv, false };
 
 	// PATCHES
@@ -35,4 +34,6 @@ namespace Internal::Config
 	inline const auto bDupeAddonNodesWarning = REX::TOML::Bool{ "Warnings"sv, "bDupeAddonNodesWarning"sv, false };
 
 	inline const auto bLeveledListEntryCountWarning = REX::TOML::Bool{ "Warnings"sv, "bLeveledListEntryCountWarning"sv, false };
+
+	inline const auto bRogueMasterWarning = REX::TOML::Bool{ "Warnings"sv, "bRogueMasterWarning"sv, false };
 }

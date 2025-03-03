@@ -4,6 +4,7 @@
 #include "Internal/Fixes/WorkbenchSoundFix.hpp"
 #include "Internal/Warnings/DupeAddonNodesWarning.hpp"
 #include "Internal/Warnings/LeveledListEntryCountWarning.hpp"
+// #include "Internal/Warnings/RogueMasterWarning.hpp"
 
 namespace Internal::Messaging
 {
@@ -67,6 +68,9 @@ namespace Internal::Messaging
 
 				// LeveledListEntryCountWarning
 				Internal::Warnings::LeveledListEntryCountWarning::CheckLeveledLists();
+
+				// RogueMasterWarning
+				// Internal::Warnings::RogueMasterWarning::Install();
 
 				break;
 			}

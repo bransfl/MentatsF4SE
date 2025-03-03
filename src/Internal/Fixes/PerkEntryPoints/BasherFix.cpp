@@ -3,9 +3,9 @@
 
 // fixes entrypoint ModOutgoingLimbBashDamage so it actually works
 // note - this will likely require RE, and wont be made until RE is done.
-namespace Internal::Fixes::PerkEntryPoints::BasherFix
+namespace Internal::Fixes::PerkEntryPoints
 {
-	void Install() noexcept
+	void BasherFix::Install() noexcept
 	{
 		logger::info("Fix installing: BasherFix."sv);
 

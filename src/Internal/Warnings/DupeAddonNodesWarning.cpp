@@ -46,9 +46,9 @@ namespace Internal::Warnings
 				const auto currentNode = (*res.first).second;
 				if (currentNode != addonNode && currentNode->formID != addonNode->formID) {
 					nodeErrors++;
-					logger::warn(FMT_STRING("DupeAddonNodesWarning -> Duplicate AddonNode Index found at FormID {:08X} in plugin {} AND FormID {:08X} in plugin {}, the index was {}."),
+					logger::warn(FMT_STRING("DupeAddonNodesWarning -> Duplicate AddonNode Index found at (FormID: {:08X} in Plugin: {}) AND (FormID {:08X} in plugin {}). The AddonNode index was {}."),
 						currentNode->formID, Utility::GetModName(currentNode, false), addonNode->formID, Utility::GetModName(addonNode, false), addonNode->index);
-					RE::ConsoleLog::GetSingleton()->AddString("EngineFixesF4SE -> DupeAddonNodesWarning -> An AddonNode duplicate index was found, check the log for more information.\n");
+					RE::ConsoleLog::GetSingleton()->AddString("EngineFixesF4SE -> DupeAddonNodesWarning -> An AddonNode duplicate index was found, check EngineFixesF4SE.log for more information.\n");
 				}
 			}
 		}

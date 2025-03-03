@@ -38,14 +38,14 @@ namespace Internal::Fixes
 
 				if (a_event.IsExit()) {
 					RE::TESFurniture* a_furniture = a_event.targetFurniture.get()->As<RE::TESFurniture>();
-					if (!a_furniture)
-						return RE::BSEventNotifyControl::kContinue;
-
-					if (!IsWorkbench(a_furniture)) {
+					
+					if (!a_furniture || !IsWorkbench(a_furniture)) {
 						return RE::BSEventNotifyControl::kContinue;
 					}
 
-					FixWorkbenchSounds(a_event.actor.get());
+					if (a_event.actor.get()) {
+						FixWorkbenchSounds(a_event.actor.get());
+					}
 				}
 
 				return RE::BSEventNotifyControl::kContinue;

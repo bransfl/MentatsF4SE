@@ -1,5 +1,5 @@
 #include "Internal/Fixes/CombatMusicFix.hpp"
-#include "Internal/Fixes/GrenadeMovementSpeedFix.hpp"
+// #include "Internal/Fixes/GrenadeMovementSpeedFix.hpp"
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
 #include "Internal/Fixes/WorkbenchSoundFix.hpp"
 #include "Internal/Warnings/DupeAddonNodesWarning.hpp"
@@ -29,7 +29,7 @@ namespace Internal::Messaging
 				}
 
 				// GrenadeMovementSpeedFix
-				Internal::Fixes::GrenadeMovementSpeedFix::Install();
+				// Internal::Fixes::GrenadeMovementSpeedFix::Install();
 
 				// WorkbenchSoundFix
 				Internal::Fixes::WorkbenchSoundFix::Install();

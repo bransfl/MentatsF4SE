@@ -10,7 +10,7 @@ namespace Internal::Fixes::PerkEntryPoints
 		logger::info("Fix installing: BasherFix."sv);
 
 		if (!Config::bBasherFix.GetValue()) {
-			logger::info("Fix aborted: BasherFix. Reason: Fix was disabled in ini file."sv);
+			logger::info("Fix aborted: BasherFix. Reason: Fix was disabled in config file."sv);
 			return;
 		}
 

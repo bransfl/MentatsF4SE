@@ -12,7 +12,7 @@ namespace Internal::Fixes
 		logger::info("Fix installing: GrenadeMovementSpeedFix."sv);
 
 		if (!Config::bGrenadeMovementSpeedFix.GetValue()) {
-			logger::info("Fix aborted: GrenadeMovementSpeedFix. Reason: Fix was disabled in ini file."sv);
+			logger::info("Fix aborted: GrenadeMovementSpeedFix. Reason: Fix was disabled in config file."sv);
 			return;
 		}
 

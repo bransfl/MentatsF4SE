@@ -47,7 +47,7 @@ namespace Internal::Fixes::TransferManyItems
 		logger::info("Fix installing: DropManyItemsFix."sv);
 
 		if (!Config::bDropManyItemsFix.GetValue()) {
-			logger::info("Fix aborted: DropManyItemsFix. Reason: Fix was disabled in ini file."sv);
+			logger::info("Fix aborted: DropManyItemsFix. Reason: Fix was disabled in config file."sv);
 			return;
 		}
 		if (REX::W32::GetModuleHandleW(L"Drop7FFFPatch.dll")) {

@@ -24,7 +24,7 @@ namespace Internal::Fixes
 		logger::info("Fix installing: WorkbenchSoundFix."sv);
 
 		if (!Config::bWorkbenchSoundFix.GetValue()) {
-			logger::info("Fix aborted: WorkbenchSoundFix. Reason: Fix was disabled in ini file."sv);
+			logger::info("Fix aborted: WorkbenchSoundFix. Reason: Fix was disabled in config file."sv);
 			return;
 		}
 

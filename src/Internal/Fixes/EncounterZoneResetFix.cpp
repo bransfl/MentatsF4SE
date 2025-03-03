@@ -10,7 +10,7 @@ namespace Internal::Fixes
 		logger::info("EncounterZoneResetFix -> Fix installing..."sv);
 
 		if (!Config::bEncounterZoneResetFix.GetValue()) {
-			logger::info("Fix aborted: EncounterZoneResetFix. Reason: Fix was disabled in ini file."sv);
+			logger::info("Fix aborted: EncounterZoneResetFix. Reason: Fix was disabled in config file."sv);
 			return;
 		}
 

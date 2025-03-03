@@ -30,9 +30,9 @@ set(ENABLE_FALLOUT_NG ON)
 set(ENABLE_FALLOUT_VR OFF)
 
 set(F4SE_SUPPORT_XBYAK OFF)
-set(REX_OPTION_INI ON)
+set(REX_OPTION_INI OFF)
 set(REX_OPTION_JSON OFF)
-set(REX_OPTION_TOML OFF)
+set(REX_OPTION_TOML ON)
 
 option(COPY_BUILD_TO_PARENT "Copy the built to the parent directory" OFF)
 option(COPY_BUILD_TO_F4SE "Copy the built to F4SE's plugin directory" OFF)

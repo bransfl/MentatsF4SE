@@ -11,7 +11,7 @@ namespace Internal::Warnings
 		logger::info("Warning installing: DupeAddonNodesWarning."sv);
 
 		if (!Config::bLeveledListCrashFix.GetValue()) {
-			logger::info("Fix aborted: LeveledListCrashFix. Reason: Fix was disabled in ini file."sv);
+			logger::info("Fix aborted: LeveledListCrashFix. Reason: Fix was disabled in config file."sv);
 			return;
 		}
 

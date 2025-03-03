@@ -12,7 +12,7 @@ namespace Internal::Fixes
 		logger::info("Fix installing: MagicEffectConditionsFix."sv);
 
 		if (!Config::bMagicEffectConditionsFix.GetValue()) {
-			logger::info("Fix aborted: MagicEffectConditionsFix. Reason: Fix was disabled in ini file."sv);
+			logger::info("Fix aborted: MagicEffectConditionsFix. Reason: Fix was disabled in config file."sv);
 			return;
 		}
 		if (REX::W32::GetModuleHandleW(L"MGEFConditionFix.dll")) {

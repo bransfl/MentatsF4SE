@@ -9,7 +9,7 @@ namespace Internal::Warnings
 		logger::info("LeveledListEntryCountWarning -> Warning installing..."sv);
 
 		if (!Config::bLeveledListEntryCountWarning.GetValue()) {
-			logger::info("Warning aborted: LeveledListEntryCountWarning. Reason: Process was disabled in ini file."sv);
+			logger::info("Warning aborted: LeveledListEntryCountWarning. Reason: Process was disabled in toml file."sv);
 			return;
 		}
 

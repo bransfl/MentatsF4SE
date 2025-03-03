@@ -14,7 +14,7 @@ namespace Internal::Fixes
 		logger::info("Fix installing: LeveledListCrashFix."sv);
 
 		if (!Config::bLeveledListCrashFix.GetValue()) {
-			logger::info("Fix aborted: LeveledListCrashFix. Reason: Fix was disabled in ini file."sv);
+			logger::info("Fix aborted: LeveledListCrashFix. Reason: Fix was disabled in config file."sv);
 			return;
 		}
 		if (REX::W32::GetModuleHandleW(L"GLXRM_InjectionBlocker.dll")) {

@@ -10,7 +10,7 @@ namespace Internal::Fixes::PerkEntryPoints
 		logger::info("Fix installing: ApplySpellsFix."sv);
 
 		if (!Config::bApplySpellsFix.GetValue()) {
-			logger::info("Fix aborted: ApplySpellsFix. Reason: Fix was disabled in ini file."sv);
+			logger::info("Fix aborted: ApplySpellsFix. Reason: Fix was disabled in config file."sv);
 			return;
 		}
 

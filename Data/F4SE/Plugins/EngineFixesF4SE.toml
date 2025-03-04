@@ -27,6 +27,10 @@ bLeveledListCrashFix = true
 # (default: enabled | Supports both versions)
 bMagicEffectConditionsFix = true
 
+# Fixes an issue where the player is never given ownership of stolen power armor frames.
+# (default: enabled | Only for Old-Gen)
+bStolenPowerArmorOwnershipFix = true
+
 # Fixes an issue where armor workbench SFX loops infinitely on the player.
 # This is commonly referred to as the "Sewing Machine Sound Bug".
 # (default: enabled | Supports both versions)

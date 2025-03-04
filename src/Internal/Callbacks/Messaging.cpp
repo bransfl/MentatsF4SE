@@ -1,6 +1,7 @@
 #include "Internal/Fixes/CombatMusicFix.hpp"
 // #include "Internal/Fixes/GrenadeMovementSpeedFix.hpp"
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
+#include "Internal/Fixes/StolenPowerArmorOwnershipFix.hpp"
 #include "Internal/Fixes/WorkbenchSoundFix.hpp"
 #include "Internal/Warnings/DupeAddonNodesWarning.hpp"
 #include "Internal/Warnings/LeveledListEntryCountWarning.hpp"
@@ -35,6 +36,9 @@ namespace Internal::Messaging
 				// WorkbenchSoundFix
 				Internal::Fixes::WorkbenchSoundFix::Install();
 				Internal::Fixes::WorkbenchSoundFix::FixWorkbenchSounds(RE::PlayerCharacter::GetSingleton());
+
+				// StolenPowerArmorOwnershipFix
+				Internal::Fixes::StolenPowerArmorOwnershipFix::Install();
 
 				// DupeAddonNodesWarnings
 				Internal::Warnings::DupeAddonNodesWarning::ClearNodeMap();

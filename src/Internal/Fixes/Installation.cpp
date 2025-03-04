@@ -27,6 +27,8 @@ namespace Internal::Fixes
 
 		MagicEffectConditionsFix::Install();
 
+		// StolenPowerArmorOwnershipFix is handled in Messaging
+
 		// WorkbenchSoundFix is handled in Messaging
 	}
 }

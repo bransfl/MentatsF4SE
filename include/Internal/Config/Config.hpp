@@ -25,6 +25,8 @@ namespace Internal::Config
 
 	inline const auto bMagicEffectConditionsFix = REX::TOML::Bool{ "Fixes"sv, "bMagicEffectConditionsFix"sv, false };
 
+	inline const auto bStolenPowerArmorOwnershipFix = REX::TOML::Bool{ "Fixes"sv, "bStolenPowerArmorOwnershipFix"sv, false };
+
 	inline const auto bWorkbenchSoundFix = REX::TOML::Bool{ "Fixes"sv, "bWorkbenchSoundFix"sv, false };
 
 	// PATCHES

@@ -7,6 +7,11 @@ bAddManyItemsFix = true
 # (default: enabled | Supports both versions)
 bDropManyItemsFix = true
 
+# Removes unused ActorCause data from projectiles when a cell is unloaded, to reduce save size.
+# From my testing, this is not as big of a deal as it is in New Vegas, but it still helped slightly.
+# (default: enabled | Supports both versions)
+bActorCauseSaveBloatFix = true
+
 # Fixes an issue where combat music can continue to loop when combat ends or when you load a save.
 # (default: enabled | Supports both versions)
 bCombatMusicFix = true

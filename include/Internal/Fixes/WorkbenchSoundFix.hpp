@@ -68,9 +68,7 @@ namespace Internal::Fixes
 
 			virtual RE::BSEventNotifyControl ProcessEvent(const RE::BGSActorCellEvent& a_event, RE::BSTEventSource<RE::BGSActorCellEvent>*) override
 			{
-				logger::info("WorkbenchSoundFix -> ActorCellEvent receieved"sv);
-
-				if (a_event.actor.get().get() != RE::PlayerCharacter::GetSingleton()) {
+				if (a_event.actor.get().get() && a_event.actor.get().get() != RE::PlayerCharacter::GetSingleton()) {
 					return RE::BSEventNotifyControl::kContinue;
 				}
 
@@ -79,7 +77,6 @@ namespace Internal::Fixes
 					return RE::BSEventNotifyControl::kContinue;
 				}
 				if (ui->GetMenuOpen("ExamineMenu"sv) || ui->GetMenuOpen("CookingMenu"sv)) {
-					logger::info("WorkbenchSoundFix -> ui had relevant menu open, return"sv);
 					return RE::BSEventNotifyControl::kContinue;
 				}
 

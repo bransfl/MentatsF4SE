@@ -25,8 +25,6 @@ namespace Internal::Fixes
 
 			virtual RE::BSEventNotifyControl ProcessEvent(const RE::TESDeathEvent& a_event, RE::BSTEventSource<RE::TESDeathEvent>*) override
 			{
-				logger::info("CombatMusicFix -> Event recieved."sv);
-
 				if (a_event.actorDying == nullptr || a_event.actorKiller == nullptr) {
 					return RE::BSEventNotifyControl::kContinue;
 				}

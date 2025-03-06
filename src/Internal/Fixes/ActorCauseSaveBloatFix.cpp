@@ -8,7 +8,7 @@ namespace Internal::Fixes
 		logger::info(FMT_STRING("ActorCauseSaveBloatFix -> Fix installing..."sv));
 
 		if (!Config::bActorCauseSaveBloatFix.GetValue()) {
-			logger::info("Fix aborted: ActorCauseSaveBloatFix. Reason: Fix was disabled in config file."sv);
+			logger::info(FMT_STRING("Fix aborted: ActorCauseSaveBloatFix. Reason: Fix was disabled in config file."sv));
 			return;
 		}
 
@@ -26,7 +26,7 @@ namespace Internal::Fixes
 		}
 
 		a_cell->ForEachRef([&](RE::TESObjectREFR* a_ref) {
-			if (a_ref->GetBaseObject()->formType == RE::ENUM_FORMTYPE::kPROJ) {
+			if (a_ref && a_ref->GetBaseObject()->formType == RE::ENUM_FORMTYPE::kPROJ) {
 				refs.push_back(a_ref);
 			}
 
@@ -35,29 +35,3 @@ namespace Internal::Fixes
 		return refs;
 	}
 }
-
-// 	std::vector<RE::TESObjectREFR*> GetWorkbenchRefsInCell(RE::TESObjectCELL* a_cell)
-
-// {
-
-// 	auto refs = std::vector<RE::TESObjectREFR*>();
-
-// 	if (a_cell == nullptr) {
-
-// 		return refs;
-// 	}
-
-// 	a_cell->ForEachRef([&](RE::TESObjectREFR* a_ref) {
-// 		if (a_ref->GetBaseObject()->formType == RE::ENUM_FORMTYPE::kFURN) {
-
-// 			if (IsValidWorkbench(a_ref->GetBaseObject()->formID)) {
-
-// 				refs.push_back(a_ref);
-// 			}
-// 		}
-
-// 		return RE::BSContainer::ForEachResult::kContinue;
-// 	});
-
-// 	return refs;
-// }

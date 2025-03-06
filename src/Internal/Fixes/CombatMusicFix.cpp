@@ -19,16 +19,16 @@ namespace Internal::Fixes
 
 	void CombatMusicFix::Install() noexcept
 	{
-		logger::info("Fix installing: CombatMusicFix."sv);
+		logger::info(FMT_STRING("Fix installing: CombatMusicFix."sv));
 
 		if (!Config::bCombatMusicFix.GetValue()) {
-			logger::info("Fix aborted: CombatMusicFix. Reason: Fix was disabled in config file."sv);
+			logger::info(FMT_STRING("Fix aborted: CombatMusicFix. Reason: Fix was disabled in config file."sv));
 			return;
 		}
 
 		RE::TESDeathEvent::GetEventSource()->RegisterSink(CombatMusicFix::DeathEventHandler::GetSingleton());
 
-		logger::info("Fix installed: CombatMusicFix."sv);
+		logger::info(FMT_STRING("Fix installed: CombatMusicFix."sv));
 	}
 
 	// please (just) stop the music!
@@ -48,7 +48,6 @@ namespace Internal::Fixes
 		if (playerCharacter && !playerCharacter->IsInCombat()) {
 			needsFix = true;
 		}
-		logger::info(FMT_STRING("CombatMusicFix -> NeedsFix: {}"), needsFix);
 		return needsFix;
 	}
 }

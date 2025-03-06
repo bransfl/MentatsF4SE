@@ -10,21 +10,21 @@ namespace Internal::Warnings
 {
 	void RogueMasterWarning::Install() noexcept
 	{
-		logger::info("Warning installing: RogueMasterWarning."sv);
+		logger::info(FMT_STRING("Warning installing: RogueMasterWarning."sv));
 
 		if (!Config::bRogueMasterWarning.GetValue()) {
-			logger::info("Fix aborted: RogueMasterWarning. Reason: Fix was disabled in config file."sv);
+			logger::info(FMT_STRING("Fix aborted: RogueMasterWarning. Reason: Fix was disabled in config file."sv));
 			return;
 		}
 
 		CheckRogueMasters();
 
-		logger::info("Warning installed: RogueMasterWarning."sv);
+		logger::info(FMT_STRING("Warning installed: RogueMasterWarning."sv));
 	}
 
 	void RogueMasterWarning::CheckRogueMasters()
 	{
-		logger::info("RogueMasterWarning -> CheckRogueMasters started..."sv);
+		logger::info(FMT_STRING("RogueMasterWarning -> CheckRogueMasters started..."sv));
 
 		bool foundRogueMasters = false;
 		auto dataHandler = RE::TESDataHandler::GetSingleton();
@@ -69,9 +69,9 @@ namespace Internal::Warnings
 			}
 		}
 		else {
-			logger::info("RogueMasterWarning -> No rogue masters were detected"sv);
+			logger::info(FMT_STRING("RogueMasterWarning -> No rogue masters were detected"sv));
 		}
 
-		logger::info("RogueMasterWarning -> CheckRogueMasters finished."sv);
+		logger::info(FMT_STRING("RogueMasterWarning -> CheckRogueMasters finished."sv));
 	}
 }

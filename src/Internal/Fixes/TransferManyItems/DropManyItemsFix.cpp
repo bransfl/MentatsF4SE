@@ -44,15 +44,15 @@ namespace Internal::Fixes::TransferManyItems
 
 	void DropManyItemsFix::Install() noexcept
 	{
-		logger::info("Fix installing: DropManyItemsFix."sv);
+		logger::info(FMT_STRING("Fix installing: DropManyItemsFix."sv));
 
 		if (!Config::bDropManyItemsFix.GetValue()) {
-			logger::info("Fix aborted: DropManyItemsFix. Reason: Fix was disabled in config file."sv);
+			logger::info(FMT_STRING("Fix aborted: DropManyItemsFix. Reason: Fix was disabled in config file."sv));
 			return;
 		}
 		if (REX::W32::GetModuleHandleW(L"Drop7FFFPatch.dll")) {
 			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Fix aborted: DropManyItemsFix. Reason: Mod 'Drop 7FFF Fix' was detected. This fix is not necessary with this mod installed.\n");
-			logger::warn("Fix aborted: DropManyItemsFix. Reason: Mod was installed: Drop7FFFPatch.dll."sv);
+			logger::warn(FMT_STRING("Fix aborted: DropManyItemsFix. Reason: Mod was installed: Drop7FFFPatch.dll."sv));
 			return;
 		}
 
@@ -60,7 +60,6 @@ namespace Internal::Fixes::TransferManyItems
 		if (REL::Module::IsNG()) {
 			// NG Patch
 			if (!g_branchTrampoline.Create(14)) {
-				logger::warn("DropManyItemsFix couldn't create codegen buffer"sv);
 				return;
 			}
 			g_branchTrampoline.Write5Call(DropItemIntoWorld_Dest_NG.GetUIntPtr(), (uintptr_t)Hook_DropItemIntoWorld_NG);
@@ -68,13 +67,12 @@ namespace Internal::Fixes::TransferManyItems
 		else {
 			// OG Patch
 			if (!g_branchTrampoline.Create(14)) {
-				logger::warn("DropManyItemsFix couldn't create codegen buffer"sv);
 				return;
 			}
 			g_branchTrampoline.Write5Call(DropItemIntoWorld_Dest.GetUIntPtr(), (uintptr_t)Hook_DropItemIntoWorld_OG);
 		}
 
-		logger::info("Fix installed: DropManyItemsFix."sv);
+		logger::info(FMT_STRING("Fix installed: DropManyItemsFix."sv));
 	}
 
 	uint32_t* DropManyItemsFix::Hook_DropItemIntoWorld_OG(RE::TESObjectREFR* refr, uint32_t* handle, RE::TESBoundObject* item, int32_t count, RE::TESObjectREFR* container, RE::NiPoint3* pa, RE::NiPoint3* pb, RE::ExtraDataList* extra)

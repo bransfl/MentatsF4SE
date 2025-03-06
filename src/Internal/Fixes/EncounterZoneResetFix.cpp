@@ -7,22 +7,22 @@ namespace Internal::Fixes
 {
 	void EncounterZoneResetFix::Install() noexcept
 	{
-		logger::info("EncounterZoneResetFix -> Fix installing..."sv);
+		logger::info(FMT_STRING("EncounterZoneResetFix -> Fix installing..."sv));
 
 		if (!Config::bEncounterZoneResetFix.GetValue()) {
-			logger::info("Fix aborted: EncounterZoneResetFix. Reason: Fix was disabled in config file."sv);
+			logger::info(FMT_STRING("Fix aborted: EncounterZoneResetFix. Reason: Fix was disabled in config file."sv));
 			return;
 		}
 
 		// if buffout4ng is installed AND version is og, this is not needed
 		if (!REL::Module::IsNG() && REX::W32::GetModuleHandleW(L"Buffout4.dll")) {
-			logger::info("Fix aborted: EncounterZoneResetFix. Reason: Mod was installed: Buffout4.dll AND game version was og"sv);
+			logger::info(FMT_STRING("Fix aborted: EncounterZoneResetFix. Reason: Mod was installed: Buffout4.dll AND Game Version was Old-Gen."sv));
 			return;
 		}
 
 		auto& cells = RE::CellAttachDetachEventSource::CellAttachDetachEventSourceSingleton::GetSingleton();
 		cells.source.RegisterSink(EncounterZoneResetFix::CellAttachDetachEventHandler::GetSingleton());
 
-		logger::info("EncounterZoneResetFix -> Fix installed."sv);
+		logger::info(FMT_STRING("EncounterZoneResetFix -> Fix installed."sv));
 	}
 }

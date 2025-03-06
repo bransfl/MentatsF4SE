@@ -8,10 +8,10 @@ namespace Internal::Warnings
 
 	void DupeAddonNodesWarning::Install() noexcept
 	{
-		logger::info("Warning installing: DupeAddonNodesWarning."sv);
+		logger::info(FMT_STRING("Warning installing: DupeAddonNodesWarning."sv));
 
 		if (!Config::bLeveledListCrashFix.GetValue()) {
-			logger::info("Fix aborted: LeveledListCrashFix. Reason: Fix was disabled in config file."sv);
+			logger::info(FMT_STRING("Fix aborted: LeveledListCrashFix. Reason: Fix was disabled in config file."sv));
 			return;
 		}
 
@@ -19,7 +19,7 @@ namespace Internal::Warnings
 
 		CheckDupeAddonNodes();
 
-		logger::info("Warning installed: DupeAddonNodesWarning."sv);
+		logger::info(FMT_STRING("Warning installed: DupeAddonNodesWarning."sv));
 	}
 
 	void DupeAddonNodesWarning::CheckDupeAddonNodes()
@@ -58,14 +58,14 @@ namespace Internal::Warnings
 
 	void DupeAddonNodesWarning::ClearNodeMap()
 	{
-		logger::info("DupeAddonNodesWarning -> Clearing node map..."sv);
+		logger::info(FMT_STRING("DupeAddonNodesWarning -> Clearing node map..."sv));
 
 		if (!nodeMap.empty()) {
 			nodeMap.clear();
-			logger::info("DupeAddonNodesWarning -> Node map cleared."sv);
+			logger::info(FMT_STRING("DupeAddonNodesWarning -> Node map cleared."sv));
 		}
 		else {
-			logger::info("DupeAddonNodesWarning -> Node was already cleared."sv);
+			logger::info(FMT_STRING("DupeAddonNodesWarning -> Node was already cleared."sv));
 		}
 	}
 }

@@ -21,10 +21,10 @@ namespace Internal::Fixes
 
 	void WorkbenchSoundFix::Install() noexcept
 	{
-		logger::info("Fix installing: WorkbenchSoundFix."sv);
+		logger::info(FMT_STRING("Fix installing: WorkbenchSoundFix."sv));
 
 		if (!Config::bWorkbenchSoundFix.GetValue()) {
-			logger::info("Fix aborted: WorkbenchSoundFix. Reason: Fix was disabled in config file."sv);
+			logger::info(FMT_STRING("Fix aborted: WorkbenchSoundFix. Reason: Fix was disabled in config file."sv));
 			return;
 		}
 
@@ -32,16 +32,16 @@ namespace Internal::Fixes
 
 		auto* cellHandler = WorkbenchSoundFix::ActorCellEventHandler::GetSingleton();
 		RE::PlayerCharacter::GetSingleton()->RE::BSTEventSource<RE::BGSActorCellEvent>::RegisterSink(cellHandler);
-		logger::info("WorkbenchSoundFix -> Events registered."sv);
+		logger::info(FMT_STRING("WorkbenchSoundFix -> Events registered."sv));
 
 		// followerFaction = (RE::TESFaction*)RE::TESForm::GetFormByID(0x23C01);
 
-		logger::info("Fix installed: WorkbenchSoundFix."sv);
+		logger::info(FMT_STRING("Fix installed: WorkbenchSoundFix."sv));
 	}
 
 	void WorkbenchSoundFix::FixWorkbenchSounds(RE::TESObjectREFR* a_workbenchUser)
 	{
-		logger::info("WorkbenchSoundFix -> FixWorkbenchSounds ran"sv);
+		logger::info(FMT_STRING("WorkbenchSoundFix -> FixWorkbenchSounds ran"sv));
 
 		for (const auto& command : FixWorkbenchSoundCommands) {
 			Utility::ExecuteCommand(command, a_workbenchUser, true);

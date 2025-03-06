@@ -11,21 +11,21 @@ namespace Internal::Fixes
 
 	void LeveledListCrashFix::Install() noexcept
 	{
-		logger::info("Fix installing: LeveledListCrashFix."sv);
+		logger::info(FMT_STRING("Fix installing: LeveledListCrashFix."sv));
 
 		if (!Config::bLeveledListCrashFix.GetValue()) {
-			logger::info("Fix aborted: LeveledListCrashFix. Reason: Fix was disabled in config file."sv);
+			logger::info(FMT_STRING("Fix aborted: LeveledListCrashFix. Reason: Fix was disabled in config file."sv));
 			return;
 		}
 		if (REX::W32::GetModuleHandleW(L"GLXRM_InjectionBlocker.dll")) {
 			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Fix aborted: LeveledListCrashFix. Reason: Mod 'Injection Blocker' was detected. This fix is not necessary with this mod installed.\n");
-			logger::warn("Fix aborted: LeveledListCrashFix. Reason: Mod was installed: GLXRM_InjectionBlocker.dll."sv);
+			logger::warn(FMT_STRING("Fix aborted: LeveledListCrashFix. Reason: Mod was installed: GLXRM_InjectionBlocker.dll."sv));
 			return;
 		}
 
 		F4SE::AllocTrampoline(16);
 
-		logger::info("LeveledListCrashFix -> Hooks installing..."sv);
+		logger::info(FMT_STRING("LeveledListCrashFix -> Hooks installing..."sv));
 		if (REL::Module::IsNG()) {
 			// NG Patch
 			REL::Relocation target_NG{ REL::ID(2193269), 0x6D };
@@ -36,9 +36,9 @@ namespace Internal::Fixes
 			REL::Relocation target_OG{ REL::ID(860553), 0x6C };
 			OriginalFunction_AddScriptAddedLeveledObject = target_OG.write_call<5>(Hook_AddScriptAddedLeveledObject);
 		}
-		logger::info("LeveledListCrashFix -> Hooks installed."sv);
+		logger::info(FMT_STRING("LeveledListCrashFix -> Hooks installed."sv));
 
-		logger::info("Fix installed: LeveledListCrashFix"sv);
+		logger::info(FMT_STRING("Fix installed: LeveledListCrashFix"sv));
 	}
 
 	void LeveledListCrashFix::Hook_AddScriptAddedLeveledObject(RE::TESLeveledList* a_this, RE::TESForm* a_owner, uint16_t a_level, uint16_t a_count, RE::TESForm* a_form)
@@ -72,7 +72,7 @@ namespace Internal::Fixes
 			}
 			i++;
 		}
-		logger::info("---------------------------------------------"sv);
+		logger::info(FMT_STRING("---------------------------------------------"sv));
 	}
 
 	std::vector<RE::TESForm*> LeveledListCrashFix::GetEntries(RE::TESLeveledList* leveledList)

@@ -6,10 +6,10 @@ namespace Internal::Warnings
 {
 	void LeveledListEntryCountWarning::CheckLeveledLists()
 	{
-		logger::info("LeveledListEntryCountWarning -> Warning installing..."sv);
+		logger::info(FMT_STRING("LeveledListEntryCountWarning -> Warning installing..."sv));
 
 		if (!Config::bLeveledListEntryCountWarning.GetValue()) {
-			logger::info("Warning aborted: LeveledListEntryCountWarning. Reason: Process was disabled in toml file."sv);
+			logger::info(FMT_STRING("Warning aborted: LeveledListEntryCountWarning. Reason: Process was disabled in toml file."sv));
 			return;
 		}
 
@@ -39,6 +39,6 @@ namespace Internal::Warnings
 		}
 		logger::info(FMT_STRING("LeveledListEntryCountWarning -> ListsChecked: {}"), listsChecked);
 
-		logger::info("LeveledListEntryCountWarning -> Warning installed."sv);
+		logger::info(FMT_STRING("LeveledListEntryCountWarning -> Warning installed."sv));
 	}
 }

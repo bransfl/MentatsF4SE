@@ -9,16 +9,16 @@ namespace Internal::Fixes
 
 	void GrenadeMovementSpeedFix::Install() noexcept
 	{
-		logger::info("Fix installing: GrenadeMovementSpeedFix."sv);
+		logger::info(FMT_STRING("Fix installing: GrenadeMovementSpeedFix."sv));
 
 		if (!Config::bGrenadeMovementSpeedFix.GetValue()) {
-			logger::info("Fix aborted: GrenadeMovementSpeedFix. Reason: Fix was disabled in config file."sv);
+			logger::info(FMT_STRING("Fix aborted: GrenadeMovementSpeedFix. Reason: Fix was disabled in config file."sv));
 			return;
 		}
 
 		Fix();
 
-		logger::info("Fix installed: GrenadeMovementSpeedFix."sv);
+		logger::info(FMT_STRING("Fix installed: GrenadeMovementSpeedFix."sv));
 	}
 
 	void GrenadeMovementSpeedFix::Fix()

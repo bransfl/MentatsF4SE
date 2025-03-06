@@ -28,15 +28,4 @@ namespace Internal::Fixes
 
 		Utility::ExecuteCommand(command, a_ref, true);
 	}
-
-	bool StolenPowerArmorOwnershipFix::IsPowerArmor(RE::TESObjectREFR* a_ref)
-	{
-		if (a_ref->extraList.get()->HasType(RE::EXTRA_DATA_TYPE::kInactivePowerArmor)) {
-			return true;
-		}
-		else if (a_ref->extraList.get()->HasType(RE::EXTRA_DATA_TYPE::kPowerArmor)) {
-			return true;
-		}
-		return false;
-	}
 }

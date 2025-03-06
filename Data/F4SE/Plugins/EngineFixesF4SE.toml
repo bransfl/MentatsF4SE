@@ -28,7 +28,7 @@ bLeveledListCrashFix = true
 bMagicEffectConditionsFix = true
 
 # Fixes an issue where the player is never given ownership of stolen power armor frames.
-# (default: enabled | Only for Old-Gen)
+# (default: enabled | Supports both versions)
 bStolenPowerArmorOwnershipFix = true
 
 # Fixes an issue where armor workbench SFX loops infinitely on the player.

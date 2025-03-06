@@ -15,6 +15,8 @@ namespace Internal::Config
 
 	inline const auto bDropManyItemsFix = REX::TOML::Bool{ "Fixes"sv, "bDropManyItemsFix"sv, false };
 
+	inline const auto bActorCauseSaveBloatFix = REX::TOML::Bool{ "Fixes"sv, "bActorCauseSaveBloatFix"sv, false };
+
 	inline const auto bCombatMusicFix = REX::TOML::Bool{ "Fixes"sv, "bCombatMusicFix"sv, false };
 
 	inline const auto bEncounterZoneResetFix = REX::TOML::Bool{ "Fixes"sv, "bEncounterZoneResetFix"sv, false };

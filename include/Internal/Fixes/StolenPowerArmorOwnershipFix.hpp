@@ -10,8 +10,6 @@ namespace Internal::Fixes
 	private:
 		static void FixOwnership(RE::TESObjectREFR* a_ref);
 
-		static bool IsPowerArmor(RE::TESObjectREFR* a_ref);
-
 		class FurnitureEventHandler : public RE::BSTEventSink<RE::TESFurnitureEvent>
 		{
 		public:
@@ -23,13 +21,12 @@ namespace Internal::Fixes
 
 			virtual RE::BSEventNotifyControl ProcessEvent(const RE::TESFurnitureEvent& a_event, RE::BSTEventSource<RE::TESFurnitureEvent>*) override
 			{
-				logger::info("StolenPowerArmorOwnershipFix -> TESFurnitureEvent receieved"sv);
-
-				if (!a_event.actor || a_event.actor.get()) {
+				if (!a_event.actor.get() || a_event.actor.get() != RE::PlayerCharacter::GetSingleton()) {
 					return RE::BSEventNotifyControl::kContinue;
 				}
 
-				if (a_event.actor.get() != RE::PlayerCharacter::GetSingleton()) {
+				// just in case the player hasnt used power armor yet
+				if (!RE::PlayerCharacter::GetSingleton()->lastUsedPowerArmor.get() || !RE::PlayerCharacter::GetSingleton()->lastUsedPowerArmor.get().get()) {
 					return RE::BSEventNotifyControl::kContinue;
 				}
 
@@ -38,11 +35,9 @@ namespace Internal::Fixes
 					return RE::BSEventNotifyControl::kContinue;
 				}
 
-				// when the player enters or exits a set of power armor, set the player as the owner
-				if (IsPowerArmor(furn)) {
-					if (furn->GetHasOwner() && furn->GetOwner() != RE::PlayerCharacter::GetSingleton()) {
-						FixOwnership(furn);
-					}
+				if (furn == RE::PlayerCharacter::GetSingleton()->lastUsedPowerArmor.get().get()) {
+					logger::info(FMT_STRING("StolenPowerArmorOwnershipFix -> FixOwnership() running on furniture: {}."), furn->GetFormID());
+					FixOwnership(furn);
 				}
 
 				return RE::BSEventNotifyControl::kContinue;

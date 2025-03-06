@@ -20,7 +20,7 @@ namespace Internal::Fixes
 		// checks if the given furniture is a valid workbench
 		static bool IsWorkbench(RE::TESFurniture* a_furniture);
 
-		// checks if the given actor is a valid companion
+		// checks if the given actor is a valid companion - unused
 		static bool IsPlayerCompanion(RE::Actor* a_actor);
 
 		class FurnitureEventHandler : public RE::BSTEventSink<RE::TESFurnitureEvent>
@@ -34,11 +34,9 @@ namespace Internal::Fixes
 
 			virtual RE::BSEventNotifyControl ProcessEvent(const RE::TESFurnitureEvent& a_event, RE::BSTEventSource<RE::TESFurnitureEvent>*) override
 			{
-				logger::info("WorkbenchSoundFix -> TESFurnitureEvent receieved"sv);
-
 				if (a_event.IsExit()) {
 					RE::TESFurniture* a_furniture = a_event.targetFurniture.get()->As<RE::TESFurniture>();
-					
+
 					if (!a_furniture || !IsWorkbench(a_furniture)) {
 						return RE::BSEventNotifyControl::kContinue;
 					}

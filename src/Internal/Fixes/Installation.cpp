@@ -17,6 +17,8 @@ namespace Internal::Fixes
 
 		TransferManyItems::DropManyItemsFix::Install();
 
+		// ActorCauseSaveBloatFix is handled in Messaging
+
 		// CombatMusicFix is handled in Messaging
 
 		EncounterZoneResetFix::Install();

@@ -1,5 +1,6 @@
 #include "Internal/Fixes/CombatMusicFix.hpp"
 // #include "Internal/Fixes/GrenadeMovementSpeedFix.hpp"
+#include "Internal/Fixes/ActorCauseSaveBloatFix.hpp"
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
 #include "Internal/Fixes/StolenPowerArmorOwnershipFix.hpp"
 #include "Internal/Fixes/WorkbenchSoundFix.hpp"
@@ -25,6 +26,9 @@ namespace Internal::Messaging
 				break;
 			}
 			case F4SE::MessagingInterface::kPostLoadGame: {
+				// ActorCauseSaveBloatFix
+				Internal::Fixes::ActorCauseSaveBloatFix::Install();
+
 				// CombatMusicFix
 				if (Internal::Fixes::CombatMusicFix::NeedsFix()) {
 					Internal::Fixes::CombatMusicFix::Fix();

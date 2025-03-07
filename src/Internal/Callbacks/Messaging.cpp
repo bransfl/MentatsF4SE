@@ -13,8 +13,6 @@ namespace Internal::Messaging
 	// handles various F4SE callback events
 	void Callback(F4SE::MessagingInterface::Message* a_msg)
 	{
-		logger::info(FMT_STRING("Messaging: Received message of type: {}"), a_msg->type);
-
 		switch (a_msg->type) {
 			case F4SE::MessagingInterface::kPostLoad: {
 				break;
@@ -86,7 +84,5 @@ namespace Internal::Messaging
 				break;
 			}
 		}
-
-		logger::info(FMT_STRING("Messaging: Finished processing for message of type: {}"), a_msg->type);
 	}
 }

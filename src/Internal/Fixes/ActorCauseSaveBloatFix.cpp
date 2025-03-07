@@ -21,7 +21,7 @@ namespace Internal::Fixes
 	std::vector<RE::TESObjectREFR*> ActorCauseSaveBloatFix::GetProjectilesInCell(RE::TESObjectCELL* a_cell)
 	{
 		auto refs = std::vector<RE::TESObjectREFR*>();
-		if (a_cell == nullptr) {
+		if (!a_cell) {
 			return refs;
 		}
 

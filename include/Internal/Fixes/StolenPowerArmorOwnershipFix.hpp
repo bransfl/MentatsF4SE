@@ -25,7 +25,7 @@ namespace Internal::Fixes
 					return RE::BSEventNotifyControl::kContinue;
 				}
 
-				// just in case the player hasnt used power armor yet
+				// just incase the player hasnt used power armor yet
 				if (!RE::PlayerCharacter::GetSingleton()->lastUsedPowerArmor.get() || !RE::PlayerCharacter::GetSingleton()->lastUsedPowerArmor.get().get()) {
 					return RE::BSEventNotifyControl::kContinue;
 				}
@@ -36,7 +36,8 @@ namespace Internal::Fixes
 				}
 
 				if (furn == RE::PlayerCharacter::GetSingleton()->lastUsedPowerArmor.get().get()) {
-					logger::info(FMT_STRING("StolenPowerArmorOwnershipFix -> FixOwnership() running on furniture: {}."), furn->GetFormID());
+					logger::info(FMT_STRING("StolenPowerArmorOwnershipFix -> FixOwnership() running on furniture: (FormID {:08X}, EditorID: {})."sv),
+						furn->GetFormID(), furn->GetBaseObject()->GetFormEditorID());
 					FixOwnership(furn);
 				}
 

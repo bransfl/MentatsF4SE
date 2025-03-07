@@ -24,21 +24,14 @@ namespace Internal::Fixes
 				switch (*a_event.type) {
 					case RE::CellAttachDetachEvent::EVENT_TYPE::kPreDetach: {
 						std::vector<RE::TESObjectREFR*> projectiles = GetProjectilesInCell(a_event.cell);
-						size_t count = projectiles.size();
-						logger::info(FMT_STRING("ActorCauseSaveBloatFix -> (tempmesg) projectiles count: {}"), count);
-						if (count == 0) {
+
+						if (projectiles.size() == 0) {
 							break;
 						}
 						else {
 							for (RE::TESObjectREFR* proj : projectiles) {
 								if (proj->GetActorCause() != nullptr) {
 									proj->SetActorCause(nullptr);
-									logger::info(FMT_STRING("ActorCauseSaveBloatFix -> (tempmesg) removed actorcause for editorid: {}, formid: {:08X}"),
-										proj->GetBaseObject()->GetFormEditorID(), proj->GetFormID());
-								}
-								else {
-									logger::info(FMT_STRING("ActorCauseSaveBloatFix -> (tempmesg) did not have to remove actorcause for editorid: {}, formid: {:08X}"),
-										proj->GetBaseObject()->GetFormEditorID(), proj->GetFormID());
 								}
 							}
 						}

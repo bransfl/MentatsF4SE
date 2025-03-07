@@ -5,7 +5,7 @@
 // prevents combat music from playing when not intended to play
 namespace Internal::Fixes
 {
-	static inline constexpr std::array StopCombatMusicCommands = {
+	static inline constexpr std::array commands = {
 		"RemoveMusic MUSzCombat"sv,
 		"RemoveMusic MUSzCombatBoss"sv,
 		"RemoveMusic MUSzCombatBossLegendary"sv,
@@ -34,10 +34,11 @@ namespace Internal::Fixes
 	// please (just) stop the music!
 	void CombatMusicFix::Fix()
 	{
+		logger::info(FMT_STRING("CombatMusicFix -> Fix() running."sv));
 		// asynchronous delay instead of just sleeping for 5 seconds
 		auto asyncFunc = []() {
 			std::this_thread::sleep_for(std::chrono::seconds(5));
-			for (const auto& command : StopCombatMusicCommands) {
+			for (const auto& command : commands) {
 				Utility::ExecuteCommand(command, nullptr, true);
 			}
 		};

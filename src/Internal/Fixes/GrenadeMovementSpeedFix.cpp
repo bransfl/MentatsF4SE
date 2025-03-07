@@ -24,7 +24,6 @@ namespace Internal::Fixes
 	void GrenadeMovementSpeedFix::Fix()
 	{
 		// TODO NOT FINISHED YET
-		return;
 
 		auto* player = RE::PlayerCharacter::GetSingleton();
 		if (!player) {
@@ -42,7 +41,7 @@ namespace Internal::Fixes
 		}
 		player->currentProcess->middleHigh->equippedItemsLock.unlock();
 
-		logger::info(FMT_STRING("GrenadeMovementSpeedFix -> HasGrenade: {}."), hasGrenade);
+		logger::info(FMT_STRING("GrenadeMovementSpeedFix -> HasGrenade: {}."sv), hasGrenade);
 		if (!hasGrenade) {
 			return;
 		}
@@ -50,12 +49,12 @@ namespace Internal::Fixes
 		const RE::EquippedItem& equippedGrenadeItem = player->currentProcess->middleHigh->equippedItems[2];
 		RE::TESForm* grenadeForm = equippedGrenadeItem.item.object;
 		if (!grenadeForm) {
-			logger::info(FMT_STRING("GrenadeMovementSpeedFix -> grenadeForm was none"));
+			logger::info(FMT_STRING("GrenadeMovementSpeedFix -> grenadeForm was none"sv));
 			return;
 		}
 		RE::TESObjectWEAP* grenadeWeapon = grenadeForm->As<RE::TESObjectWEAP>();
 		if (!grenadeWeapon) {
-			logger::info(FMT_STRING("GrenadeMovementSpeedFix -> grenadeWeapon was none"));
+			logger::info(FMT_STRING("GrenadeMovementSpeedFix -> grenadeWeapon was none"sv));
 			return;
 		}
 
@@ -67,7 +66,7 @@ namespace Internal::Fixes
 			return;
 		}
 
-		logger::info(FMT_STRING("GrenadeMovementSpeedFix -> Unequipping grenade..."));
+		logger::info(FMT_STRING("GrenadeMovementSpeedFix -> Unequipping grenade..."sv));
 		equipManager->UnequipObject(
 			/* a_actor */ player,
 			/* a_object */ &equippedGrenadeItem.item,
@@ -79,7 +78,7 @@ namespace Internal::Fixes
 			/* a_playSounds */ false,
 			/* a_applyNow */ true,
 			/* a_slotBeingReplaced */ nullptr);
-		logger::info(FMT_STRING("GrenadeMovementSpeedFix -> Unequipped grenade."));
+		logger::info(FMT_STRING("GrenadeMovementSpeedFix -> Unequipped grenade."sv));
 	}
 }
 

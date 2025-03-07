@@ -28,7 +28,6 @@ namespace Internal::Warnings
 
 		bool foundRogueMasters = false;
 		auto dataHandler = RE::TESDataHandler::GetSingleton();
-
 		std::unordered_map<std::string_view, uint32_t> loadOrder;
 		std::vector<std::string_view> rogueMasters;
 		auto idx = 0;
@@ -63,7 +62,7 @@ namespace Internal::Warnings
 			const auto [first, last] = std::ranges::unique(rogueMasters);
 			rogueMasters.erase(first, last);
 			RE::ConsoleLog::GetSingleton()->AddString("EngineFixesF4SE -> Rogue Masters were detected. Check EngineFixesF4SE.log\n");
-			logger::info("RogueMasterWarning -> Found rogue masters:"sv);
+			logger::info(FMT_STRING("RogueMasterWarning -> Found rogue masters:"sv));
 			for (const auto& master : rogueMasters) {
 				logger::info(FMT_STRING("\t{}"), master);
 			}

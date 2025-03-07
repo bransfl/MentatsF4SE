@@ -21,6 +21,7 @@ namespace Internal::Utility
 		if (a_silent == true) {
 			log->buffer = std::move(buffer);
 		}
+
 		delete script;
 	}
 

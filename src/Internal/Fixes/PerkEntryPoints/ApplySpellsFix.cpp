@@ -20,7 +20,6 @@ namespace Internal::Fixes::PerkEntryPoints
 
 	void ApplySpellsFix::Install() noexcept
 	{
-		return;
 		logger::info(FMT_STRING("Fix installing: ApplySpellsFix."sv));
 
 		if (!Config::bApplySpellsFix.GetValue()) {
@@ -29,7 +28,7 @@ namespace Internal::Fixes::PerkEntryPoints
 		}
 
 		// F4SE::Trampoline& trampoline = F4SE::GetTrampoline();
-
+		// F4SE::AllocTrampoline(32); maybe?
 		if (REL::Module::IsNG()) {
 			// NG Patch
 		}
@@ -49,10 +48,9 @@ namespace Internal::Fixes::PerkEntryPoints
 		va_start(varArgs, perkOwner);
 		auto* weapon = va_arg(varArgs, RE::TESObjectWEAP*);
 		auto* target = va_arg(varArgs, RE::Actor*);
-		// auto** result = va_arg(varArgs, RE::SpellItem**); unused?
+		// auto** result = va_arg(varArgs, RE::SpellItem**); // unused?
 		va_end(varArgs);
 
-		// ApplySpells::HandleEntryPoint(entryPoint, perkOwner, std::vector<Skyrim::TESForm*>{ perkOwner, weapon, target });
 		auto spellItemsList = ApplySpellsFix::HandleEntryPoint(entryPoint, perkOwner, std::vector<RE::TESForm*>{ perkOwner, weapon, target });
 
 		for (auto* spellItem : spellItemsList) {
@@ -77,7 +75,7 @@ namespace Internal::Fixes::PerkEntryPoints
 	{
 		uint8_t entryPointUnderlying = static_cast<uint8_t>(std::to_underlying(entryPoint));
 
-		// last enum type is (kSetFatigueToAPMult = 0x9D), so we can probably try 0x9E for skyrim's kTotal's equivalent
+		// last enum type is (kSetFatigueToAPMult = 0x9D), so we can try 0x9E for skyrim's kTotal's equivalent
 
 		if (entryPointUnderlying < 0x9E) {
 			if (perkOwner && perkOwner->HasPerkEntries(entryPointUnderlying)) {
@@ -111,7 +109,7 @@ namespace Internal::Fixes::PerkEntryPoints
 	}
 }
 
-//		virtual void ForEachPerkEntry(std::uint8_t a_entryPoint, PerkEntryVisitor& a_visitor) const;																									// 10C
+// virtual void ForEachPerkEntry(std::uint8_t a_entryPoint, PerkEntryVisitor& a_visitor) const;
 // // bp42s added start
 // class PerkEntryVisitor
 // {

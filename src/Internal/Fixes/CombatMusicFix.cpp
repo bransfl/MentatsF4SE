@@ -34,20 +34,25 @@ namespace Internal::Fixes
 	// please (just) stop the music!
 	void CombatMusicFix::Fix()
 	{
-		logger::info("CombatMusicFix -> Fix ran."sv);
-		// todo - make this asynchronous and add a 3-5 second delay so it doesnt instantly end
-		for (const auto& command : StopCombatMusicCommands) {
-			Utility::ExecuteCommand(command, nullptr, true);
-		}
+		// asynchronous delay instead of just sleeping for 5 seconds
+		auto asyncFunc = []() {
+			std::this_thread::sleep_for(std::chrono::seconds(5));
+			for (const auto& command : StopCombatMusicCommands) {
+				Utility::ExecuteCommand(command, nullptr, true);
+			}
+		};
+		std::jthread t(asyncFunc);
+		t.detach();
 	}
 
 	bool CombatMusicFix::NeedsFix()
 	{
-		bool needsFix = false; // setup this way for logging
 		auto playerCharacter = RE::PlayerCharacter::GetSingleton();
 		if (playerCharacter && !playerCharacter->IsInCombat()) {
-			needsFix = true;
+			return true;
 		}
-		return needsFix;
+		else {
+			return false;
+		}
 	}
 }

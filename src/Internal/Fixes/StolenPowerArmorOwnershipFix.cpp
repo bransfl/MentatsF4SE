@@ -4,7 +4,7 @@
 
 namespace Internal::Fixes
 {
-	const std::string_view command = "SetOwnership"; // passing without params sets the player as the owner
+	static inline constexpr std::string_view command = "SetOwnership"; // passing without params sets the player as the owner
 
 	void StolenPowerArmorOwnershipFix::Install() noexcept
 	{

@@ -17,8 +17,6 @@ namespace Internal::Fixes
 		"RecvAnimEvent \"SoundStop\" \"UIWorkshopDrillPressPowerLPM\""sv,
 	};
 
-	// RE::TESFaction* followerFaction = nullptr;	// todo - unused until i can figure out how to get the player's companions
-
 	void WorkbenchSoundFix::Install() noexcept
 	{
 		logger::info(FMT_STRING("Fix installing: WorkbenchSoundFix."sv));
@@ -30,11 +28,8 @@ namespace Internal::Fixes
 
 		RE::TESFurnitureEvent::GetEventSource()->RegisterSink(WorkbenchSoundFix::FurnitureEventHandler::GetSingleton());
 
-		auto* cellHandler = WorkbenchSoundFix::ActorCellEventHandler::GetSingleton();
-		RE::PlayerCharacter::GetSingleton()->RE::BSTEventSource<RE::BGSActorCellEvent>::RegisterSink(cellHandler);
+		RE::PlayerCharacter::GetSingleton()->RE::BSTEventSource<RE::BGSActorCellEvent>::RegisterSink(WorkbenchSoundFix::ActorCellEventHandler::GetSingleton());
 		logger::info(FMT_STRING("WorkbenchSoundFix -> Events registered."sv));
-
-		// followerFaction = (RE::TESFaction*)RE::TESForm::GetFormByID(0x23C01);
 
 		logger::info(FMT_STRING("Fix installed: WorkbenchSoundFix."sv));
 	}
@@ -55,13 +50,5 @@ namespace Internal::Fixes
 		}
 
 		return a_furniture->wbData.type != RE::WorkbenchData::Type::kNone;
-	}
-
-	bool WorkbenchSoundFix::IsPlayerCompanion(RE::Actor* a_actor)
-	{
-		if (!a_actor) {
-			return false;
-		}
-		return false; // TODO
 	}
 }

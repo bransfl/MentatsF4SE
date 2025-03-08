@@ -46,6 +46,8 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f
 {
 	F4SE::Init(a_f4se);
 
+	F4SE::AllocTrampoline(96);
+
 	logger::info("---------------------------------------------"sv);
 	logger::info("Config loading..."sv);
 	Internal::Config::Load();

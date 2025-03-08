@@ -40,10 +40,7 @@ namespace Internal::Warnings
 		// check master order
 		for (auto& mods = dataHandler->files; const auto mod : mods) {
 			if (mod->masterCount > 0) {
-				for (const auto masterName : mod->masters) {
-					if (!masterName) {
-						continue;
-					}
+				for (const std::string_view masterName : mod->masters) {
 					auto master = dataHandler->LookupLoadedModByName(masterName); // this is the error rn
 					if (master) {
 						if (loadOrder.at(master->GetFilename()) > loadOrder.at(mod->GetFilename())) {

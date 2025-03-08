@@ -23,8 +23,6 @@ namespace Internal::Fixes
 			return;
 		}
 
-		F4SE::AllocTrampoline(16);
-
 		logger::info(FMT_STRING("LeveledListCrashFix -> Hooks installing..."sv));
 		if (REL::Module::IsNG()) {
 			// NG Patch

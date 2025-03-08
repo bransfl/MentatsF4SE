@@ -21,7 +21,6 @@ namespace Internal::Fixes
 			return;
 		}
 
-		F4SE::AllocTrampoline(64);
 		F4SE::Trampoline& trampoline = F4SE::GetTrampoline();
 
 		if (REL::Module::IsNG()) {

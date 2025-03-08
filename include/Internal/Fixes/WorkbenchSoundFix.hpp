@@ -20,9 +20,6 @@ namespace Internal::Fixes
 		// checks if the given furniture is a valid workbench
 		static bool IsWorkbench(RE::TESFurniture* a_furniture);
 
-		// checks if the given actor is a valid companion - unused
-		static bool IsPlayerCompanion(RE::Actor* a_actor);
-
 		class FurnitureEventHandler : public RE::BSTEventSink<RE::TESFurnitureEvent>
 		{
 		public:

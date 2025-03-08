@@ -26,13 +26,13 @@ bEncounterZoneResetFix = true
 # (default: enabled | Supports both versions)
 bLeveledListCrashFix = true
 
-# Fixes a major issue with the conditions of magic effects from being updated properly.
-# This is an issue with floating-point precision can eventually break spells/perks/really everything.
+# Fixes a major issue with floating-point precision that eventually prevents the conditions of magic effects from being updated properly.
+# This can eventually break spells/perks/really everything.
 # This version of the fix does not have the addiction bug that has been reported on the other mod.
 # (default: enabled | Supports both versions)
 bMagicEffectConditionsFix = true
 
-# Fixes an issue where the player is never given ownership of stolen power armor frames.
+# Fixes an issue where the player is never given proper ownership of stolen power armor frames.
 # (default: enabled | Supports both versions)
 bStolenPowerArmorOwnershipFix = true
 

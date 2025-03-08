@@ -6,10 +6,10 @@ namespace Internal::Warnings
 {
 	void LeveledListEntryCountWarning::CheckLeveledLists()
 	{
-		logger::info(FMT_STRING("LeveledListEntryCountWarning -> Warning installing..."sv));
+		logger::info("LeveledListEntryCountWarning -> Warning installing..."sv);
 
 		if (!Config::bLeveledListEntryCountWarning.GetValue()) {
-			logger::info(FMT_STRING("Warning aborted: LeveledListEntryCountWarning. Reason: Process was disabled in toml file."sv));
+			logger::info("Warning aborted: LeveledListEntryCountWarning. Reason: Process was disabled in toml file."sv);
 			return;
 		}
 
@@ -30,15 +30,15 @@ namespace Internal::Warnings
 				continue;
 			}
 
-			logger::info(FMT_STRING("LeveledListEntryCountWarning-> LeveledList (FormID: {:08X}, EditorID: {}) has {} entries."),
+			logger::info("LeveledListEntryCountWarning-> LeveledList (FormID: {:08X}, EditorID: {}) has {} entries."sv,
 				levItem->GetFormID(), levItem->GetFormEditorID(), numEntries);
 			foundBadLL = true;
 		}
 		if (foundBadLL) {
 			RE::ConsoleLog::GetSingleton()->AddString("EngineFixesF4SE -> LeveledListEntryCountWarning -> Warning: At least 1 leveled list has over 255 entries. Check the log at Documents/My Games/Fallout4/F4SE/EngineFixesF4SE.log\n");
 		}
-		logger::info(FMT_STRING("LeveledListEntryCountWarning -> ListsChecked: {}"), listsChecked);
+		logger::info("LeveledListEntryCountWarning -> ListsChecked: {}."sv, listsChecked);
 
-		logger::info(FMT_STRING("LeveledListEntryCountWarning -> Warning installed."sv));
+		logger::info("LeveledListEntryCountWarning -> Warning installed."sv);
 	}
 }

@@ -5,17 +5,17 @@ namespace Internal::Fixes
 {
 	void ActorCauseSaveBloatFix::Install() noexcept
 	{
-		logger::info(FMT_STRING("ActorCauseSaveBloatFix -> Fix installing..."sv));
+		logger::info("ActorCauseSaveBloatFix -> Fix installing..."sv);
 
 		if (!Config::bActorCauseSaveBloatFix.GetValue()) {
-			logger::info(FMT_STRING("Fix aborted: ActorCauseSaveBloatFix. Reason: Fix was disabled in config file."sv));
+			logger::info("Fix aborted: ActorCauseSaveBloatFix. Reason: Fix was disabled in config file."sv);
 			return;
 		}
 
 		auto& cells = RE::CellAttachDetachEventSource::CellAttachDetachEventSourceSingleton::GetSingleton();
 		cells.source.RegisterSink(ActorCauseSaveBloatFix::CellAttachDetachEventHandler::GetSingleton());
 
-		logger::info(FMT_STRING("ActorCauseSaveBloatFix -> Fix installed."sv));
+		logger::info("ActorCauseSaveBloatFix -> Fix installed."sv);
 	}
 
 	std::vector<RE::TESObjectREFR*> ActorCauseSaveBloatFix::GetProjectilesInCell(RE::TESObjectCELL* a_cell)

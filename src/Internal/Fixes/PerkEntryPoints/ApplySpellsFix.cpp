@@ -34,10 +34,10 @@ namespace Internal::Fixes::PerkEntryPoints
 
 	void ApplySpellsFix::Install() noexcept
 	{
-		logger::info(FMT_STRING("Fix installing: ApplySpellsFix."sv));
+		logger::info("Fix installing: ApplySpellsFix."sv);
 
 		if (!Config::bApplySpellsFix.GetValue()) {
-			logger::info(FMT_STRING("Fix aborted: ApplySpellsFix. Reason: Fix was disabled in config file."sv));
+			logger::info("Fix aborted: ApplySpellsFix. Reason: Fix was disabled in config file."sv);
 			return;
 		}
 
@@ -50,7 +50,7 @@ namespace Internal::Fixes::PerkEntryPoints
 			// OG Patch
 		}
 
-		logger::info(FMT_STRING("Fix installed: ApplySpellsFix."sv));
+		logger::info("Fix installed: ApplySpellsFix."sv);
 	}
 
 	void ApplySpellsFix::ApplyCombatHitSpell(

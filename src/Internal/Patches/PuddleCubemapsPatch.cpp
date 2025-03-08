@@ -5,16 +5,16 @@ namespace Internal::Patches
 {
 	void PuddleCubemapsPatch::Install() noexcept
 	{
-		logger::info(FMT_STRING("PuddleCubemapsPatch -> Patch installing..."sv));
+		logger::info("PuddleCubemapsPatch -> Patch installing..."sv);
 
 		if (!Config::bPuddleCubemapsPatch.GetValue()) {
-			logger::info(FMT_STRING("Patch aborted: PuddleCubemapsPatch. Reason: Patch was disabled in config file."sv));
+			logger::info("Patch aborted: PuddleCubemapsPatch. Reason: Patch was disabled in config file."sv);
 			return;
 		}
 
 		Fix();
 
-		logger::info(FMT_STRING("PuddleCubemapsPatch -> Patch installed."sv));
+		logger::info("PuddleCubemapsPatch -> Patch installed."sv);
 	}
 
 	void PuddleCubemapsPatch::Fix()
@@ -29,12 +29,12 @@ namespace Internal::Patches
 
 		for (RE::TESWorldSpace* worldspace : worldspaces) {
 			if (!worldspace) {
-				logger::warn(FMT_STRING("PuddleCubemapsPatch -> Worldspace was nullptr."));
+				logger::warn("PuddleCubemapsPatch -> Worldspace was nullptr.");
 				continue;
 			}
 
 			worldspace->waterEnvMap.textureName = blank;
-			logger::info(FMT_STRING("PuddleCubemapsPatch -> Worldspace waterEnvMap was cleared: {}."), worldspace->GetFormEditorID());
+			logger::info("PuddleCubemapsPatch -> Worldspace waterEnvMap was cleared: {}.", worldspace->GetFormEditorID());
 		}
 	}
 }

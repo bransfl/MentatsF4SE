@@ -8,16 +8,16 @@ namespace Internal::Fixes
 
 	void StolenPowerArmorOwnershipFix::Install() noexcept
 	{
-		logger::info(FMT_STRING("StolenPowerArmorOwnershipFix -> Fix installing..."sv));
+		logger::info("StolenPowerArmorOwnershipFix -> Fix installing..."sv);
 
 		if (!Config::bStolenPowerArmorOwnershipFix.GetValue()) {
-			logger::info(FMT_STRING("Fix aborted: StolenPowerArmorOwnershipFix. Reason: Fix was disabled in config file."sv));
+			logger::info("Fix aborted: StolenPowerArmorOwnershipFix. Reason: Fix was disabled in config file."sv);
 			return;
 		}
 
 		RE::TESFurnitureEvent::GetEventSource()->RegisterSink(StolenPowerArmorOwnershipFix::FurnitureEventHandler::GetSingleton());
 
-		logger::info(FMT_STRING("StolenPowerArmorOwnershipFix -> Fix installed."sv));
+		logger::info("StolenPowerArmorOwnershipFix -> Fix installed."sv);
 	}
 
 	void StolenPowerArmorOwnershipFix::FixOwnership(RE::TESObjectREFR* a_ref)

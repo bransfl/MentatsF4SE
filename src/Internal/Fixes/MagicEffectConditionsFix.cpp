@@ -9,15 +9,15 @@ namespace Internal::Fixes
 
 	void MagicEffectConditionsFix::Install() noexcept
 	{
-		logger::info(FMT_STRING("Fix installing: MagicEffectConditionsFix."sv));
+		logger::info("Fix installing: MagicEffectConditionsFix."sv);
 
 		if (!Config::bMagicEffectConditionsFix.GetValue()) {
-			logger::info(FMT_STRING("Fix aborted: MagicEffectConditionsFix. Reason: Fix was disabled in config file."sv));
+			logger::info("Fix aborted: MagicEffectConditionsFix. Reason: Fix was disabled in config file."sv);
 			return;
 		}
 		if (REX::W32::GetModuleHandleW(L"MGEFConditionFix.dll")) {
 			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Mod 'MGEF Condition Fix' was detected. It is recommended that you disable this mod while using EngineFixesF4SE.\n");
-			logger::info(FMT_STRING("Fix aborted: MagicEffectConditionsFix. Reason: Mod was installed: MGEFConditionFix.dll."sv));
+			logger::info("Fix aborted: MagicEffectConditionsFix. Reason: Mod was installed: MGEFConditionFix.dll."sv);
 			return;
 		}
 
@@ -34,7 +34,7 @@ namespace Internal::Fixes
 			OriginalFunction_EvaluateConditions_OG = trampoline.write_branch<5>(ptr_EvaluateConditions_OG.address(), &Hook_EvaluateConditions);
 		}
 
-		logger::info(FMT_STRING("Fix installed: MagicEffectConditionsFix."sv));
+		logger::info("Fix installed: MagicEffectConditionsFix."sv);
 	}
 
 	float MagicEffectConditionsFix::ActiveEffectConditionUpdateInterval()
@@ -65,9 +65,9 @@ namespace Internal::Fixes
 			if (!potion)
 				return;
 
-			// logger::debug(FMT_STRING("activeEffect was FaF potion. GetFormID()={:08X}, EditorId={}"), potion->GetFormID(), potion->GetFormEditorID());
+			// logger::debug("activeEffect was FaF potion. GetFormID()={:08X}, EditorId={}"), potion->GetFormID(), potion->GetFormEditorID());
 			if (potion->data.addictionChance > 0.0 || potion->data.addictionItem != nullptr) {
-				// logger::debug(FMT_STRING("activeEffect potion WAS addictive. addiction: {}"), potion->data.addictionName);
+				// logger::debug("activeEffect potion WAS addictive. addiction: {}"), potion->data.addictionName);
 				return;
 			}
 		}

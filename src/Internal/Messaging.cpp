@@ -35,9 +35,6 @@ namespace Internal::Messaging
 					Internal::Fixes::CombatMusicFix::Fix();
 				}
 
-				// GrenadeMovementSpeedFix
-				// Internal::Fixes::GrenadeMovementSpeedFix::Install();
-
 				// WorkbenchSoundFix
 				Internal::Fixes::WorkbenchSoundFix::Install();
 				Internal::Fixes::WorkbenchSoundFix::FixWorkbenchSounds(RE::PlayerCharacter::GetSingleton());
@@ -80,9 +77,6 @@ namespace Internal::Messaging
 
 				// LeveledListEntryCountWarning
 				Internal::Warnings::LeveledListEntryCountWarning::CheckLeveledLists();
-
-				// RogueMasterWarning
-				// Internal::Warnings::RogueMasterWarning::Install();
 
 				break;
 			}

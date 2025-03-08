@@ -44,21 +44,21 @@ namespace Internal::Fixes::TransferManyItems
 
 	void DropManyItemsFix::Install() noexcept
 	{
-		logger::info(FMT_STRING("Fix installing: DropManyItemsFix."sv));
+		logger::info("Fix installing: DropManyItemsFix."sv);
 
 		if (!Config::bDropManyItemsFix.GetValue()) {
-			logger::info(FMT_STRING("Fix aborted: DropManyItemsFix. Reason: Fix was disabled in config file."sv));
+			logger::info("Fix aborted: DropManyItemsFix. Reason: Fix was disabled in config file."sv);
 			return;
 		}
 		if (REX::W32::GetModuleHandleW(L"Drop7FFFPatch.dll")) {
 			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Fix aborted: DropManyItemsFix. Reason: Mod 'Drop 7FFF Fix' was detected. This fix is not necessary with this mod installed.\n");
-			logger::warn(FMT_STRING("Fix aborted: DropManyItemsFix. Reason: Mod was installed: Drop7FFFPatch.dll."sv));
+			logger::warn("Fix aborted: DropManyItemsFix. Reason: Mod was installed: Drop7FFFPatch.dll."sv);
 			return;
 		}
 
 		Fix();
 
-		logger::info(FMT_STRING("Fix installed: DropManyItemsFix."sv));
+		logger::info("Fix installed: DropManyItemsFix."sv);
 	}
 
 	void DropManyItemsFix::Fix()

@@ -19,22 +19,22 @@ namespace Internal::Fixes
 
 	void CombatMusicFix::Install() noexcept
 	{
-		logger::info(FMT_STRING("Fix installing: CombatMusicFix."sv));
+		logger::info("Fix installing: CombatMusicFix."sv);
 
 		if (!Config::bCombatMusicFix.GetValue()) {
-			logger::info(FMT_STRING("Fix aborted: CombatMusicFix. Reason: Fix was disabled in config file."sv));
+			logger::info("Fix aborted: CombatMusicFix. Reason: Fix was disabled in config file."sv);
 			return;
 		}
 
 		RE::TESDeathEvent::GetEventSource()->RegisterSink(CombatMusicFix::DeathEventHandler::GetSingleton());
 
-		logger::info(FMT_STRING("Fix installed: CombatMusicFix."sv));
+		logger::info("Fix installed: CombatMusicFix."sv);
 	}
 
 	// please (just) stop the music!
 	void CombatMusicFix::Fix()
 	{
-		logger::info(FMT_STRING("CombatMusicFix -> Fix() running."sv));
+		logger::info("CombatMusicFix -> Fix() running."sv);
 		// asynchronous delay instead of just sleeping for 5 seconds
 		auto asyncFunc = []() {
 			std::this_thread::sleep_for(std::chrono::seconds(5));

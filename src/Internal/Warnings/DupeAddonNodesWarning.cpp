@@ -8,10 +8,10 @@ namespace Internal::Warnings
 
 	void DupeAddonNodesWarning::Install() noexcept
 	{
-		logger::info(FMT_STRING("Warning installing: DupeAddonNodesWarning."sv));
+		logger::info("Warning installing: DupeAddonNodesWarning."sv);
 
 		if (!Config::bLeveledListCrashFix.GetValue()) {
-			logger::info(FMT_STRING("Fix aborted: LeveledListCrashFix. Reason: Fix was disabled in config file."sv));
+			logger::info("Fix aborted: LeveledListCrashFix. Reason: Fix was disabled in config file."sv);
 			return;
 		}
 
@@ -19,7 +19,7 @@ namespace Internal::Warnings
 
 		CheckDupeAddonNodes();
 
-		logger::info(FMT_STRING("Warning installed: DupeAddonNodesWarning."sv));
+		logger::info("Warning installed: DupeAddonNodesWarning."sv);
 	}
 
 	void DupeAddonNodesWarning::CheckDupeAddonNodes()
@@ -46,26 +46,26 @@ namespace Internal::Warnings
 				const auto currentNode = (*res.first).second;
 				if (currentNode != addonNode && currentNode->formID != addonNode->formID) {
 					nodeErrors++;
-					logger::warn(FMT_STRING("DupeAddonNodesWarning -> Duplicate AddonNode Index found at (FormID: {:08X} in Plugin: {}) AND (FormID {:08X} in plugin {}). The AddonNode index was {}."),
+					logger::warn("DupeAddonNodesWarning -> Duplicate AddonNode Index found at (FormID: {:08X} in Plugin: {}) AND (FormID {:08X} in plugin {}). The AddonNode index was {}.",
 						currentNode->formID, Utility::GetModName(currentNode, false), addonNode->formID, Utility::GetModName(addonNode, false), addonNode->index);
 					RE::ConsoleLog::GetSingleton()->AddString("EngineFixesF4SE -> DupeAddonNodesWarning -> An AddonNode duplicate index was found, check EngineFixesF4SE.log for more information.\n");
 				}
 			}
 		}
 
-		logger::info(FMT_STRING("DupeAddonNodesWarning -> CheckDupeAddonNodes finished, NodesChecked: {}, NodeErrors: {}"), nodesChecked, nodeErrors);
+		logger::info("DupeAddonNodesWarning -> CheckDupeAddonNodes finished. NodesChecked: {}, NodeErrors: {}."sv, nodesChecked, nodeErrors);
 	}
 
 	void DupeAddonNodesWarning::ClearNodeMap()
 	{
-		logger::info(FMT_STRING("DupeAddonNodesWarning -> Clearing node map..."sv));
+		logger::info("DupeAddonNodesWarning -> Clearing node map..."sv);
 
 		if (!nodeMap.empty()) {
 			nodeMap.clear();
-			logger::info(FMT_STRING("DupeAddonNodesWarning -> Node map cleared."sv));
+			logger::info("DupeAddonNodesWarning -> Node map cleared."sv);
 		}
 		else {
-			logger::info(FMT_STRING("DupeAddonNodesWarning -> Node was already cleared."sv));
+			logger::info("DupeAddonNodesWarning -> Node was already cleared."sv);
 		}
 	}
 }

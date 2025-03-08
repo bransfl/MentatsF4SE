@@ -21,8 +21,6 @@ namespace Internal::Config
 
 	inline const auto bEncounterZoneResetFix = REX::TOML::Bool{ "Fixes"sv, "bEncounterZoneResetFix"sv, false };
 
-	inline const auto bGrenadeMovementSpeedFix = REX::TOML::Bool{ "Fixes"sv, "bGrenadeMovementSpeedFix"sv, false };
-
 	inline const auto bLeveledListCrashFix = REX::TOML::Bool{ "Fixes"sv, "bLeveledListCrashFix"sv, false };
 
 	inline const auto bMagicEffectConditionsFix = REX::TOML::Bool{ "Fixes"sv, "bMagicEffectConditionsFix"sv, false };
@@ -38,6 +36,4 @@ namespace Internal::Config
 	inline const auto bDupeAddonNodesWarning = REX::TOML::Bool{ "Warnings"sv, "bDupeAddonNodesWarning"sv, false };
 
 	inline const auto bLeveledListEntryCountWarning = REX::TOML::Bool{ "Warnings"sv, "bLeveledListEntryCountWarning"sv, false };
-
-	inline const auto bRogueMasterWarning = REX::TOML::Bool{ "Warnings"sv, "bRogueMasterWarning"sv, false };
 }

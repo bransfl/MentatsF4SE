@@ -23,8 +23,6 @@ namespace Internal::Fixes
 
 		EncounterZoneResetFix::Install();
 
-		// GrenadeMovementSpeedFix is handled in Messaging
-
 		LeveledListCrashFix::Install();
 
 		MagicEffectConditionsFix::Install();

@@ -32,7 +32,7 @@ namespace Internal::Config
 	inline const auto bWorkbenchSoundFix = REX::TOML::Bool{ "Fixes"sv, "bWorkbenchSoundFix"sv, false };
 
 	// PATCHES
-	// n/a
+	inline const auto bPuddleCubemapsPatch = REX::TOML::Bool{ "Patches"sv, "bPuddleCubemapsPatch"sv, false };
 
 	// WARNINGS
 	inline const auto bDupeAddonNodesWarning = REX::TOML::Bool{ "Warnings"sv, "bDupeAddonNodesWarning"sv, false };

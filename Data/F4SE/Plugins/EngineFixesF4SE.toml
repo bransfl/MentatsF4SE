@@ -42,6 +42,12 @@ bStolenPowerArmorOwnershipFix = true
 bWorkbenchSoundFix = true
 
 
+[Patches]
+# Patches all loaded worldspaces to remove flickering on water puddles and blood pools.
+# (default: enabled | Supports both versions)
+bPuddleCubemapsPatch = true
+
+
 [Warnings]
 # Warns if there are two or more addon nodes (ADDN) with the same node index in your load order.
 # (default: enabled | Supports both versions)

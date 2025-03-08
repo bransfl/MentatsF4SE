@@ -1,5 +1,5 @@
 #include "Internal/Fixes/EncounterZoneResetFix.hpp"
-#include "Internal/Config/Config.hpp"
+#include "Internal/Config.hpp"
 
 // only needed for NG, Buffout4NG covers this for OG
 // if alandtse updates Buffout4NG to include this for NG, this fix will be deprecated and removed

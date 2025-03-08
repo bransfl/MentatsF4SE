@@ -1,5 +1,5 @@
 #include "Internal/Fixes/PerkEntryPoints/BasherFix.hpp"
-#include "Internal/Config/Config.hpp"
+#include "Internal/Config.hpp"
 
 // fixes entrypoint ModOutgoingLimbBashDamage so it actually works
 // note - this will likely require RE, and wont be made until RE is done.

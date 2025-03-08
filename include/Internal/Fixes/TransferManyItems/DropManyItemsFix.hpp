@@ -9,6 +9,8 @@ namespace Internal::Fixes::TransferManyItems
 		static void Install() noexcept;
 
 	private:
+		static void Fix();
+		
 		// og hook
 		static uint32_t* Hook_DropItemIntoWorld_OG(RE::TESObjectREFR* refr, uint32_t* handle, RE::TESBoundObject* item, int32_t count, RE::TESObjectREFR* container, RE::NiPoint3* pa, RE::NiPoint3* pb, RE::ExtraDataList* extra);
 

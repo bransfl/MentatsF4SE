@@ -1,5 +1,5 @@
 #include "Internal/Fixes/WorkbenchSoundFix.hpp"
-#include "Internal/Config/Config.hpp"
+#include "Internal/Config.hpp"
 #include "Internal/Utility/Utility.hpp"
 
 // SoundDescriptors:

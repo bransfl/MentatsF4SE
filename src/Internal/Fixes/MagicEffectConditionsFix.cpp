@@ -1,5 +1,5 @@
 #include "Internal/Fixes/MagicEffectConditionsFix.hpp"
-#include "Internal/Config/Config.hpp"
+#include "Internal/Config.hpp"
 
 namespace Internal::Fixes
 {

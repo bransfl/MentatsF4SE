@@ -1,5 +1,5 @@
 #include "Internal/Fixes/TransferManyItems/DropManyItemsFix.hpp"
-#include "Internal/Config/Config.hpp"
+#include "Internal/Config.hpp"
 #include "f4se/GameApi.h"
 #include <f4se_common/BranchTrampoline.h>
 #include <f4se_common/Relocation.h>
@@ -56,6 +56,13 @@ namespace Internal::Fixes::TransferManyItems
 			return;
 		}
 
+		Fix();
+
+		logger::info(FMT_STRING("Fix installed: DropManyItemsFix."sv));
+	}
+
+	void DropManyItemsFix::Fix()
+	{
 		// i use gbranchtrampoline here since sylee used it and i'm clearly such a free thinker
 		if (REL::Module::IsNG()) {
 			// NG Patch
@@ -71,8 +78,6 @@ namespace Internal::Fixes::TransferManyItems
 			}
 			g_branchTrampoline.Write5Call(DropItemIntoWorld_Dest.GetUIntPtr(), (uintptr_t)Hook_DropItemIntoWorld_OG);
 		}
-
-		logger::info(FMT_STRING("Fix installed: DropManyItemsFix."sv));
 	}
 
 	uint32_t* DropManyItemsFix::Hook_DropItemIntoWorld_OG(RE::TESObjectREFR* refr, uint32_t* handle, RE::TESBoundObject* item, int32_t count, RE::TESObjectREFR* container, RE::NiPoint3* pa, RE::NiPoint3* pb, RE::ExtraDataList* extra)

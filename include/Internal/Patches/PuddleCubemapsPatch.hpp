@@ -1,11 +1,10 @@
 #pragma once
 
-namespace Internal::Fixes::TransferManyItems
+namespace Internal::Patches
 {
-	class AddManyItemsFix
+	class PuddleCubemapsPatch
 	{
 	public:
-		// installs the fix
 		static void Install() noexcept;
 
 	private:

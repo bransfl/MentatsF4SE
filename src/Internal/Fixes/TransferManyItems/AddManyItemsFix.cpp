@@ -1,5 +1,5 @@
 #include "Internal/Fixes/TransferManyItems/AddManyItemsFix.hpp"
-#include "Internal/Config/Config.hpp"
+#include "Internal/Config.hpp"
 #include "f4se_common/Relocation.h"
 
 namespace Internal::Fixes::TransferManyItems
@@ -19,6 +19,13 @@ namespace Internal::Fixes::TransferManyItems
 			return;
 		}
 
+		Fix();
+
+		logger::info(FMT_STRING("Fix installed: AddManyItemsFix."sv));
+	}
+
+	void AddManyItemsFix::Fix()
+	{
 		if (REL::Module::IsNG()) {
 			// NG patch
 			uint8_t buf[] = { 0x44, 0x8B, 0x44, 0x24, 0x70, 0x90 };
@@ -29,8 +36,6 @@ namespace Internal::Fixes::TransferManyItems
 			uint8_t buf[] = { 0x44, 0x8B, 0x44, 0x24, 0x74, 0x90 };
 			REL::safe_write(RelocationManager::s_baseAddr + 0x003FBF3E, buf, sizeof(buf));
 		}
-
-		logger::info(FMT_STRING("Fix installed: AddManyItemsFix."sv));
 	}
 }
 

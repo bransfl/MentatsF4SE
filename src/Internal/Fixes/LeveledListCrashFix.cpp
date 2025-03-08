@@ -1,5 +1,5 @@
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
-#include "Internal/Config/Config.hpp"
+#include "Internal/Config.hpp"
 #include "Internal/Utility/Utility.hpp"
 // #include "detourxs/detourxs.h"
 

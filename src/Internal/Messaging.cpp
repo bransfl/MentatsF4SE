@@ -1,12 +1,15 @@
-#include "Internal/Fixes/CombatMusicFix.hpp"
-// #include "Internal/Fixes/GrenadeMovementSpeedFix.hpp"
+#include "Internal/Messaging.hpp"
+// fixes
 #include "Internal/Fixes/ActorCauseSaveBloatFix.hpp"
+#include "Internal/Fixes/CombatMusicFix.hpp"
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
 #include "Internal/Fixes/StolenPowerArmorOwnershipFix.hpp"
 #include "Internal/Fixes/WorkbenchSoundFix.hpp"
+// patches
+#include "Internal/Patches/PuddleCubemapsPatch.hpp"
+// warnings
 #include "Internal/Warnings/DupeAddonNodesWarning.hpp"
 #include "Internal/Warnings/LeveledListEntryCountWarning.hpp"
-// #include "Internal/Warnings/RogueMasterWarning.hpp"
 
 namespace Internal::Messaging
 {
@@ -68,6 +71,9 @@ namespace Internal::Messaging
 			case F4SE::MessagingInterface::kGameDataReady: {
 				// CombatMusicFix
 				Internal::Fixes::CombatMusicFix::Install();
+
+				// PuddleCubemapsPatch
+				Internal::Patches::PuddleCubemapsPatch::Install();
 
 				// DupeAddonNodesWarnings
 				Internal::Warnings::DupeAddonNodesWarning::Install();

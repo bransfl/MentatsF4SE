@@ -1,6 +1,6 @@
-#include "Internal/Callbacks/Messaging.hpp"
-#include "Internal/Config/Config.hpp"
+#include "Internal/Config.hpp"
 #include "Internal/Fixes/Installation.hpp"
+#include "Internal/Messaging.hpp"
 #include "Internal/Patches/Installation.hpp"
 #include "Internal/Warnings/Installation.hpp"
 
@@ -64,10 +64,10 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f
 	Internal::Fixes::Install();
 	logger::info("Fixes installed."sv);
 
-	// logger::info("---------------------------------------------"sv);
-	// logger::info("Patches installing..."sv);
-	// Internal::Patches::Install();
-	// logger::info("Patches installed."sv);
+	logger::info("---------------------------------------------"sv);
+	logger::info("Patches installing..."sv);
+	Internal::Patches::Install();
+	logger::info("Patches installed."sv);
 
 	logger::info("---------------------------------------------"sv);
 	logger::info("Installing warnings..."sv);

@@ -1,5 +1,5 @@
 #include "Internal/Warnings/RogueMasterWarning.hpp"
-#include "Internal/Config/Config.hpp"
+#include "Internal/Config.hpp"
 
 // # Logs and reports any master files that load after the mods that require them.
 // # Newer versions of MO2 typically prevent this from happening, but it can still occur sometimes.

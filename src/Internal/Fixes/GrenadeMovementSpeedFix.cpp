@@ -1,5 +1,5 @@
 #include "Internal/Fixes/GrenadeMovementSpeedFix.hpp"
-#include "Internal/Config/Config.hpp"
+#include "Internal/Config.hpp"
 
 // unequips and reequips the player's grenade on save load to fix a semi-common movement speed bug
 namespace Internal::Fixes

@@ -28,6 +28,11 @@ namespace Internal::Warnings
 
 		bool foundRogueMasters = false;
 		auto dataHandler = RE::TESDataHandler::GetSingleton();
+		if (!dataHandler) {
+			logger::info(FMT_STRING("RogueMasterWarning -> dataHandler was null"sv));
+			return;
+		}
+
 		std::unordered_map<std::string_view, uint32_t> loadOrder;
 		std::vector<std::string_view> rogueMasters;
 		auto idx = 0;
@@ -41,7 +46,7 @@ namespace Internal::Warnings
 		for (auto& mods = dataHandler->files; const auto mod : mods) {
 			if (mod->masterCount > 0) {
 				for (const std::string_view masterName : mod->masters) {
-					auto master = dataHandler->LookupLoadedModByName(masterName); // this is the error rn
+					auto master = dataHandler->LookupModByName(masterName);
 					if (master) {
 						if (loadOrder.at(master->GetFilename()) > loadOrder.at(mod->GetFilename())) {
 							foundRogueMasters = true;
@@ -49,6 +54,9 @@ namespace Internal::Warnings
 							logger::warn(FMT_STRING("RogueMasterWarning -> Master file: {} is loaded after {}."),
 								master->GetFilename(), mod->GetFilename());
 						}
+					}
+					else {
+						logger::info(FMT_STRING("RogueMasterWarning -> a master was null"sv));
 					}
 				}
 			}

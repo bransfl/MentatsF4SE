@@ -59,26 +59,26 @@ namespace Internal::Fixes
 
 	void MagicEffectConditionsFix::Hook_EvaluateConditions(RE::ActiveEffect* activeEffect, float elapsedTimeDelta, bool forceUpdate)
 	{
-		logger::info("activeEffect was: GetFormID()={:08X}, EditorId={}"sv, activeEffect->spell->GetFormID(), activeEffect->spell->GetFormEditorID());
+		// logger::info("activeEffect was: GetFormID()={:08X}, EditorId={}"sv, activeEffect->spell->GetFormID(), activeEffect->spell->GetFormEditorID());
 
 		if (activeEffect->conditionStatus == RE::ActiveEffect::ConditionStatus::kNotAvailable) {
-			logger::info("MagicEffectConditions -> activeEffect's ConditionStatus was kNotAvailable. Return."sv);
+			// logger::info("MagicEffectConditions -> activeEffect's ConditionStatus was kNotAvailable. Return."sv);
 			return;
 		}
 
 		if (activeEffect->spell->GetCastingType() == RE::MagicSystem::CastingType::kFireAndForget) {
-			logger::info("activeEffect was FireAndForget. GetFormID()={:08X}, EditorId={}"sv, activeEffect->spell->GetFormID(), activeEffect->spell->GetFormEditorID());
+			// logger::info("activeEffect was FireAndForget. GetFormID()={:08X}, EditorId={}"sv, activeEffect->spell->GetFormID(), activeEffect->spell->GetFormEditorID());
 
 			RE::AlchemyItem* potion = RE::TESForm::GetFormByID(activeEffect->spell->GetFormID())->As<RE::AlchemyItem>();
 			if (potion) {
-				logger::info("activeEffect was FireAndForget potion. GetFormID()={:08X}, EditorId={}"sv, potion->GetFormID(), potion->GetFormEditorID());
+				// logger::info("activeEffect was FireAndForget potion. GetFormID()={:08X}, EditorId={}"sv, potion->GetFormID(), potion->GetFormEditorID());
 				if (potion->data.addictionChance > 0.0 || potion->data.addictionItem != nullptr) {
-					logger::info("activeEffect potion WAS addictive. addiction: {}"sv, potion->data.addictionName);
+					// logger::info("activeEffect potion WAS addictive. addiction: {}"sv, potion->data.addictionName);
 					return;
 				}
 			}
 			else {
-				logger::info("activeEffect potion was null. GetFormID()={:08X}, EditorId={}"sv, activeEffect->spell->GetFormID(), activeEffect->spell->GetFormEditorID());
+				// logger::info("activeEffect potion was null. GetFormID()={:08X}, EditorId={}"sv, activeEffect->spell->GetFormID(), activeEffect->spell->GetFormEditorID());
 			}
 		}
 
@@ -92,29 +92,29 @@ namespace Internal::Fixes
 				if (activeEffect->elapsedSeconds <= 0.0F) {
 					// set the auxillary timer to the amt of the effect has been active
 					reinterpret_cast<float&>(activeEffect->pad94) = elapsedTimeDelta;
-					logger::info("MagicEffectConditions -> activeEffect's pad94 was set to elapsedTimeDelta"sv);
+					// logger::info("MagicEffectConditions -> activeEffect's pad94 was set to elapsedTimeDelta"sv);
 					return;
 				}
 
 				if (conditionUpdateTime > 0.0F && conditionUpdateTime < ActiveEffectConditionUpdateInterval()) {
 					reinterpret_cast<float&>(activeEffect->pad94) += elapsedTimeDelta;
-					logger::info("MagicEffectConditions -> activeEffect's pad94 had elapsedTimeDelta added."sv);
+					// logger::info("MagicEffectConditions -> activeEffect's pad94 had elapsedTimeDelta added."sv);
 					return;
 				}
 			}
 
 			if (activeEffect->effect->conditions.IsTrue(activeEffect->target->GetTargetStatsObject(), activeEffect->caster.get().get()) && !activeEffect->CheckDisplacementSpellOnTarget()) {
 				activeEffect->conditionStatus = RE::ActiveEffect::ConditionStatus::kTrue;
-				logger::info("MagicEffectConditions -> activeEffect's ConditionStatus was set to kTrue for GetFormID()={:08X}, EditorId={}"sv, activeEffect->spell->GetFormID(), activeEffect->spell->GetFormEditorID());
+				// logger::info("MagicEffectConditions -> activeEffect's ConditionStatus was set to kTrue for GetFormID()={:08X}, EditorId={}"sv, activeEffect->spell->GetFormID(), activeEffect->spell->GetFormEditorID());
 			}
 			else {
 				activeEffect->conditionStatus = RE::ActiveEffect::ConditionStatus::kFalse;
-				logger::info("MagicEffectConditions -> activeEffect ConditionStatus was set to kFalse for GetFormID()={:08X}, EditorId={}"sv, activeEffect->spell->GetFormID(), activeEffect->spell->GetFormEditorID());
+				// logger::info("MagicEffectConditions -> activeEffect ConditionStatus was set to kFalse for GetFormID()={:08X}, EditorId={}"sv, activeEffect->spell->GetFormID(), activeEffect->spell->GetFormEditorID());
 			}
 		}
 		else {
 			activeEffect->conditionStatus = RE::ActiveEffect::ConditionStatus::kNotAvailable;
-			logger::info("MagicEffectConditions -> activeEffect's ConditionStatus was set to kNotAvailable for GetFormID()={:08X}, EditorId={}"sv, activeEffect->spell->GetFormID(), activeEffect->spell->GetFormEditorID());
+			// logger::info("MagicEffectConditions -> activeEffect's ConditionStatus was set to kNotAvailable for GetFormID()={:08X}, EditorId={}"sv, activeEffect->spell->GetFormID(), activeEffect->spell->GetFormEditorID());
 		}
 	}
 }

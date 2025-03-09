@@ -24,9 +24,10 @@ namespace Internal::Fixes
 		F4SE::Trampoline& trampoline = F4SE::GetTrampoline();
 
 		if (REL::Module::IsNG()) {
-			// NG Patch
-			REL::Relocation<uintptr_t> ptr_EvaluateConditions_NG{ REL::ID(2226003) };
-			OriginalFunction_EvaluateConditions_NG = trampoline.write_branch<5>(ptr_EvaluateConditions_NG.address(), &Hook_EvaluateConditions);
+			// NG Patch - TODO needs to be tested and fixed
+			logger::info("Fix aborted: MagicEffectConditionsFix. Reason: Game version was Next-Gen."sv);
+			// REL::Relocation<uintptr_t> ptr_EvaluateConditions_NG{ REL::ID(2226003) };
+			// OriginalFunction_EvaluateConditions_NG = trampoline.write_branch<5>(ptr_EvaluateConditions_NG.address(), &Hook_EvaluateConditions);
 		}
 		else {
 			// OG Patch

@@ -22,14 +22,13 @@ bCombatMusicFix = true
 bEncounterZoneResetFix = true
 
 # Fixes an issue where leveled lists with more than 255 entries can cause your game to CTD.
-# This can happen if you have a large amount of weapon mods installed.
 # (default: enabled | Supports both versions)
 bLeveledListCrashFix = true
 
 # Fixes a major issue with floating-point precision that eventually prevents the conditions of magic effects from being updated properly.
 # This can eventually break spells/perks/really everything.
 # This version of the fix does not have the addiction bug that has been reported on the other mod.
-# (default: enabled | Supports both versions)
+# (default: enabled | Only for Last-Gen)
 bMagicEffectConditionsFix = true
 
 # Fixes an issue where the player is never given proper ownership of stolen power armor frames.

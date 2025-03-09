@@ -46,6 +46,19 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f
 {
 	F4SE::Init(a_f4se);
 
+	// sanity logging since people never post their game versions / f4se versions bro
+	logger::info("---------------------------------------------"sv);
+	logger::info("User F4SE version: {}."sv, F4SE::GetF4SEVersion());
+	logger::info("User game version: {}."sv, (REL::Module::IsNG() ? "Next-Gen" : "Old-Gen"));
+	bool hasAddressLib = false;
+	if (REL::Module::IsNG()) {
+		std::filesystem::exists("Data/F4SE/Plugins/version-1-10-984-0.bin") ? hasAddressLib = true : hasAddressLib = false;
+	}
+	else {
+		std::filesystem::exists("Data/F4SE/Plugins/version-1-10-163-0.bin") ? hasAddressLib = true : hasAddressLib = false;
+	}
+	logger::info("User has the correct version of Address Library: {}."sv, hasAddressLib);
+
 	F4SE::AllocTrampoline(96);
 
 	logger::info("---------------------------------------------"sv);

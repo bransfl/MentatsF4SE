@@ -37,7 +37,7 @@ namespace Internal::Warnings
 		if (foundBadLL) {
 			RE::ConsoleLog::GetSingleton()->AddString("EngineFixesF4SE -> LeveledListEntryCountWarning -> Warning: At least 1 leveled list has over 255 entries. Check the log at Documents/My Games/Fallout4/F4SE/EngineFixesF4SE.log\n");
 		}
-		logger::info("LeveledListEntryCountWarning -> ListsChecked: {}."sv, listsChecked);
+		logger::info("LeveledListEntryCountWarning -> ListsChecked: {}, FoundBadLL: {}."sv, listsChecked, foundBadLL);
 
 		logger::info("LeveledListEntryCountWarning -> Warning installed."sv);
 	}

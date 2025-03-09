@@ -17,8 +17,8 @@ namespace Internal::Fixes
 			logger::info("Fix aborted: LeveledListCrashFix. Reason: Fix was disabled in config file."sv);
 			return;
 		}
+
 		if (REX::W32::GetModuleHandleW(L"GLXRM_InjectionBlocker.dll")) {
-			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Fix aborted: LeveledListCrashFix. Reason: Mod 'Injection Blocker' was detected. This fix is not necessary with this mod installed.\n");
 			logger::warn("Fix aborted: LeveledListCrashFix. Reason: Mod was installed: GLXRM_InjectionBlocker.dll."sv);
 			return;
 		}

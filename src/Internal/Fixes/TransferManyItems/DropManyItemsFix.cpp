@@ -50,8 +50,8 @@ namespace Internal::Fixes::TransferManyItems
 			logger::info("Fix aborted: DropManyItemsFix. Reason: Fix was disabled in config file."sv);
 			return;
 		}
+
 		if (REX::W32::GetModuleHandleW(L"Drop7FFFPatch.dll")) {
-			RE::ConsoleLog::GetSingleton()->PrintLine("EngineFixesF4SE - Fix aborted: DropManyItemsFix. Reason: Mod 'Drop 7FFF Fix' was detected. This fix is not necessary with this mod installed.\n");
 			logger::warn("Fix aborted: DropManyItemsFix. Reason: Mod was installed: Drop7FFFPatch.dll."sv);
 			return;
 		}

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Internal::Fixes::TransferManyItems
+namespace Internal::Fixes
 {
 	class DropManyItemsFix
 	{

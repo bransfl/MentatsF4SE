@@ -27,7 +27,6 @@ namespace Internal::Fixes
 		}
 
 		RE::TESFurnitureEvent::GetEventSource()->RegisterSink(WorkbenchSoundFix::FurnitureEventHandler::GetSingleton());
-
 		RE::PlayerCharacter::GetSingleton()->RE::BSTEventSource<RE::BGSActorCellEvent>::RegisterSink(WorkbenchSoundFix::ActorCellEventHandler::GetSingleton());
 		logger::info("WorkbenchSoundFix -> Events registered."sv);
 

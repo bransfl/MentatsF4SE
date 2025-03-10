@@ -21,6 +21,7 @@ namespace Internal::Patches
 	{
 		auto dataHandler = RE::TESDataHandler::GetSingleton();
 		if (!dataHandler) {
+			logger::warn("PuddleCubemapsPatch -> dataHandler was nullptr. Patch was not applied."sv);
 			return;
 		}
 
@@ -29,12 +30,13 @@ namespace Internal::Patches
 
 		for (RE::TESWorldSpace* worldspace : worldspaces) {
 			if (!worldspace) {
-				logger::warn("PuddleCubemapsPatch -> Worldspace was nullptr.");
+				logger::warn("PuddleCubemapsPatch -> Worldspace was nullptr."sv);
 				continue;
 			}
 
 			worldspace->waterEnvMap.textureName = blank;
-			logger::info("PuddleCubemapsPatch -> Worldspace waterEnvMap was cleared: {}.", worldspace->GetFormEditorID());
+			logger::debug("PuddleCubemapsPatch -> Worldspace (FormID: {:08X}, EditorID: {}) - waterEnvMap was cleared."sv,
+				worldspace->GetFormID(), worldspace->GetFormEditorID());
 		}
 	}
 }

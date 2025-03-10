@@ -6,6 +6,8 @@ namespace Internal::Warnings
 	{
 	public:
 		// checks all leveledlists to report if they have over 255 entries
+		static void Install();
+
 		static void CheckLeveledLists();
 	};
 }

@@ -1,8 +1,8 @@
-#include "Internal/Fixes/TransferManyItems/AddManyItemsFix.hpp"
+#include "Internal/Fixes/AddManyItemsFix.hpp"
 #include "Internal/Config.hpp"
 #include "f4se_common/Relocation.h"
 
-namespace Internal::Fixes::TransferManyItems
+namespace Internal::Fixes
 {
 
 	void AddManyItemsFix::Install() noexcept

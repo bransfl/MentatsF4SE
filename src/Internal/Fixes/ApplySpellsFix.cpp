@@ -1,8 +1,8 @@
-#include "Internal/Fixes/PerkEntryPoints/ApplySpellsFix.hpp"
+#include "Internal/Fixes/ApplySpellsFix.hpp"
 #include "Internal/Config.hpp"
 
 // fixes entrypoint ApplyCombatHitSpell so multiple spells can be applied at once
-namespace Internal::Fixes::PerkEntryPoints
+namespace Internal::Fixes
 {
 	typedef void(HandleEntryPointVisitorSig)(RE::Actor*, RE::BGSEntryPointFunctionData::FunctionType, RE::TESForm**, void**, uint8_t, uint8_t);
 	REL::Relocation<HandleEntryPointVisitorSig> HandleEntryPointVisitor_OG(721434);

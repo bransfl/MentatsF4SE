@@ -1,4 +1,4 @@
-#include "Internal/Fixes/TransferManyItems/DropManyItemsFix.hpp"
+#include "Internal/Fixes/DropManyItemsFix.hpp"
 #include "Internal/Config.hpp"
 #include "f4se/GameApi.h"
 #include <f4se_common/BranchTrampoline.h>
@@ -9,7 +9,7 @@
 // note - this mod and the original mod both have the minor issue of
 // dropping a stack of 32,766 + 1 individual item or a stack of 32,765 + 2 individual items sometimes instead of a full 32,767 stack
 // when you drop a LOT of items, but it's better than voiding all of your stuff and having negative items
-namespace Internal::Fixes::TransferManyItems
+namespace Internal::Fixes
 {
 	typedef uint32_t* (*_DropItemIntoWorld)(RE::TESObjectREFR*, uint32_t*, RE::TESBoundObject*, int32_t, RE::TESObjectREFR*, RE::NiPoint3*, RE::NiPoint3*, RE::ExtraDataList*);
 

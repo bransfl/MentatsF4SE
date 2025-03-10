@@ -8,6 +8,7 @@ namespace Internal::Warnings
 		// installs the warning
 		static void Install() noexcept;
 
+	private:
 		// checks and reports any duplicate addon node indexes
 		static void CheckDupeAddonNodes();
 

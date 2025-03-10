@@ -1,6 +1,6 @@
 #include "Internal/Fixes/StolenPowerArmorOwnershipFix.hpp"
 #include "Internal/Config.hpp"
-#include "Internal/Utility/Utility.hpp"
+#include "Internal/Utility.hpp"
 
 namespace Internal::Fixes
 {

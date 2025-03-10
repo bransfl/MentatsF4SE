@@ -1,6 +1,6 @@
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
 #include "Internal/Config.hpp"
-#include "Internal/Utility/Utility.hpp"
+#include "Internal/Utility.hpp"
 // #include "detourxs/detourxs.h"
 
 namespace Internal::Fixes
@@ -63,27 +63,30 @@ namespace Internal::Fixes
 		int i = 1;
 		for (auto& entry : LeveledListCrashFix::GetEntries(a_list)) {
 			if (!entry->GetFormID()) {
-				logger::warn("LeveledListCrashFix -> Index: {} has NULL form. This is a problem, do not ignore it.", i);
+				logger::warn("LeveledListCrashFix -> Index: {} has NULL form. This is a problem, do not ignore it."sv, i);
 			}
 			else {
-				logger::warn("LeveledListCrashFix -> Index: {} at has FormID: {:08X}, EditorID: {}.", i, entry->GetFormID(), entry->GetFormEditorID());
+				logger::warn("LeveledListCrashFix -> Index: {} at has FormID: {:08X}, EditorID: {}."sv, i, entry->GetFormID(), entry->GetFormEditorID());
 			}
 			i++;
 		}
 		logger::info("---------------------------------------------"sv);
 	}
 
-	std::vector<RE::TESForm*> LeveledListCrashFix::GetEntries(RE::TESLeveledList* leveledList)
+	std::vector<RE::TESForm*> LeveledListCrashFix::GetEntries(RE::TESLeveledList* a_leveledList)
 	{
 		std::vector<RE::TESForm*> ret;
-		for (size_t i = 0; i < leveledList->baseListCount; i++) {
-			RE::LEVELED_OBJECT& entry = leveledList->leveledLists[i];
+
+		for (size_t i = 0; i < a_leveledList->baseListCount; i++) {
+			RE::LEVELED_OBJECT& entry = a_leveledList->leveledLists[i];
 			ret.push_back(entry.form);
 		}
-		for (size_t i = 0; i < leveledList->scriptListCount; i++) {
-			RE::LEVELED_OBJECT*& entry = leveledList->scriptAddedLists[i];
+
+		for (size_t i = 0; i < a_leveledList->scriptListCount; i++) {
+			RE::LEVELED_OBJECT*& entry = a_leveledList->scriptAddedLists[i];
 			ret.push_back(entry->form);
 		}
+
 		return ret;
 	}
 }

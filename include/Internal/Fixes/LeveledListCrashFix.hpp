@@ -16,6 +16,6 @@ namespace Internal::Fixes
 		static void DebugLeveledList(RE::TESLeveledList* a_list, RE::TESForm* a_form);
 
 		// returns a vector of all of the forms in the leveledlist
-		static std::vector<RE::TESForm*> GetEntries(RE::TESLeveledList* leveledList);
+		static std::vector<RE::TESForm*> GetEntries(RE::TESLeveledList* a_leveledList);
 	};
 }

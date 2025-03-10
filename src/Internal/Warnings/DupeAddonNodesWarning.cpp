@@ -1,10 +1,10 @@
 #include "Internal/Warnings/DupeAddonNodesWarning.hpp"
 #include "Internal/Config.hpp"
-#include "Internal/Utility/Utility.hpp"
+#include "Internal/Utility.hpp"
 
 namespace Internal::Warnings
 {
-	std::unordered_map<std::uint32_t, RE::BGSAddonNode*> nodeMap;
+	std::unordered_map<uint32_t, RE::BGSAddonNode*> nodeMap;
 
 	void DupeAddonNodesWarning::Install() noexcept
 	{
@@ -15,9 +15,9 @@ namespace Internal::Warnings
 			return;
 		}
 
-		ClearNodeMap();
-
 		CheckDupeAddonNodes();
+
+		ClearNodeMap();
 
 		logger::info("Warning installed: DupeAddonNodesWarning."sv);
 	}
@@ -28,6 +28,8 @@ namespace Internal::Warnings
 		auto& formArray = dataHandler->GetFormArray<RE::BGSAddonNode>();
 		uint32_t nodesChecked = 0;
 		uint32_t nodeErrors = 0;
+
+		ClearNodeMap();
 
 		for (auto* addonNode : formArray) {
 			if (!addonNode) {
@@ -46,9 +48,9 @@ namespace Internal::Warnings
 				const auto currentNode = (*res.first).second;
 				if (currentNode != addonNode && currentNode->formID != addonNode->formID) {
 					nodeErrors++;
-					logger::warn("DupeAddonNodesWarning -> Duplicate AddonNode Index found at (FormID: {:08X} in Plugin: {}) AND (FormID {:08X} in plugin {}). The AddonNode index was {}.",
+					logger::warn("DupeAddonNodesWarning -> Duplicate AddonNode Index found at (FormID: {:08X} in Plugin: {}) AND (FormID {:08X} in plugin {}). The AddonNode index was {}."sv,
 						currentNode->formID, Utility::GetModName(currentNode, false), addonNode->formID, Utility::GetModName(addonNode, false), addonNode->index);
-					RE::ConsoleLog::GetSingleton()->AddString("EngineFixesF4SE -> DupeAddonNodesWarning -> An AddonNode duplicate index was found, check EngineFixesF4SE.log for more information.\n");
+					RE::ConsoleLog::GetSingleton()->AddString("EngineFixesF4SE -> DupeAddonNodesWarning -> An duplicate AddonNode index was found, check EngineFixesF4SE.log for more information.\n");
 				}
 			}
 		}
@@ -58,14 +60,8 @@ namespace Internal::Warnings
 
 	void DupeAddonNodesWarning::ClearNodeMap()
 	{
-		logger::info("DupeAddonNodesWarning -> Clearing node map..."sv);
-
 		if (!nodeMap.empty()) {
 			nodeMap.clear();
-			logger::info("DupeAddonNodesWarning -> Node map cleared."sv);
-		}
-		else {
-			logger::info("DupeAddonNodesWarning -> Node was already cleared."sv);
 		}
 	}
 }

@@ -1,6 +1,6 @@
 #include "Internal/Fixes/WorkbenchSoundFix.hpp"
 #include "Internal/Config.hpp"
-#include "Internal/Utility/Utility.hpp"
+#include "Internal/Utility.hpp"
 
 // SoundDescriptors:
 // UIWorkshopSewingMachineRunLPM [SNDR:0019E999]

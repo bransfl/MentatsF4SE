@@ -42,9 +42,6 @@ namespace Internal::Messaging
 				// StolenPowerArmorOwnershipFix
 				Internal::Fixes::StolenPowerArmorOwnershipFix::Install();
 
-				// DupeAddonNodesWarnings
-				Internal::Warnings::DupeAddonNodesWarning::ClearNodeMap();
-
 				break;
 			}
 			case F4SE::MessagingInterface::kPreSaveGame: {

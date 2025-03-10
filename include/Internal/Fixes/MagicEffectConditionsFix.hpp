@@ -13,6 +13,6 @@ namespace Internal::Fixes
 		static float ActiveEffectConditionUpdateInterval();
 
 		// the hook
-		static void Hook_EvaluateConditions(RE::ActiveEffect* activeEffect, float elapsedTimeDelta, bool forceUpdate);
+		static void Hook_EvaluateConditions(RE::ActiveEffect* a_activeEffect, float a_elapsedTimeDelta, bool a_forceUpdate);
 	};
 }

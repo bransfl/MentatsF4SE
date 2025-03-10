@@ -1,8 +1,8 @@
-#include "Internal/Utility/Utility.hpp"
+#include "Internal/Utility.hpp"
 
-namespace Internal::Utility
+namespace Internal
 {
-	void ExecuteCommand(std::string_view a_command, RE::TESObjectREFR* a_targetRef, bool a_silent)
+	void Utility::ExecuteCommand(std::string_view a_command, RE::TESObjectREFR* a_targetRef, bool a_silent)
 	{
 		auto* log = RE::ConsoleLog::GetSingleton();
 		auto compiler = RE::ScriptCompiler();
@@ -25,7 +25,7 @@ namespace Internal::Utility
 		delete script;
 	}
 
-	std::string_view GetModName(RE::TESForm* a_form, bool a_lastModified)
+	std::string_view Utility::GetModName(RE::TESForm* a_form, bool a_lastModified)
 	{
 		const auto index = a_lastModified ? -1 : 0;
 		const auto* file = a_form->GetFile(index);
@@ -37,11 +37,12 @@ namespace Internal::Utility
 		}
 	}
 
-	int8_t GetNumEntries(RE::TESLeveledList* leveledList)
+	int32_t Utility::GetNumEntries(RE::TESLeveledList* a_leveledList)
 	{
-		if (!leveledList) {
+		if (!a_leveledList) {
 			return -1;
 		}
-		return leveledList->baseListCount + leveledList->scriptListCount;
+
+		return a_leveledList->baseListCount + a_leveledList->scriptListCount;
 	}
 }

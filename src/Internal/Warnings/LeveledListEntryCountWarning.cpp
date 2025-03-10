@@ -1,6 +1,6 @@
 #include "Internal/Warnings/LeveledListEntryCountWarning.hpp"
 #include "Internal/Config.hpp"
-#include "Internal/Utility/Utility.hpp"
+#include "Internal/Utility.hpp"
 
 namespace Internal::Warnings
 {
@@ -33,7 +33,7 @@ namespace Internal::Warnings
 			if (!leveledList) {
 				continue;
 			}
-			int8_t numEntries = Utility::GetNumEntries(leveledList);
+			int32_t numEntries = Utility::GetNumEntries(leveledList);
 			if (numEntries <= 255) {
 				continue;
 			}

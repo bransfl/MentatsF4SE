@@ -1,6 +1,6 @@
 #include "Internal/Fixes/CombatMusicFix.hpp"
 #include "Internal/Config.hpp"
-#include "Internal/Utility/Utility.hpp"
+#include "Internal/Utility.hpp"
 
 // prevents combat music from playing when not intended to play
 namespace Internal::Fixes
@@ -34,7 +34,7 @@ namespace Internal::Fixes
 	// please (just) stop the music!
 	void CombatMusicFix::Fix()
 	{
-		logger::info("CombatMusicFix -> Fix() running."sv);
+		logger::debug("CombatMusicFix -> Fix() running."sv);
 		// asynchronous delay instead of just sleeping for 5 seconds
 		auto asyncFunc = []() {
 			std::this_thread::sleep_for(std::chrono::seconds(5));

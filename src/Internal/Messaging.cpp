@@ -37,7 +37,6 @@ namespace Internal::Messaging
 
 				// WorkbenchSoundFix
 				Internal::Fixes::WorkbenchSoundFix::Install();
-				Internal::Fixes::WorkbenchSoundFix::FixWorkbenchSounds(RE::PlayerCharacter::GetSingleton());
 
 				// StolenPowerArmorOwnershipFix
 				Internal::Fixes::StolenPowerArmorOwnershipFix::Install();
@@ -73,7 +72,7 @@ namespace Internal::Messaging
 				Internal::Warnings::DupeAddonNodesWarning::Install();
 
 				// LeveledListEntryCountWarning
-				Internal::Warnings::LeveledListEntryCountWarning::CheckLeveledLists();
+				Internal::Warnings::LeveledListEntryCountWarning::Install();
 
 				break;
 			}

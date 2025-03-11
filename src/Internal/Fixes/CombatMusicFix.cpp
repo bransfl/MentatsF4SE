@@ -38,7 +38,7 @@ namespace Internal::Fixes
 		// asynchronous delay instead of just sleeping for 5 seconds
 		auto asyncFunc = []() {
 			std::this_thread::sleep_for(std::chrono::seconds(5));
-			for (const auto& command : commands) {
+			for (const std::string_view& command : commands) {
 				Utility::ExecuteCommand(command, nullptr, true);
 			}
 		};

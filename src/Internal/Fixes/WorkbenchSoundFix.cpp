@@ -28,7 +28,8 @@ namespace Internal::Fixes
 
 		RE::TESFurnitureEvent::GetEventSource()->RegisterSink(WorkbenchSoundFix::FurnitureEventHandler::GetSingleton());
 		RE::PlayerCharacter::GetSingleton()->RE::BSTEventSource<RE::BGSActorCellEvent>::RegisterSink(WorkbenchSoundFix::ActorCellEventHandler::GetSingleton());
-		logger::info("WorkbenchSoundFix -> Events registered."sv);
+
+		FixWorkbenchSounds(RE::PlayerCharacter::GetSingleton()); // for existing saves + sanity
 
 		logger::info("Fix installed: WorkbenchSoundFix."sv);
 	}
@@ -37,7 +38,7 @@ namespace Internal::Fixes
 	{
 		logger::info("WorkbenchSoundFix -> FixWorkbenchSounds ran."sv);
 
-		for (const auto& command : FixWorkbenchSoundCommands) {
+		for (const std::string_view& command : FixWorkbenchSoundCommands) {
 			Utility::ExecuteCommand(command, a_workbenchUser, true);
 		}
 	}

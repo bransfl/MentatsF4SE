@@ -46,7 +46,6 @@ namespace Internal::Fixes
 			return;
 		}
 		else {
-			// logger::info("ll crash fix orig func ran (temp)"sv);
 			return OriginalFunction_AddScriptAddedLeveledObject(a_this, a_owner, a_level, a_count, a_form);
 		}
 	}
@@ -58,8 +57,9 @@ namespace Internal::Fixes
 		// logger::info("The form has not been inserted. For ease of review, here are the current contents of the list:\n"sv);
 
 		if (!a_form) {
-			// compiler moment
+			// todo - compiler moment
 		}
+
 		int i = 1;
 		for (auto& entry : LeveledListCrashFix::GetEntries(a_list)) {
 			if (!entry->GetFormID()) {

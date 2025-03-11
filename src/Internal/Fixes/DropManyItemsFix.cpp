@@ -6,7 +6,7 @@
 
 // i know this is a mess
 //
-// note - this mod and the original mod both have the minor issue of
+// note - this mod and the original mod sometimes have the minor issue of
 // dropping a stack of 32,766 + 1 individual item or a stack of 32,765 + 2 individual items sometimes instead of a full 32,767 stack
 // when you drop a LOT of items, but it's better than voiding all of your stuff and having negative items
 namespace Internal::Fixes
@@ -66,6 +66,9 @@ namespace Internal::Fixes
 		// i use gbranchtrampoline here since sylee used it and i'm clearly such a free thinker
 		if (REL::Module::IsNG()) {
 			// NG Patch
+			logger::info("Fix aborted: DropManyItemsFix. Reason: Fix is temporarily disabled for Next-Gen."sv);
+			return;
+
 			if (!g_branchTrampoline.Create(14)) {
 				return;
 			}

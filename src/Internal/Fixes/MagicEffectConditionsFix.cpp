@@ -63,10 +63,12 @@ namespace Internal::Fixes
 
 		if (a_activeEffect->spell->GetCastingType() == RE::MagicSystem::CastingType::kFireAndForget) {
 			RE::AlchemyItem* potion = RE::TESForm::GetFormByID(a_activeEffect->spell->GetFormID())->As<RE::AlchemyItem>();
-			if (potion && potion->data.addictionChance > 0.0 || potion->data.addictionItem != nullptr) {
-				// this is a fire-and-forget addictive potion (likely an addictive chem)
-				// we return normally since fire-and-forget potions don't evaluate conditions after application
-				return;
+			if (potion) {
+				if (potion->data.addictionChance > 0.0 || potion->data.addictionItem != nullptr) {
+					// this is a fire-and-forget addictive potion (likely an addictive chem)
+					// we return normally since fire-and-forget potions don't evaluate conditions after application
+					return;
+				}
 			}
 		}
 
@@ -89,7 +91,7 @@ namespace Internal::Fixes
 				}
 			}
 
-			// evaluate conditions
+			// evaluate conditions and set status accordingly since we replace the original function
 			if (a_activeEffect->effect->conditions.IsTrue(a_activeEffect->target->GetTargetStatsObject(), a_activeEffect->caster.get().get()) && !a_activeEffect->CheckDisplacementSpellOnTarget()) {
 				a_activeEffect->conditionStatus = RE::ActiveEffect::ConditionStatus::kTrue;
 			}

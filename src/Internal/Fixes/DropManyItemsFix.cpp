@@ -69,10 +69,10 @@ namespace Internal::Fixes
 			logger::info("Fix aborted: DropManyItemsFix. Reason: Fix is temporarily disabled for Next-Gen."sv);
 			return;
 
-			if (!g_branchTrampoline.Create(14)) {
-				return;
-			}
-			g_branchTrampoline.Write5Call(DropItemIntoWorld_Dest_NG.GetUIntPtr(), (uintptr_t)Hook_DropItemIntoWorld_NG);
+			// if (!g_branchTrampoline.Create(14)) {
+			// 	return;
+			// }
+			// g_branchTrampoline.Write5Call(DropItemIntoWorld_Dest_NG.GetUIntPtr(), (uintptr_t)Hook_DropItemIntoWorld_NG);
 		}
 		else {
 			// OG Patch

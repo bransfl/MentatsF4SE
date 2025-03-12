@@ -16,11 +16,11 @@ namespace Internal::Fixes
 	// OG typedef/address
 	// NG typedef/address
 
-	RelocAddr<_DropItemIntoWorld> DropItemIntoWorld_Original(0x003FA580);
+	RelocAddr<_DropItemIntoWorld> DropItemIntoWorld_Original_OG(0x003FA580);
 	RelocAddr<_DropItemIntoWorld> DropItemIntoWorld_Original_NG(0x004AD7E0);
 
-	RelocPtr<void> DropItemIntoWorld_Dest(0x003F9BEB);
-	RelocPtr<void> DropItemIntoWorld_Dest_NG(0x003F9BEB);
+	RelocPtr<void> DropItemIntoWorld_Dest_OG(0x003F9BEB);
+	RelocPtr<void> DropItemIntoWorld_Dest_NG(0x004ACE91);
 
 	typedef RE::ExtraDataList* (*_ExtraDataList_ctor_OG)(void*);
 	RelocAddr<_ExtraDataList_ctor_OG> ExtraDataList_ctor_OG(0x00080750);
@@ -28,17 +28,17 @@ namespace Internal::Fixes
 	RelocAddr<_ExtraDataList_ctor_NG> ExtraDataList_ctor_NG(0x0021E420);
 
 	typedef void (*_ExtraDataList_dtor)(RE::ExtraDataList*);
-	RelocAddr<_ExtraDataList_dtor> ExtraDataList_dtor(0x00080790);
+	RelocAddr<_ExtraDataList_dtor> ExtraDataList_dtor_OG(0x00080790);
 	typedef void (*_ExtraDataList_dtor_NG)(RE::ExtraDataList*);
 	RelocAddr<_ExtraDataList_dtor_NG> ExtraDataList_dtor_NG(0x0021E460);
 
 	typedef void (*_ExtraDataList_CopyList)(RE::ExtraDataList*, RE::ExtraDataList*);
-	RelocAddr<_ExtraDataList_CopyList> ExtraDataList_CopyList(0x00082240);
+	RelocAddr<_ExtraDataList_CopyList> ExtraDataList_CopyList_OG(0x00082240);
 	typedef void (*_ExtraDataList_CopyList_NG)(RE::ExtraDataList*, RE::ExtraDataList*);
 	RelocAddr<_ExtraDataList_CopyList_NG> ExtraDataList_CopyList_NG(0x002214C0);
 
 	typedef void (*_ExtraDataList_SetCount)(RE::ExtraDataList*, int16_t);
-	RelocAddr<_ExtraDataList_SetCount> ExtraDataList_SetCount(0x00086FB0);
+	RelocAddr<_ExtraDataList_SetCount> ExtraDataList_SetCount_OG(0x00086FB0);
 	typedef void (*_ExtraDataList_SetCount_NG)(RE::ExtraDataList*, int16_t);
 	RelocAddr<_ExtraDataList_SetCount_NG> ExtraDataList_SetCount_NG(0x00226F00);
 
@@ -68,7 +68,6 @@ namespace Internal::Fixes
 			// NG Patch
 			logger::info("Fix aborted: DropManyItemsFix. Reason: Fix is temporarily disabled for Next-Gen."sv);
 			return;
-
 			// if (!g_branchTrampoline.Create(14)) {
 			// 	return;
 			// }
@@ -79,7 +78,7 @@ namespace Internal::Fixes
 			if (!g_branchTrampoline.Create(14)) {
 				return;
 			}
-			g_branchTrampoline.Write5Call(DropItemIntoWorld_Dest.GetUIntPtr(), (uintptr_t)Hook_DropItemIntoWorld_OG);
+			g_branchTrampoline.Write5Call(DropItemIntoWorld_Dest_OG.GetUIntPtr(), (uintptr_t)Hook_DropItemIntoWorld_OG);
 		}
 	}
 
@@ -93,22 +92,22 @@ namespace Internal::Fixes
 
 			REX::W32::InterlockedIncrement(&list->refCount);
 
-			ExtraDataList_CopyList(extra, list);
+			ExtraDataList_CopyList_OG(extra, list);
 
-			ExtraDataList_SetCount(list, 0x7FFF);
+			ExtraDataList_SetCount_OG(list, 0x7FFF);
 
-			DropItemIntoWorld_Original(refr, handle, item, 0x7FFF, container, pa, pb, list);
+			DropItemIntoWorld_Original_OG(refr, handle, item, 0x7FFF, container, pa, pb, list);
 
 			if (REX::W32::InterlockedDecrement(&list->refCount) == 0) {
-				ExtraDataList_dtor(list);
+				ExtraDataList_dtor_OG(list);
 				Heap_Free(list);
 			}
 		}
 
 		// seems to req direct conversion from 32 to 16 for some awful reason
-		ExtraDataList_SetCount(extra, static_cast<int16_t>(count));
+		ExtraDataList_SetCount_OG(extra, static_cast<int16_t>(count));
 
-		DropItemIntoWorld_Original(refr, handle, item, count, container, pa, pb, extra);
+		DropItemIntoWorld_Original_OG(refr, handle, item, count, container, pa, pb, extra);
 		return handle;
 	}
 

@@ -1,6 +1,6 @@
 [Fixes]
-# Removes unused ActorCause data from projectiles when a cell is unloaded, to reduce save size.
-# From my testing, this is not as big of a deal as it is in New Vegas, but it still helped slightly.
+# Removes unused ActorCause data from projectiles when a cell is unloaded to reduce save size.
+# From my testing, this is not as big of a deal as it is in New Vegas but it still helped slightly.
 # (default: enabled | Supports both versions)
 bActorCauseSaveBloatFix = true
 
@@ -13,13 +13,8 @@ bAddManyItemsFix = true
 bCombatMusicFix = true
 
 # Fixes an issue where items are voided when dropping more than 32,767 items at once.
-# (default: enabled | Supports both versions)
+# (default: enabled | Only for Last-Gen)
 bDropManyItemsFix = true
-
-# Fixes an issue where encounter zones immediately reset when left.
-# This fix is only for Next-Gen players because Buffout 4 NG already covers this fix for Last-Gen players.
-# (default: enabled | Only for Next-Gen)
-bEncounterZoneResetFix = true
 
 # Fixes an issue where leveled lists with more than 255 entries can cause your game to CTD.
 # (default: enabled | Supports both versions)

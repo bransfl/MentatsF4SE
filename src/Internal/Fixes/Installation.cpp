@@ -1,7 +1,6 @@
 #include "Internal/Fixes/Installation.hpp"
 #include "Internal/Fixes/AddManyItemsFix.hpp"
 #include "Internal/Fixes/DropManyItemsFix.hpp"
-#include "Internal/Fixes/EncounterZoneResetFix.hpp"
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
 #include "Internal/Fixes/MagicEffectConditionsFix.hpp"
 
@@ -20,8 +19,6 @@ namespace Internal::Fixes
 		// CombatMusicFix is handled in Messaging
 
 		DropManyItemsFix::Install();
-
-		EncounterZoneResetFix::Install();
 
 		LeveledListCrashFix::Install();
 

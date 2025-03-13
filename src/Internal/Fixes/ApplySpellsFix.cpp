@@ -1,12 +1,25 @@
 #include "Internal/Fixes/ApplySpellsFix.hpp"
 #include "Internal/Config.hpp"
 
+#pragma warning(disable : 4505) // temp
+
 // fixes entrypoint ApplyCombatHitSpell so multiple spells can be applied at once
 namespace Internal::Fixes
 {
 	typedef void(HandleEntryPointVisitorSig)(RE::Actor*, RE::BGSEntryPointFunctionData::FunctionType, RE::TESForm**, void**, uint8_t, uint8_t);
 	REL::Relocation<HandleEntryPointVisitorSig> HandleEntryPointVisitor_OG(721434);
 	REL::Relocation<HandleEntryPointVisitorSig> HandleEntryPointVisitor_NG(2766957);
+
+	static RE::BGSEntryPoint::ENTRY_POINT GetEntryPoint(RE::BGSEntryPointPerkEntry* a_this)
+	{
+		return a_this->GetFunction();
+	}
+
+	// could be useful
+	static auto* GetEntryPointData(RE::BGSEntryPointPerkEntry* a_this)
+	{
+		return a_this->GetFunctionData();
+	}
 
 	// address might be 699291 (0x9E5AA3) - its not
 	// these dont work yet

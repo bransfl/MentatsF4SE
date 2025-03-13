@@ -30,8 +30,10 @@ namespace Internal::Fixes
 						}
 						else {
 							for (RE::TESObjectREFR* proj : projectiles) {
-								if (proj->GetActorCause() != nullptr) {
-									proj->SetActorCause(nullptr);
+								if (proj) {
+									if (proj->GetActorCause() != nullptr) {
+										proj->SetActorCause(nullptr);
+									}
 								}
 							}
 						}

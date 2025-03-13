@@ -19,8 +19,6 @@ namespace Internal::Config
 
 	inline const auto bCombatMusicFix = REX::TOML::Bool{ "Fixes"sv, "bCombatMusicFix"sv, false };
 
-	inline const auto bEncounterZoneResetFix = REX::TOML::Bool{ "Fixes"sv, "bEncounterZoneResetFix"sv, false };
-
 	inline const auto bLeveledListCrashFix = REX::TOML::Bool{ "Fixes"sv, "bLeveledListCrashFix"sv, false };
 
 	inline const auto bMagicEffectConditionsFix = REX::TOML::Bool{ "Fixes"sv, "bMagicEffectConditionsFix"sv, false };

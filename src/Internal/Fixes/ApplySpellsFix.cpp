@@ -10,40 +10,12 @@ namespace Internal::Fixes
 	REL::Relocation<HandleEntryPointVisitorSig> HandleEntryPointVisitor_OG(721434);
 	REL::Relocation<HandleEntryPointVisitorSig> HandleEntryPointVisitor_NG(2766957);
 
+	// typedef RE::BGSEntryPoint::ENTRY_POINT(GetEntryPointSig)(RE::BGSEntryPointPerkEntry* a_this);
+	// REL::Relocation<GetEntryPointSig> GetEntryPoint(0x9E5AA3);
 	static RE::BGSEntryPoint::ENTRY_POINT GetEntryPoint(RE::BGSEntryPointPerkEntry* a_this)
 	{
-		return a_this->GetFunction();
+		return a_this->entryData.entryPoint;
 	}
-
-	// could be useful
-	static auto* GetEntryPointData(RE::BGSEntryPointPerkEntry* a_this)
-	{
-		return a_this->GetFunctionData();
-	}
-
-	// address might be 699291 (0x9E5AA3) - its not
-	// these dont work yet
-	// static RE::BGSEntryPointPerkEntry* GetEntryPoint(RE::BGSEntryPoint::ENTRY_POINT entryPoint)
-	// {
-	// 	return std::addressof(GetEntryPoints()[std::to_underlying(entryPoint)]);
-	// }
-
-	// static RE::BGSEntryPointPerkEntry* GetEntryPoints()
-	// {
-	// 	// inline constexpr REL::RelocationID BGSEntryPointPerkEntry{ 928907, 2767025 };
-	// 	if (REL::Module::IsNG()) {
-	// 		REL::Relocation<uintptr_t> BGSEntryPointPerkEntry_Location{ REL::ID(2767025) };
-	// 		auto* singleton{ reinterpret_cast<RE::BGSEntryPointPerkEntry*>(BGSEntryPointPerkEntry_Location.address()) };
-	// 		return singleton;
-	// 	}
-
-	// 	else {
-
-	// 		REL::Relocation<uintptr_t> BGSEntryPointPerkEntry_Location{ REL::ID(928907) };
-	// 		auto* singleton{ reinterpret_cast<RE::BGSEntryPointPerkEntry*>(BGSEntryPointPerkEntry_Location.address()) };
-	// 		return singleton;
-	// 	}
-	// }
 
 	void ApplySpellsFix::Install() noexcept
 	{
@@ -55,7 +27,7 @@ namespace Internal::Fixes
 		}
 
 		// F4SE::Trampoline& trampoline = F4SE::GetTrampoline();
-		// F4SE::AllocTrampoline(32); maybe?
+		// F4SE::AllocTrampoline(32);
 		if (REL::Module::IsNG()) {
 			// NG Patch
 		}
@@ -82,19 +54,13 @@ namespace Internal::Fixes
 
 		for (auto* spellItem : spellItemsList) {
 			if (spellItem) {
-				// cast here
+				// cast the spell on the target here
 				// static_cast<Skyrim::SpellItem*>(combatHitSpellItem)->Apply(target, ApplySpells::castSpells_ ? perkOwner : target);
-				// static_cast<RE::SpellItem*>(spellItem)->Cast(perkOwner, target, perkOwner, /* add vm here? */);
 			}
 		}
-		// bool Cast(TESObjectREFR* caster, TESObjectREFR* target, Actor* anyActor, BSScript::IVirtualMachine* vm)
-		// {
-		// 	using func_t = decltype(&SpellItem::Cast);
-		// 	static REL::Relocation<func_t> func{ REL::ID(1511987) };
-		// 	return func(this, caster, target, anyActor, vm);
-		// }
 	}
 
+	// char BGSEntryPoint::HandleEntryPoint(int aeEntryPoint, Actor *apPerkOwner, ...)
 	std::vector<void*> ApplySpellsFix::HandleEntryPoint(
 		RE::BGSEntryPoint::ENTRY_POINT entryPoint,
 		RE::Actor* perkOwner,
@@ -108,7 +74,7 @@ namespace Internal::Fixes
 			if (perkOwner && perkOwner->HasPerkEntries(entryPointUnderlying)) {
 
 				// conditionFilterArgumentCount is likely either (std::uint8_t numArgs, or std::uint8_t unk03 (guessed due to uint8_t)
-				// if (conditionFilterArguments.size() == GetEntryPoint(entryPoint)->entryData.numArgs) {
+				// if (conditionFilterArguments.size() == ) {
 				// std::vector<void*> entryPointFunctionArgs = { std::numeric_limits<uint8_t>::max(), nullptr };
 				// // RE::HandleEntryPointVisitor handlePerkEntryVisitor = RE::HandleEntryPointVisitor(
 				// // 	perkOwner,
@@ -142,24 +108,3 @@ namespace Internal::Fixes
 		return {};
 	}
 }
-
-// virtual void ForEachPerkEntry(std::uint8_t a_entryPoint, PerkEntryVisitor& a_visitor) const;
-// // bp42s added start
-// class PerkEntryVisitor
-// {
-// 	// add
-// 	virtual BSContainer::ForEachResult operator()(BGSPerkEntry* a_entry) = 0; // 00
-// };
-// static_assert(sizeof(PerkEntryVisitor) == 0x8);
-
-// class HandleEntryPointVisitor : public PerkEntryVisitor // 00
-// {
-// 	Actor* perkOwner;												// 08
-// 	RE::BGSEntryPointFunctionData::FunctionType eFunctionType; // 10
-// 	BGSObjectInstance** filterForms;								// 18
-// 	void** functionArguments;										// 20
-// 	uint8_t parameterNum;											// 28
-// 	uint8_t argumentNum;											// 29
-// };
-// static_assert(sizeof(HandleEntryPointVisitor) == 0x30);
-// // bp42s added end

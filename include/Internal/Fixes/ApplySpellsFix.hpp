@@ -3,9 +3,9 @@
 // fixes entrypoint kApplyCombatHitSpell so multiple spells can be applied at once
 namespace Internal::Fixes
 {
-	static RE::BGSEntryPoint::ENTRY_POINT GetEntryPoint(RE::BGSEntryPointPerkEntry* a_this);
+	// static RE::BGSEntryPoint::ENTRY_POINT GetEntryPoint(RE::BGSEntryPointPerkEntry* a_this);
 
-	static auto* GetEntryPointData(RE::BGSEntryPointPerkEntry* a_this);
+	// static auto* GetEntryPointData(RE::BGSEntryPointPerkEntry* a_this);
 
 	class ApplySpellsFix
 	{

@@ -12,10 +12,10 @@ namespace Internal::Fixes
 
 	// typedef RE::BGSEntryPoint::ENTRY_POINT(GetEntryPointSig)(RE::BGSEntryPointPerkEntry* a_this);
 	// REL::Relocation<GetEntryPointSig> GetEntryPoint(0x9E5AA3);
-	static RE::BGSEntryPoint::ENTRY_POINT GetEntryPoint(RE::BGSEntryPointPerkEntry* a_this)
-	{
-		return a_this->entryData.entryPoint;
-	}
+	// static RE::BGSEntryPoint::ENTRY_POINT GetEntryPoint(RE::BGSEntryPointPerkEntry* a_this)
+	// {
+	// 	return a_this->entryData.entryPoint;
+	// }
 
 	void ApplySpellsFix::Install() noexcept
 	{

@@ -25,7 +25,17 @@ namespace Internal::Fixes
 
 			virtual RE::BSEventNotifyControl ProcessEvent(const RE::TESDeathEvent& a_event, RE::BSTEventSource<RE::TESDeathEvent>*) override
 			{
-				if (a_event.actorDying == nullptr || a_event.actorKiller == nullptr) {
+				// if(a_event.dying == false) {
+				// TODO - check if dying==false is dead or if dying==true is dead
+				// return early if theyre dying. proceed if theyre dead.
+				// }
+
+				if (a_event.actorDying.get() == nullptr || a_event.actorKiller.get() == nullptr) {
+					return RE::BSEventNotifyControl::kContinue;
+				}
+
+				if (a_event.actorKiller.get() != RE::PlayerCharacter::GetSingleton()) {
+					// we dont need to run this for every single kill
 					return RE::BSEventNotifyControl::kContinue;
 				}
 

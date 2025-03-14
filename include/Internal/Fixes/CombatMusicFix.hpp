@@ -5,13 +5,20 @@ namespace Internal::Fixes
 	class CombatMusicFix
 	{
 	public:
-		// installs the fix
+		/**
+		 * @brief Initializes/registers the fix.
+		 */
 		static void Install() noexcept;
 
-		// stops combat music
+		/**
+		 * @brief Stops combat music.
+		 */
 		static void Fix();
 
-		// checks if combat music needs to be stopped
+		/**
+		 * @brief Checks conditions to see if combat music is playing when it shouldn't be.
+		 * @return If the fix needs to be applied or not.
+		 */
 		static bool NeedsFix();
 
 		class DeathEventHandler : public RE::BSTEventSink<RE::TESDeathEvent>

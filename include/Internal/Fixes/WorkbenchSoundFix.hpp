@@ -11,13 +11,22 @@ namespace Internal::Fixes
 	class WorkbenchSoundFix
 	{
 	public:
-		// installs the fix
+		/**
+		 * @brief Installs the fix.
+		 */
 		static void Install() noexcept;
 
-		// stops the goddamned sewing machine sound
+		/**
+		 * @brief Stops all workbench SFX annotations on the given reference.
+		 * @param a_workbenchUser The reference to silence.
+		 */
 		static void FixWorkbenchSounds(RE::TESObjectREFR* a_workbenchUser);
 
-		// checks if the given furniture is a valid workbench
+		/**
+		 * @brief Checks if the given furniture reference is a workbench.
+		 * @param a_furniture The reference to check.
+		 * @return If the given furniture reference is a workbench. If the reference is null, this returns false.
+		 */
 		static bool IsWorkbench(RE::TESFurniture* a_furniture);
 
 		class FurnitureEventHandler : public RE::BSTEventSink<RE::TESFurnitureEvent>

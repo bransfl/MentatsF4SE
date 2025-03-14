@@ -5,10 +5,15 @@ namespace Internal::Fixes
 	class AddManyItemsFix
 	{
 	public:
-		// installs the fix
+		/**
+		 * @brief Installs the fix.
+		 */
 		static void Install() noexcept;
 
 	private:
+		/**
+		 * @brief Patches relevant code.
+		 */
 		static void Fix();
 	};
 }

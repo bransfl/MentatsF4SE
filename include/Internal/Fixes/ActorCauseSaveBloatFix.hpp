@@ -5,9 +5,17 @@ namespace Internal::Fixes
 	class ActorCauseSaveBloatFix
 	{
 	public:
+		/**
+		 * @brief Installs the fix.
+		 */
 		static void Install() noexcept;
 
 	private:
+		/**
+		 * @brief Gathers all non-nullptr references with base formtype kPROJ.
+		 * @param a_cell The cell to gather from. If this is null, an empty vector is returned.
+		 * @return Vector of found references.
+		 */
 		static std::vector<RE::TESObjectREFR*> GetProjectilesInCell(RE::TESObjectCELL* a_cell);
 
 		class CellAttachDetachEventHandler : public RE::BSTEventSink<RE::CellAttachDetachEvent>

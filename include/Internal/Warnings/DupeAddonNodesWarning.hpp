@@ -5,14 +5,20 @@ namespace Internal::Warnings
 	class DupeAddonNodesWarning
 	{
 	public:
-		// installs the warning
+		/**
+		 * @brief Installs the warning.
+		 */
 		static void Install() noexcept;
 
 	private:
-		// checks and reports any duplicate addon node indexes
+		/**
+		 * @brief Checks all RE::BGSAddonNode forms and their member variable index to see if any have the same index.
+		 */
 		static void CheckDupeAddonNodes();
 
-		// resets the nodemap to free up memory
+		/**
+		 * @brief Clears nodeMap to free up memory after this warning has been processed.
+		 */
 		static void ClearNodeMap();
 	};
 }

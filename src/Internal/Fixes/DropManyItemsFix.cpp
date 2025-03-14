@@ -82,21 +82,21 @@ namespace Internal::Fixes
 		}
 	}
 
-	uint32_t* DropManyItemsFix::Hook_DropItemIntoWorld_OG(RE::TESObjectREFR* refr, uint32_t* handle, RE::TESBoundObject* item, int32_t count, RE::TESObjectREFR* container, RE::NiPoint3* pa, RE::NiPoint3* pb, RE::ExtraDataList* extra)
+	uint32_t* DropManyItemsFix::Hook_DropItemIntoWorld_OG(RE::TESObjectREFR* a_refr, uint32_t* a_handle, RE::TESBoundObject* a_item, int32_t a_count, RE::TESObjectREFR* a_container, RE::NiPoint3* a_pa, RE::NiPoint3* a_pb, RE::ExtraDataList* a_extra)
 	{
 
-		while (count >= 0x8000) {
-			count -= 0x7FFF;
+		while (a_count >= 0x8000) {
+			a_count -= 0x7FFF;
 
 			RE::ExtraDataList* list = ExtraDataList_ctor_OG(Heap_Allocate(sizeof(RE::ExtraDataList)));
 
 			REX::W32::InterlockedIncrement(&list->refCount);
 
-			ExtraDataList_CopyList_OG(extra, list);
+			ExtraDataList_CopyList_OG(a_extra, list);
 
 			ExtraDataList_SetCount_OG(list, 0x7FFF);
 
-			DropItemIntoWorld_Original_OG(refr, handle, item, 0x7FFF, container, pa, pb, list);
+			DropItemIntoWorld_Original_OG(a_refr, a_handle, a_item, 0x7FFF, a_container, a_pa, a_pb, list);
 
 			if (REX::W32::InterlockedDecrement(&list->refCount) == 0) {
 				ExtraDataList_dtor_OG(list);
@@ -105,27 +105,27 @@ namespace Internal::Fixes
 		}
 
 		// seems to req direct conversion from 32 to 16 for some awful reason
-		ExtraDataList_SetCount_OG(extra, static_cast<int16_t>(count));
+		ExtraDataList_SetCount_OG(a_extra, static_cast<int16_t>(a_count));
 
-		DropItemIntoWorld_Original_OG(refr, handle, item, count, container, pa, pb, extra);
-		return handle;
+		DropItemIntoWorld_Original_OG(a_refr, a_handle, a_item, a_count, a_container, a_pa, a_pb, a_extra);
+		return a_handle;
 	}
 
-	uint32_t* DropManyItemsFix::Hook_DropItemIntoWorld_NG(RE::TESObjectREFR* refr, uint32_t* handle, RE::TESBoundObject* item, int32_t count, RE::TESObjectREFR* container, RE::NiPoint3* pa, RE::NiPoint3* pb, RE::ExtraDataList* extra)
+	uint32_t* DropManyItemsFix::Hook_DropItemIntoWorld_NG(RE::TESObjectREFR* a_refr, uint32_t* a_handle, RE::TESBoundObject* a_item, int32_t a_count, RE::TESObjectREFR* a_container, RE::NiPoint3* a_pa, RE::NiPoint3* a_pb, RE::ExtraDataList* a_extra)
 	{
 
-		while (count >= 0x8000) {
-			count -= 0x7FFF;
+		while (a_count >= 0x8000) {
+			a_count -= 0x7FFF;
 
 			RE::ExtraDataList* list = ExtraDataList_ctor_NG(Heap_Allocate(sizeof(RE::ExtraDataList)));
 
 			REX::W32::InterlockedIncrement(&list->refCount);
 
-			ExtraDataList_CopyList_NG(extra, list);
+			ExtraDataList_CopyList_NG(a_extra, list);
 
 			ExtraDataList_SetCount_NG(list, 0x7FFF);
 
-			DropItemIntoWorld_Original_NG(refr, handle, item, 0x7FFF, container, pa, pb, list);
+			DropItemIntoWorld_Original_NG(a_refr, a_handle, a_item, 0x7FFF, a_container, a_pa, a_pb, list);
 
 			if (REX::W32::InterlockedDecrement(&list->refCount) == 0) {
 				ExtraDataList_dtor_NG(list);
@@ -134,10 +134,10 @@ namespace Internal::Fixes
 		}
 
 		// seems to req direct conversion from 32 to 16 for some awful reason
-		ExtraDataList_SetCount_NG(extra, static_cast<int16_t>(count));
+		ExtraDataList_SetCount_NG(a_extra, static_cast<int16_t>(a_count));
 
-		DropItemIntoWorld_Original_NG(refr, handle, item, count, container, pa, pb, extra);
-		return handle;
+		DropItemIntoWorld_Original_NG(a_refr, a_handle, a_item, a_count, a_container, a_pa, a_pb, a_extra);
+		return a_handle;
 	}
 
 	// todo - update to use this

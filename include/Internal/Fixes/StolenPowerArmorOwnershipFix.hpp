@@ -5,9 +5,16 @@ namespace Internal::Fixes
 	class StolenPowerArmorOwnershipFix
 	{
 	public:
+		/**
+		 * @brief Installs the fix.
+		 */
 		static void Install() noexcept;
 
 	private:
+		/**
+		 * @brief Gives the player ownership of the given PowerArmor reference.
+		 * @param a_ref The PowerArmor to patch.
+		 */
 		static void FixOwnership(RE::TESObjectREFR* a_ref);
 
 		class FurnitureEventHandler : public RE::BSTEventSink<RE::TESFurnitureEvent>

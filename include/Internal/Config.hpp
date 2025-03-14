@@ -4,7 +4,7 @@ namespace Internal::Config
 {
 	void Load() noexcept;
 
-	// default is false in case a fix is removed from the ini for any reason
+	// default is false in case a fix is removed from the ini for any reason.
 
 	// FIXES
 	inline const auto bApplySpellsFix = REX::TOML::Bool{ "Fixes"sv, "bApplySpellsFix"sv, false };

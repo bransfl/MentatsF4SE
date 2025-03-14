@@ -2,6 +2,8 @@
 
 namespace Internal::Patches
 {
-	// installs included patches
+	/**
+	 * @brief Installs all patches that do not need to wait for a Messaging callback.
+	 */
 	void Install() noexcept;
 }

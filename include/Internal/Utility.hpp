@@ -1,18 +1,35 @@
 #pragma once
 
-// common functions used in multiple fixes
 namespace Internal
 {
+	/**
+	 * @class Shared utility functions used in multiple fixes.
+	 */
 	class Utility
 	{
 	public:
-		// executes a console command
+		/**
+		 * @brief Runs a console command.
+		 * @param a_command The command to execute.
+		 * @param a_targetRef The target to execute this command on. This can be nullptr.
+		 * @param a_silent If the console command should be visible in the console's history.
+		 */
 		static void ExecuteCommand(std::string_view a_command, RE::TESObjectREFR* a_targetRef, bool a_silent);
 
-		// returns the mod that a form is from
+		/**
+		 * @brief Returns the mod that a form is defined in, or was last modified by.
+		 * @param a_form The form to process.
+		 * @param a_lastModified If true, returns the name of the mod that last modified this form.
+		 * 						 If false, returns the mame of the mod that the form is defined in.
+		 */
 		static std::string_view GetModName(RE::TESForm* a_form, bool a_lastModified);
 
-		// returns the amount of entries in the given LeveledList
+		/**
+		 * @brief Returns the amount of entries in the given LeveledList.
+		 * @details We return an int32_t instead of an int8_t to prevent the value from overflowing if the given LeveledList has more than 255 entries.
+		 * @param a_leveledList The LeveledList to process.
+		 * @return The amount of entries in this LeveledList.
+		 */
 		static int32_t GetNumEntries(RE::TESLeveledList* a_leveledList);
 	};
 }

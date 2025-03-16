@@ -34,18 +34,19 @@ namespace Internal::Fixes
 					return RE::BSEventNotifyControl::kContinue;
 				}
 
-				// just in case the player hasnt used power armor yet
-				if (!player->lastUsedPowerArmor.get() || !player->lastUsedPowerArmor.get().get()) {
-					return RE::BSEventNotifyControl::kContinue;
-				}
-
 				RE::TESObjectREFR* furn = a_event.targetFurniture.get();
 				if (!furn) {
 					return RE::BSEventNotifyControl::kContinue;
 				}
 
+				// just in case the player hasnt used power armor yet
+				if (!player->lastUsedPowerArmor.get() || !player->lastUsedPowerArmor.get().get()) {
+					return RE::BSEventNotifyControl::kContinue;
+				}
+
 				if (furn == player->lastUsedPowerArmor.get().get()) {
-					logger::info("StolenPowerArmorOwnershipFix -> FixOwnership() running on furniture: (FormID {:08X}, EditorID: {})."sv, furn->GetFormID(), furn->GetBaseObject()->GetFormEditorID());
+					logger::info("StolenPowerArmorOwnershipFix -> FixOwnership() running on furniture: (FormID: {:08X}, EditorID: {})."sv,
+						furn->GetFormID(), furn->GetBaseObject()->GetFormEditorID());
 					FixOwnership(furn);
 				}
 

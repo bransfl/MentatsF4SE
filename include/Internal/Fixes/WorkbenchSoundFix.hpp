@@ -25,7 +25,8 @@ namespace Internal::Fixes
 		/**
 		 * @brief Checks if the given furniture reference is a workbench.
 		 * @param a_furniture The reference to check.
-		 * @return If the given furniture reference is a workbench. If the reference is null, this returns false.
+		 * @return If the a_furniture is a workbench.
+		 *		   If the reference is null, this returns false.
 		 */
 		static bool IsWorkbench(RE::TESFurniture* a_furniture);
 
@@ -47,9 +48,12 @@ namespace Internal::Fixes
 						return RE::BSEventNotifyControl::kContinue;
 					}
 
-					if (a_event.actor.get()) {
-						FixWorkbenchSounds(a_event.actor.get());
+					RE::TESObjectREFR* actor = a_event.actor.get();
+					if (!actor) {
+						return RE::BSEventNotifyControl::kContinue;
 					}
+
+					FixWorkbenchSounds(actor);
 				}
 
 				return RE::BSEventNotifyControl::kContinue;

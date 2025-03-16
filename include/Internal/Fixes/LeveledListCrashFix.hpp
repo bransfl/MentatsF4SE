@@ -17,10 +17,10 @@ namespace Internal::Fixes
 		 * 			If the entry count is less than 255, this behaves normally.
 		 * 			If the entry count is above 255, this prevents injection and logs a warning for the user.
 		 * @param a_this The LeveledList to inject into.
-		 * @param a_owner Unsure.
+		 * @param a_owner Unsure. This might be the owner of the form that injected it, such as the injection quest?
 		 * @param a_level The minimum level for a_form to appear in a_this.
 		 * @param a_count The amount of a_form to inject into a_this.
-		 * @param a_form The form that will be added to the LeveledList.
+		 * @param a_form The form that will be injected into to a_this.
 		 */
 		static void Hook_AddScriptAddedLeveledObject(RE::TESLeveledList* a_this, RE::TESForm* a_owner, uint16_t a_level, uint16_t a_count, RE::TESForm* a_form);
 

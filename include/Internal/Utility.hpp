@@ -31,5 +31,12 @@ namespace Internal
 		 * @return The amount of entries in this LeveledList.
 		 */
 		static int32_t GetNumEntries(RE::TESLeveledList* a_leveledList);
+
+		/**
+		 * @brief Returns formatted FormID/EditorID information for a_form.
+		 * @param a_form The form to process.
+		 * @return String representation of a_form.
+		 */
+		static std::string_view GetFormInfo(RE::TESForm* a_form);
 	};
 }

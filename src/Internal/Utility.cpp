@@ -46,4 +46,15 @@ namespace Internal
 
 		return a_leveledList->baseListCount + a_leveledList->scriptListCount;
 	}
+
+	std::string_view Utility::GetFormInfo(RE::TESForm* a_form)
+	{
+		if (!a_form) {
+			"(FormID: nullptr, EditorID: nullptr)";
+		}
+
+		RE::TESFormID formID = a_form->GetFormID();
+		std::string_view editorID = a_form->GetFormEditorID();
+		return "(FormID: {:08X}, EditorID: {})", formID, editorID;
+	}
 }

@@ -49,8 +49,8 @@ namespace Internal::Fixes
 		}
 
 		if (furn == player->lastUsedPowerArmor.get().get()) {
-			logger::info("StolenPowerArmorOwnershipFix -> FixOwnership() running on furniture: (FormID: {:08X}, EditorID: {})."sv,
-				furn->GetFormID(), furn->GetBaseObject()->GetFormEditorID());
+			logger::info("StolenPowerArmorOwnershipFix -> FixOwnership() running on furniture: {}.",
+				Utility::GetFormInfo(furn->GetBaseObject()));
 			FixOwnership(furn);
 		}
 

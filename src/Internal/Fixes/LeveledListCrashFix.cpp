@@ -55,9 +55,8 @@ namespace Internal::Fixes
 		// 	a_form->GetFormID(), a_form->GetFormEditorID(), a_list->GetFormID(), a_list->GetFormEditorID());
 		// logger::info("The form has not been inserted. For ease of review, here are the current contents of the list:\n"sv);
 
-		if (!a_form) {
-			// todo - compiler moment
-		}
+		logger::warn("LeveledListCrashFix -> DebugLeveledList -> Insertion of Form a_form (FormID: {:08X}, EditorID: {}) was prevented."sv,
+			a_form->GetFormID(), a_form->GetFormEditorID());
 
 		int i = 1;
 		for (auto& entry : LeveledListCrashFix::GetEntries(a_list)) {
@@ -65,7 +64,7 @@ namespace Internal::Fixes
 				logger::warn("LeveledListCrashFix -> Index: {} has NULL form. This is a problem, do not ignore it."sv, i);
 			}
 			else {
-				logger::warn("LeveledListCrashFix -> Index: {} at has FormID: {:08X}, EditorID: {}."sv, i, entry->GetFormID(), entry->GetFormEditorID());
+				logger::warn("LeveledListCrashFix -> Index: {} at has (FormID: {:08X}, EditorID: {})."sv, i, entry->GetFormID(), entry->GetFormEditorID());
 			}
 			i++;
 		}

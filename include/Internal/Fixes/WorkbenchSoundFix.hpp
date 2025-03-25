@@ -1,11 +1,5 @@
 #pragma once
 
-// Sounds:
-// UIWorkshopSewingMachineRunLPM [SNDR:0019E999]
-// UIWorkshopPowerArmorWeldLPM [SNDR:0022C1D3]
-// UIWorkshopDrillPressDrillLPM [SNDR:0017C8D2]
-// UIWorkshopDrillPressPowerLPM [SNDR:0017C8D3]
-
 namespace Internal::Fixes
 {
 	class WorkbenchSoundFix
@@ -33,31 +27,22 @@ namespace Internal::Fixes
 		class FurnitureEventHandler : public RE::BSTEventSink<RE::TESFurnitureEvent>
 		{
 		public:
+			/**
+			 * @brief Singleton getter for class.
+			 * @return Class Singleton.
+			 */
 			[[nodiscard]] static FurnitureEventHandler* GetSingleton()
 			{
 				static FurnitureEventHandler singleton;
 				return std::addressof(singleton);
 			}
 
-			virtual RE::BSEventNotifyControl ProcessEvent(const RE::TESFurnitureEvent& a_event, RE::BSTEventSource<RE::TESFurnitureEvent>*) override
-			{
-				if (a_event.IsExit()) {
-					RE::TESFurniture* a_furniture = a_event.targetFurniture.get()->As<RE::TESFurniture>();
-
-					if (!a_furniture || !IsWorkbench(a_furniture)) {
-						return RE::BSEventNotifyControl::kContinue;
-					}
-
-					RE::TESObjectREFR* actor = a_event.actor.get();
-					if (!actor) {
-						return RE::BSEventNotifyControl::kContinue;
-					}
-
-					FixWorkbenchSounds(actor);
-				}
-
-				return RE::BSEventNotifyControl::kContinue;
-			}
+			/**
+			 * @brief Checks if the player has exited a workbench, and stops all workbench sound annotations if so.
+			 * @param a_event The event data to evaluate.
+			 * @return Event continue statement.
+			 */
+			virtual RE::BSEventNotifyControl ProcessEvent(const RE::TESFurnitureEvent& a_event, RE::BSTEventSource<RE::TESFurnitureEvent>*) override;
 
 			FurnitureEventHandler() = default;
 			FurnitureEventHandler(const FurnitureEventHandler&) = delete;

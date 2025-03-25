@@ -5,7 +5,6 @@
 
 namespace Internal::Fixes
 {
-	// typedefs for function signature and original function declaration
 	typedef void(mem_AddScriptAddedLeveledObjectSig)(RE::TESLeveledList*, RE::TESForm*, uint16_t, uint16_t, RE::TESForm*);
 	REL::Relocation<mem_AddScriptAddedLeveledObjectSig> OriginalFunction_AddScriptAddedLeveledObject;
 

@@ -2,7 +2,7 @@
 
 cmake_minimum_required(VERSION 3.30)
 
-set(PROJECT_NAME "EngineFixesF4SE")
+set(PROJECT_NAME "MentatsF4SE")
 set(PROJECT_AUTHOR "bp42s")
 set(PROJECT_VERSION 1.0.0.0)
 set(PROJECT_LICENSE "MIT License")

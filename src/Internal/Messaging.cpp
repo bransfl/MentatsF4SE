@@ -17,15 +17,15 @@ namespace Internal::Messaging
 	void Callback(F4SE::MessagingInterface::Message* a_msg)
 	{
 		switch (a_msg->type) {
-			case F4SE::MessagingInterface::kPostLoad: {
-				break;
-			}
-			case F4SE::MessagingInterface::kPostPostLoad: {
-				break;
-			}
-			case F4SE::MessagingInterface::kPreLoadGame: {
-				break;
-			}
+			// case F4SE::MessagingInterface::kPostLoad: {
+			// 	break;
+			// }
+			// case F4SE::MessagingInterface::kPostPostLoad: {
+			// 	break;
+			// }
+			// case F4SE::MessagingInterface::kPreLoadGame: {
+			// 	break;
+			// }
 			case F4SE::MessagingInterface::kPostLoadGame: {
 				// ActorCauseSaveBloatFix
 				Internal::Fixes::ActorCauseSaveBloatFix::Install();
@@ -43,24 +43,24 @@ namespace Internal::Messaging
 
 				break;
 			}
-			case F4SE::MessagingInterface::kPreSaveGame: {
-				break;
-			}
-			case F4SE::MessagingInterface::kPostSaveGame: {
-				break;
-			}
-			case F4SE::MessagingInterface::kDeleteGame: {
-				break;
-			}
-			case F4SE::MessagingInterface::kInputLoaded: {
-				break;
-			}
-			case F4SE::MessagingInterface::kNewGame: {
-				break;
-			}
-			case F4SE::MessagingInterface::kGameLoaded: {
-				break;
-			}
+			// case F4SE::MessagingInterface::kPreSaveGame: {
+			// 	break;
+			// }
+			// case F4SE::MessagingInterface::kPostSaveGame: {
+			// 	break;
+			// }
+			// case F4SE::MessagingInterface::kDeleteGame: {
+			// 	break;
+			// }
+			// case F4SE::MessagingInterface::kInputLoaded: {
+			// 	break;
+			// }
+			// case F4SE::MessagingInterface::kNewGame: {
+			// 	break;
+			// }
+			// case F4SE::MessagingInterface::kGameLoaded: {
+			// 	break;
+			// }
 			case F4SE::MessagingInterface::kGameDataReady: {
 				// CombatMusicFix
 				Internal::Fixes::CombatMusicFix::Install();

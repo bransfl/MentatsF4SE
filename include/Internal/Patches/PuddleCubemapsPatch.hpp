@@ -14,6 +14,6 @@ namespace Internal::Patches
 		/**
 		 * @brief Patches all loaded RE::TESWorldspace forms to set their waterEnvMap member to none.
 		 */
-		static void Fix();
+		static void Patch();
 	};
 }

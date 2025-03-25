@@ -72,10 +72,10 @@ namespace Internal::Fixes
 
 		// if (this effect has conditions OR this has a displacement spell) AND (the target is valid AND the target's object ref is valid)
 		if ((a_this->flags.all(RE::ActiveEffect::Flags::kHasConditions) || a_this->displacementSpell) && a_this->target && a_this->target->GetTargetStatsObject()) {
-			// store the auxillary timer on the unused uint32_t member pad94
-			auto& conditionUpdateTime = reinterpret_cast<float&>(a_this->pad94);
-
 			if (a_forceUpdate == false) {
+				// store the auxillary timer on the unused uint32_t member pad94
+				float& conditionUpdateTime = reinterpret_cast<float&>(a_this->pad94);
+
 				if (a_this->elapsedSeconds <= 0.0F) {
 					// set the auxillary timer to the amt of time the effect has been active
 					reinterpret_cast<float&>(a_this->pad94) = a_elapsedTimeDelta;

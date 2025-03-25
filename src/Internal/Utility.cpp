@@ -40,6 +40,7 @@ namespace Internal
 	int32_t Utility::GetNumEntries(RE::TESLeveledList* a_leveledList)
 	{
 		if (!a_leveledList) {
+			logger::warn("Utility -> GetNumEntries -> a_leveledList was null.sv");
 			return -1;
 		}
 

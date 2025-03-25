@@ -12,12 +12,12 @@ namespace Internal::Patches
 			return;
 		}
 
-		Fix();
+		Patch();
 
 		logger::info("PuddleCubemapsPatch -> Patch installed."sv);
 	}
 
-	void PuddleCubemapsPatch::Fix()
+	void PuddleCubemapsPatch::Patch()
 	{
 		auto dataHandler = RE::TESDataHandler::GetSingleton();
 		if (!dataHandler) {
@@ -35,7 +35,7 @@ namespace Internal::Patches
 			}
 
 			worldspace->waterEnvMap.textureName = blank;
-			logger::debug("PuddleCubemapsPatch -> Worldspace (FormID: {:08X}, EditorID: {}) - waterEnvMap was cleared."sv,
+			logger::info("PuddleCubemapsPatch -> Worldspace (FormID: {:08X}, EditorID: {}) - waterEnvMap was cleared."sv,
 				worldspace->GetFormID(), worldspace->GetFormEditorID());
 		}
 	}

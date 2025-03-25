@@ -47,7 +47,7 @@ bPuddleCubemapsPatch = true
 # (default: enabled | Supports both versions)
 bDupeAddonNodesWarning = true
 
-# Logs and reports any existing leveled lists that have over 255 entries. Logs are written in MyGames/Fallout4/F4SE/EngineFixesF4SE.log
+# Logs and reports any existing leveled lists that have over 255 entries. Logs are written in MyGames/Fallout4/F4SE/MentatsF4SE.log
 # This warning does not fix or prevent issues with leveled lists with over 255 entries, it just reports them.
 # (default: enabled | Supports both versions)
 bLeveledListEntryCountWarning = true

@@ -2,11 +2,11 @@
 #include "Internal/Config.hpp"
 #include "Internal/Utility.hpp"
 
-// SoundDescriptors:
-// UIWorkshopSewingMachineRunLPM [SNDR:0019E999]
-// UIWorkshopPowerArmorWeldLPM [SNDR:0022C1D3]
-// UIWorkshopDrillPressDrillLPM [SNDR:0017C8D2]
-// UIWorkshopDrillPressPowerLPM [SNDR:0017C8D3]
+// Workshop UI SoundDescriptors:
+// 	UIWorkshopSewingMachineRunLPM [SNDR:0019E999]
+// 	UIWorkshopPowerArmorWeldLPM [SNDR:0022C1D3]
+//	UIWorkshopDrillPressDrillLPM [SNDR:0017C8D2]
+//	UIWorkshopDrillPressPowerLPM [SNDR:0017C8D3]
 
 namespace Internal::Fixes
 {
@@ -26,10 +26,11 @@ namespace Internal::Fixes
 			return;
 		}
 
+		auto* player = RE::PlayerCharacter::GetSingleton();
 		RE::TESFurnitureEvent::GetEventSource()->RegisterSink(WorkbenchSoundFix::FurnitureEventHandler::GetSingleton());
-		RE::PlayerCharacter::GetSingleton()->RE::BSTEventSource<RE::BGSActorCellEvent>::RegisterSink(WorkbenchSoundFix::ActorCellEventHandler::GetSingleton());
+		player->RE::BSTEventSource<RE::BGSActorCellEvent>::RegisterSink(WorkbenchSoundFix::ActorCellEventHandler::GetSingleton());
 
-		FixWorkbenchSounds(RE::PlayerCharacter::GetSingleton()); // for existing saves + sanity
+		FixWorkbenchSounds(player); // for existing saves and sanity
 
 		logger::info("Fix installed: WorkbenchSoundFix."sv);
 	}
@@ -50,5 +51,27 @@ namespace Internal::Fixes
 		}
 
 		return a_furniture->wbData.type != RE::WorkbenchData::Type::kNone;
+	}
+
+	RE::BSEventNotifyControl WorkbenchSoundFix::FurnitureEventHandler::ProcessEvent(const RE::TESFurnitureEvent& a_event, RE::BSTEventSource<RE::TESFurnitureEvent>*)
+	{
+		if (a_event.IsEnter()) {
+			// we only run on IsExit(), otherwise workbenches would be silent
+			return RE::BSEventNotifyControl::kContinue;
+		}
+
+		RE::TESFurniture* a_furniture = a_event.targetFurniture.get()->As<RE::TESFurniture>();
+		if (!a_furniture || !IsWorkbench(a_furniture)) {
+			return RE::BSEventNotifyControl::kContinue;
+		}
+
+		RE::TESObjectREFR* actor = a_event.actor.get();
+		if (!actor) {
+			return RE::BSEventNotifyControl::kContinue;
+		}
+
+		FixWorkbenchSounds(actor);
+
+		return RE::BSEventNotifyControl::kContinue;
 	}
 }

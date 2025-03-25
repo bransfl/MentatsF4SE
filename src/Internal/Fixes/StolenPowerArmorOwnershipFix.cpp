@@ -49,7 +49,7 @@ namespace Internal::Fixes
 		}
 
 		if (furn == player->lastUsedPowerArmor.get().get()) {
-			logger::info("StolenPowerArmorOwnershipFix -> FixOwnership() running on furniture: {}.",
+			logger::info("StolenPowerArmorOwnershipFix -> FixOwnership() running on furniture: {}."sv,
 				Utility::GetFormInfo(furn->GetBaseObject()));
 			FixOwnership(furn);
 		}

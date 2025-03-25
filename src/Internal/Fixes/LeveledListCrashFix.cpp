@@ -5,8 +5,8 @@
 
 namespace Internal::Fixes
 {
-	typedef void(mem_AddScriptAddedLeveledObjectSig)(RE::TESLeveledList*, RE::TESForm*, uint16_t, uint16_t, RE::TESForm*);
-	REL::Relocation<mem_AddScriptAddedLeveledObjectSig> OriginalFunction_AddScriptAddedLeveledObject;
+	typedef void(Signature_AddScriptAddedLeveledObject)(RE::TESLeveledList*, RE::TESForm*, uint16_t, uint16_t, RE::TESForm*);
+	REL::Relocation<Signature_AddScriptAddedLeveledObject> OriginalFunction_AddScriptAddedLeveledObject;
 
 	void LeveledListCrashFix::Install() noexcept
 	{
@@ -55,16 +55,16 @@ namespace Internal::Fixes
 		// 	a_form->GetFormID(), a_form->GetFormEditorID(), a_list->GetFormID(), a_list->GetFormEditorID());
 		// logger::info("The form has not been inserted. For ease of review, here are the current contents of the list:\n"sv);
 
-		logger::warn("LeveledListCrashFix -> DebugLeveledList -> Insertion of Form a_form (FormID: {:08X}, EditorID: {}) was prevented."sv,
-			a_form->GetFormID(), a_form->GetFormEditorID());
+		logger::warn("LeveledListCrashFix -> DebugLeveledList -> Insertion of Form a_form {} was prevented."sv,
+			Utility::GetFormInfo(a_form));
 
 		int i = 1;
 		for (auto& entry : LeveledListCrashFix::GetEntries(a_list)) {
 			if (!entry->GetFormID()) {
-				logger::warn("LeveledListCrashFix -> Index: {} has NULL form. This is a problem, do not ignore it."sv, i);
+				logger::warn("\tLeveledListCrashFix -> [WARNING] - Form at index: {} is nullptr. This is a problem, do not ignore it."sv, i);
 			}
 			else {
-				logger::warn("LeveledListCrashFix -> Index: {} at has (FormID: {:08X}, EditorID: {})."sv, i, entry->GetFormID(), entry->GetFormEditorID());
+				logger::warn("\tLeveledListCrashFix -> Form at index: {} is {}."sv, i, Utility::GetFormInfo(entry));
 			}
 			i++;
 		}

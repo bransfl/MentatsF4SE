@@ -9,7 +9,7 @@ namespace Internal::Config
 
 	void Load() noexcept
 	{
-		auto* toml = REX::TOML::SettingStore::GetSingleton();
+		REX::TOML::SettingStore* toml = REX::TOML::SettingStore::GetSingleton();
 		toml->Init(FILE_PATH_TOML, CUSTOM_FILE_PATH_TOML);
 		toml->Load();
 	}

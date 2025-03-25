@@ -1,5 +1,6 @@
 #include "Internal/Patches/PuddleCubemapsPatch.hpp"
 #include "Internal/Config.hpp"
+#include "Internal/Utility.hpp"
 
 namespace Internal::Patches
 {
@@ -26,6 +27,12 @@ namespace Internal::Patches
 		}
 
 		auto worldspaces = dataHandler->GetFormArray<RE::TESWorldSpace>();
+		if (worldspaces.size() == 0) {
+			logger::warn("PuddleCubemapsPatch -> Worldspaces array size was 0. Patch was not applied."sv);
+			return;
+		}
+
+		// textureName is a RE::BSFixedString type
 		RE::BSFixedString blank = RE::BSFixedString("");
 
 		for (RE::TESWorldSpace* worldspace : worldspaces) {
@@ -35,8 +42,8 @@ namespace Internal::Patches
 			}
 
 			worldspace->waterEnvMap.textureName = blank;
-			logger::info("PuddleCubemapsPatch -> Worldspace (FormID: {:08X}, EditorID: {}) - waterEnvMap was cleared."sv,
-				worldspace->GetFormID(), worldspace->GetFormEditorID());
+			logger::info("PuddleCubemapsPatch -> Worldspace {} - waterEnvMap was cleared."sv,
+				Utility::GetFormInfo(worldspace));
 		}
 	}
 }

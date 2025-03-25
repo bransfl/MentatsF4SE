@@ -15,7 +15,7 @@ namespace Internal
 		script->CompileAndRun(&compiler, RE::COMPILER_NAME::kSystemWindow, a_targetRef);
 
 		if (!script->header.isCompiled) {
-			logger::info("Utility -> ExecuteCommand: Failed to compile command: {}", a_command);
+			logger::info("Utility -> ExecuteCommand: Failed to compile command: {}"sv, a_command);
 		}
 
 		if (a_silent == true) {
@@ -50,7 +50,7 @@ namespace Internal
 	std::string_view Utility::GetFormInfo(RE::TESForm* a_form)
 	{
 		if (!a_form) {
-			"(FormID: nullptr, EditorID: nullptr)";
+			return "(FormID: nullptr, EditorID: nullptr)"sv;
 		}
 
 		RE::TESFormID formID = a_form->GetFormID();

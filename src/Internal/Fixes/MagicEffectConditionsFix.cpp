@@ -1,10 +1,11 @@
 #include "Internal/Fixes/MagicEffectConditionsFix.hpp"
 #include "Internal/Config.hpp"
+#include "Internal/Utility.hpp"
 
 namespace Internal::Fixes
 {
-	typedef void(EvaluateConditionsSig)(RE::ActiveEffect*, float, bool);
-	REL::Relocation<EvaluateConditionsSig> OriginalFunction_EvaluateConditions;
+	typedef void(Signature_EvaluateConditions)(RE::ActiveEffect*, float, bool);
+	REL::Relocation<Signature_EvaluateConditions> OriginalFunction_EvaluateConditions;
 
 	void MagicEffectConditionsFix::Install() noexcept
 	{
@@ -52,7 +53,8 @@ namespace Internal::Fixes
 	// thank you bingle my beloved
 	void MagicEffectConditionsFix::Hook_EvaluateConditions(RE::ActiveEffect* a_this, float a_elapsedTimeDelta, bool a_forceUpdate)
 	{
-		// logger::debug("a_this was: GetFormID()={:08X}, EditorId={}"sv, a_this->spell->GetFormID(), a_this->spell->GetFormEditorID());
+		// logger::debug("MagicEffectConditionsFix -> Hook_EvaluateConditions -> a_this->spell was {}."sv,
+		// 	RE::TESForm::GetFormByID(a_this->spell->GetFormID())->As<RE::TESForm>());
 
 		if (a_this->conditionStatus == RE::ActiveEffect::ConditionStatus::kNotAvailable) {
 			// this effect has no conditions, so there's nothing to evaluate
@@ -64,7 +66,7 @@ namespace Internal::Fixes
 			if (potion) {
 				if (potion->data.addictionChance > 0.0 || potion->data.addictionItem != nullptr) {
 					// this is a fire-and-forget addictive potion (likely an addictive chem)
-					// we return normally since fire-and-forget potions don't evaluate conditions after application
+					// so we return normally since fire-and-forget potions don't evaluate conditions after application
 					return;
 				}
 			}
@@ -72,16 +74,15 @@ namespace Internal::Fixes
 
 		// if (this effect has conditions OR this has a displacement spell) AND (the target is valid AND the target's object ref is valid)
 		if ((a_this->flags.all(RE::ActiveEffect::Flags::kHasConditions) || a_this->displacementSpell) && a_this->target && a_this->target->GetTargetStatsObject()) {
+			// we store an auxillary timer on the unused uint32_t member pad94
 			if (a_forceUpdate == false) {
-				// store the auxillary timer on the unused uint32_t member pad94
-				float& conditionUpdateTime = reinterpret_cast<float&>(a_this->pad94);
-
 				if (a_this->elapsedSeconds <= 0.0F) {
-					// set the auxillary timer to the amt of time the effect has been active
+					// set the auxillary timer to the amount of time the effect has been active
 					reinterpret_cast<float&>(a_this->pad94) = a_elapsedTimeDelta;
 					return;
 				}
 
+				float& conditionUpdateTime = reinterpret_cast<float&>(a_this->pad94);
 				if (conditionUpdateTime > 0.0F && conditionUpdateTime < ActiveEffectConditionUpdateInterval()) {
 					// add the effect's elapsed time to the auxillary timer
 					reinterpret_cast<float&>(a_this->pad94) += a_elapsedTimeDelta;

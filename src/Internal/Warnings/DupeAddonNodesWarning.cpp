@@ -49,10 +49,11 @@ namespace Internal::Warnings
 				const auto currentNode = (*res.first).second;
 				if (currentNode != addonNode && currentNode->formID != addonNode->formID) {
 					nodeErrors++;
-					logger::warn("DupeAddonNodesWarning -> Duplicate AddonNode Index found at (FormID: {:08X} in Plugin: {}) AND (FormID {:08X} in plugin {}). The AddonNode index was {}."sv,
-						currentNode->formID, Utility::GetModName(currentNode, false),
-						addonNode->formID, Utility::GetModName(addonNode, false), addonNode->index);
-					RE::ConsoleLog::GetSingleton()->AddString("MentatsF4SE -> DupeAddonNodesWarning -> An duplicate AddonNode index was found, check MentatsF4SE.log for more information.\n");
+					logger::warn("DupeAddonNodesWarning -> Duplicate AddonNode index found: {}. Index was found at (Form: {} in Plugin: {}) AND (Form: {} in Plugin {})."sv,
+						addonNode->index,
+						Utility::GetFormInfo(currentNode), Utility::GetModName(currentNode, false),
+						Utility::GetFormInfo(addonNode), Utility::GetModName(addonNode, false));
+					RE::ConsoleLog::GetSingleton()->AddString("MentatsF4SE -> DupeAddonNodesWarning -> An duplicate AddonNode index was found, do not ignore this warning. Check MentatsF4SE.log for more information.\n");
 				}
 			}
 		}

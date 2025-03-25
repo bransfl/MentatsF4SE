@@ -27,12 +27,16 @@ namespace Internal::Warnings
 		bool foundBadLL = false;
 
 		for (RE::TESLevItem* levItem : formArray) {
-			listsChecked++;
-
+			if (!levItem) {
+				continue;
+			}
 			RE::TESLeveledList* leveledList = levItem->As<RE::TESLeveledList>();
 			if (!leveledList) {
 				continue;
 			}
+
+			listsChecked++;
+
 			int32_t numEntries = Utility::GetNumEntries(leveledList);
 			if (numEntries <= 255) {
 				continue;
@@ -45,6 +49,6 @@ namespace Internal::Warnings
 		if (foundBadLL) {
 			RE::ConsoleLog::GetSingleton()->AddString("MentatsF4SE -> LeveledListEntryCountWarning -> Warning: At least 1 leveled list has over 255 entries. Check the log at Documents/My Games/Fallout4/F4SE/MentatsF4SE.log\n");
 		}
-		logger::info("LeveledListEntryCountWarning -> ListsChecked: {}, FoundBadLL: {}."sv, listsChecked, foundBadLL);
+		logger::info("LeveledListEntryCountWarning -> ListsChecked: {}, FoundBadLeveledList: {}."sv, listsChecked, foundBadLL);
 	}
 }

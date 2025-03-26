@@ -3,12 +3,21 @@
 namespace Internal::Fixes
 {
 	class MagicEffectConditionsFix
+		: public Fix
 	{
 	public:
 		/**
 		 * @brief Installs the fix.
 		 */
 		static void Install() noexcept;
+
+		/**
+		 * @brief Class name method.
+		 */
+		static std::string_view Module::GetModuleName()
+		{
+			return "MagicEffectConditionsFix"sv;
+		}
 
 	private:
 		/**

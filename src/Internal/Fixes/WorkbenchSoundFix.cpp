@@ -1,6 +1,4 @@
 #include "Internal/Fixes/WorkbenchSoundFix.hpp"
-#include "Internal/Config.hpp"
-#include "Internal/Utility.hpp"
 
 // Workshop UI SoundDescriptors:
 // 	UIWorkshopSewingMachineRunLPM [SNDR:0019E999]
@@ -22,7 +20,7 @@ namespace Internal::Fixes
 		logger::info("Fix installing: WorkbenchSoundFix."sv);
 
 		if (!Config::bWorkbenchSoundFix.GetValue()) {
-			logger::info("Fix aborted: WorkbenchSoundFix. Reason: Fix was disabled in config file."sv);
+			logger::info("Fix aborted: WorkbenchSoundFix. Reason: Fix was disabled in config."sv);
 			return;
 		}
 

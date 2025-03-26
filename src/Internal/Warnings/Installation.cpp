@@ -1,9 +1,8 @@
 #include "Internal/Warnings/Installation.hpp"
-#include "Internal/Warnings/DupeAddonNodesWarning.hpp"
 
 namespace Internal::Warnings
 {
-	void Install() noexcept
+	void Installation::Install() noexcept
 	{
 		// DupeAddonNodesWarning is handled in Messaging
 

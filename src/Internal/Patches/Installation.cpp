@@ -2,7 +2,7 @@
 
 namespace Internal::Patches
 {
-	void Install() noexcept
+	void Installation::Install() noexcept
 	{
 		// PuddleCubemapsPatch is handled in Messaging
 	}

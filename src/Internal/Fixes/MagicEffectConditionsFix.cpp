@@ -1,6 +1,4 @@
 #include "Internal/Fixes/MagicEffectConditionsFix.hpp"
-#include "Internal/Config.hpp"
-#include "Internal/Utility.hpp"
 
 namespace Internal::Fixes
 {
@@ -12,7 +10,7 @@ namespace Internal::Fixes
 		logger::info("Fix installing: MagicEffectConditionsFix."sv);
 
 		if (!Config::bMagicEffectConditionsFix.GetValue()) {
-			logger::info("Fix aborted: MagicEffectConditionsFix. Reason: Fix was disabled in config file."sv);
+			logger::info("Fix aborted: MagicEffectConditionsFix. Reason: Fix was disabled in config."sv);
 			return;
 		}
 

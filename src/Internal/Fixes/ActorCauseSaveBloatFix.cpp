@@ -1,5 +1,4 @@
 #include "Internal/Fixes/ActorCauseSaveBloatFix.hpp"
-#include "Internal/Config.hpp"
 
 namespace Internal::Fixes
 {
@@ -8,7 +7,7 @@ namespace Internal::Fixes
 		logger::info("ActorCauseSaveBloatFix -> Fix installing..."sv);
 
 		if (!Config::bActorCauseSaveBloatFix.GetValue()) {
-			logger::info("Fix aborted: ActorCauseSaveBloatFix. Reason: Fix was disabled in config file."sv);
+			logger::info("Fix aborted: ActorCauseSaveBloatFix. Reason: Fix was disabled in config."sv);
 			return;
 		}
 
@@ -50,14 +49,14 @@ namespace Internal::Fixes
 				std::vector<RE::TESObjectREFR*> projectiles = GetProjectilesInCell(a_event.cell);
 				logger::info("ActorCauseSaveBloatFix -> Processing projectiles vector. Size: {}."sv, projectiles.size());
 				if (projectiles.size() == 0) {
+					return RE::BSEventNotifyControl::kContinue;
 					break;
 				}
-				else {
-					for (RE::TESObjectREFR* proj : projectiles) {
-						if (proj) {
-							if (proj->GetActorCause() != nullptr) {
-								proj->SetActorCause(nullptr);
-							}
+
+				for (RE::TESObjectREFR* projectile : projectiles) {
+					if (projectile) {
+						if (projectile->GetActorCause() != nullptr) {
+							projectile->SetActorCause(nullptr);
 						}
 					}
 				}

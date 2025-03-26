@@ -1,6 +1,4 @@
 #include "Internal/Fixes/LeveledListCrashFix.hpp"
-#include "Internal/Config.hpp"
-#include "Internal/Utility.hpp"
 // #include "detourxs/detourxs.h"
 
 namespace Internal::Fixes
@@ -13,7 +11,7 @@ namespace Internal::Fixes
 		logger::info("Fix installing: LeveledListCrashFix."sv);
 
 		if (!Config::bLeveledListCrashFix.GetValue()) {
-			logger::info("Fix aborted: LeveledListCrashFix. Reason: Fix was disabled in config file."sv);
+			logger::info("Fix aborted: LeveledListCrashFix. Reason: Fix was disabled in config."sv);
 			return;
 		}
 
@@ -55,12 +53,12 @@ namespace Internal::Fixes
 		// 	a_form->GetFormID(), a_form->GetFormEditorID(), a_list->GetFormID(), a_list->GetFormEditorID());
 		// logger::info("The form has not been inserted. For ease of review, here are the current contents of the list:\n"sv);
 
-		logger::warn("LeveledListCrashFix -> DebugLeveledList -> Insertion of Form a_form {} was prevented."sv,
+		logger::warn("LeveledListCrashFix -> DebugLeveledList -> Insertion of Form a_form: {} was prevented."sv,
 			Utility::GetFormInfo(a_form));
 
 		int i = 1;
 		for (auto& entry : LeveledListCrashFix::GetEntries(a_list)) {
-			if (!entry->GetFormID()) {
+			if (!entry || !entry->GetFormID()) {
 				logger::warn("\tLeveledListCrashFix -> [WARNING] - Form at index: {} is nullptr. This is a problem, do not ignore it."sv, i);
 			}
 			else {

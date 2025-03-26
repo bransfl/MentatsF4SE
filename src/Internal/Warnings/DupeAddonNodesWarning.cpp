@@ -1,6 +1,4 @@
 #include "Internal/Warnings/DupeAddonNodesWarning.hpp"
-#include "Internal/Config.hpp"
-#include "Internal/Utility.hpp"
 
 namespace Internal::Warnings
 {
@@ -10,8 +8,8 @@ namespace Internal::Warnings
 	{
 		logger::info("Warning installing: DupeAddonNodesWarning."sv);
 
-		if (!Config::bLeveledListCrashFix.GetValue()) {
-			logger::info("Fix aborted: DupeAddonNodesWarning. Reason: Fix was disabled in config file."sv);
+		if (!Config::bDupeAddonNodesWarning.GetValue()) {
+			logger::info("Warning aborted: DupeAddonNodesWarning. Reason: Fix was disabled in config."sv);
 			return;
 		}
 

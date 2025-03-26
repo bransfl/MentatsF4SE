@@ -3,12 +3,21 @@
 namespace Internal::Warnings
 {
 	class DupeAddonNodesWarning
+		: public Warning
 	{
 	public:
 		/**
 		 * @brief Installs the warning.
 		 */
 		static void Install() noexcept;
+
+		/**
+		 * @brief Class name method.
+		 */
+		static std::string_view Module::GetModuleName()
+		{
+			return "DupeAddonNodesWarning"sv;
+		}
 
 	private:
 		/**

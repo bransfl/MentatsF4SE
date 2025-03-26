@@ -1,6 +1,4 @@
 #include "Internal/Fixes/StolenPowerArmorOwnershipFix.hpp"
-#include "Internal/Config.hpp"
-#include "Internal/Utility.hpp"
 
 namespace Internal::Fixes
 {
@@ -12,7 +10,7 @@ namespace Internal::Fixes
 		logger::info("StolenPowerArmorOwnershipFix -> Fix installing..."sv);
 
 		if (!Config::bStolenPowerArmorOwnershipFix.GetValue()) {
-			logger::info("Fix aborted: StolenPowerArmorOwnershipFix. Reason: Fix was disabled in config file."sv);
+			logger::info("Fix aborted: StolenPowerArmorOwnershipFix. Reason: Fix was disabled in config."sv);
 			return;
 		}
 

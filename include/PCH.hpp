@@ -119,3 +119,8 @@ namespace stl = F4SE::stl;
 #include "Plugin.hpp"
 
 #include "Common.hpp"
+
+#include "Internal/Config.hpp"
+#include "Internal/Logging.hpp"
+#include "Internal/Types.hpp"
+#include "Internal/Utility.hpp"

@@ -1,5 +1,4 @@
 #include "Internal/Fixes/ApplySpellsFix.hpp"
-#include "Internal/Config.hpp"
 
 #pragma warning(disable : 4505) // temp
 
@@ -22,7 +21,7 @@ namespace Internal::Fixes
 		logger::info("Fix installing: ApplySpellsFix."sv);
 
 		if (!Config::bApplySpellsFix.GetValue()) {
-			logger::info("Fix aborted: ApplySpellsFix. Reason: Fix was disabled in config file."sv);
+			logger::info("Fix aborted: ApplySpellsFix. Reason: Fix was disabled in config."sv);
 			return;
 		}
 

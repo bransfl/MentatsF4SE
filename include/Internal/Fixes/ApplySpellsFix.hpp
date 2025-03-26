@@ -8,9 +8,21 @@ namespace Internal::Fixes
 	// static auto* GetEntryPointData(RE::BGSEntryPointPerkEntry* a_this);
 
 	class ApplySpellsFix
+		: public Fix
 	{
 	public:
+		/**
+		 * @brief Installs the fix.
+		 */
 		static void Install() noexcept;
+
+		/**
+		 * @brief Class name method.
+		 */
+		static std::string_view Module::GetModuleName()
+		{
+			return "ApplySpellsFix"sv;
+		}
 
 		static void ApplyCombatHitSpell(
 			RE::BGSEntryPoint::ENTRY_POINT entryPoint,

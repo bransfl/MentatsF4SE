@@ -3,12 +3,21 @@
 namespace Internal::Warnings
 {
 	class LeveledListEntryCountWarning
+		: public Warning
 	{
 	public:
 		/**
 		 * @brief Installs the warning.
 		 */
 		static void Install();
+
+		/**
+		 * @brief Class name method.
+		 */
+		static std::string_view Module::GetModuleName()
+		{
+			return "LeveledListEntryCountWarning"sv;
+		}
 
 	private:
 		/**

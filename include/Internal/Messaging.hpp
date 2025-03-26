@@ -1,6 +1,10 @@
 #pragma once
 
-namespace Internal::Messaging
+namespace Internal
 {
-	void Callback(F4SE::MessagingInterface::Message* a_msg);
+	class Messaging
+	{
+	public:
+		static void Callback(F4SE::MessagingInterface::Message* a_msg);
+	};
 }

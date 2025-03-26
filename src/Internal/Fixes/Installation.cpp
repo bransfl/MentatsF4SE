@@ -6,7 +6,7 @@
 
 namespace Internal::Fixes
 {
-	void Install() noexcept
+	void Installation::Install() noexcept
 	{
 		// ActorCauseSaveBloatFix is handled in Messaging
 

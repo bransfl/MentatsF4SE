@@ -1,5 +1,4 @@
 #include "Internal/Fixes/DropManyItemsFix.hpp"
-#include "Internal/Config.hpp"
 #include "f4se/GameApi.h"
 #include <f4se_common/BranchTrampoline.h>
 #include <f4se_common/Relocation.h>
@@ -47,7 +46,7 @@ namespace Internal::Fixes
 		logger::info("Fix installing: DropManyItemsFix."sv);
 
 		if (!Config::bDropManyItemsFix.GetValue()) {
-			logger::info("Fix aborted: DropManyItemsFix. Reason: Fix was disabled in config file."sv);
+			logger::info("Fix aborted: DropManyItemsFix. Reason: Fix was disabled in config."sv);
 			return;
 		}
 

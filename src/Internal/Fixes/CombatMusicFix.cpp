@@ -1,6 +1,4 @@
 #include "Internal/Fixes/CombatMusicFix.hpp"
-#include "Internal/Config.hpp"
-#include "Internal/Utility.hpp"
 
 // prevents combat music from playing when not intended to play
 namespace Internal::Fixes
@@ -22,7 +20,7 @@ namespace Internal::Fixes
 		logger::info("Fix installing: CombatMusicFix."sv);
 
 		if (!Config::bCombatMusicFix.GetValue()) {
-			logger::info("Fix aborted: CombatMusicFix. Reason: Fix was disabled in config file."sv);
+			logger::info("Fix aborted: CombatMusicFix. Reason: Fix was disabled in config."sv);
 			return;
 		}
 

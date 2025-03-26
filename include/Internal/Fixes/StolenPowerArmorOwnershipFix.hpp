@@ -3,12 +3,21 @@
 namespace Internal::Fixes
 {
 	class StolenPowerArmorOwnershipFix
+		: public Fix
 	{
 	public:
 		/**
 		 * @brief Installs the fix.
 		 */
 		static void Install() noexcept;
+
+		/**
+		 * @brief Class name method.
+		 */
+		static std::string_view Module::GetModuleName()
+		{
+			return "StolenPowerArmorOwnershipFix"sv;
+		}
 
 	private:
 		/**

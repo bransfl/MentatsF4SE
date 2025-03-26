@@ -1,6 +1,4 @@
 #include "Internal/Warnings/LeveledListEntryCountWarning.hpp"
-#include "Internal/Config.hpp"
-#include "Internal/Utility.hpp"
 
 namespace Internal::Warnings
 {
@@ -9,7 +7,7 @@ namespace Internal::Warnings
 		logger::info("LeveledListEntryCountWarning -> Warning installing..."sv);
 
 		if (!Config::bLeveledListEntryCountWarning.GetValue()) {
-			logger::info("Warning aborted: LeveledListEntryCountWarning. Reason: Process was disabled in toml file."sv);
+			logger::info("Warning aborted: LeveledListEntryCountWarning. Reason: Warning was disabled in config."sv);
 			return;
 		}
 

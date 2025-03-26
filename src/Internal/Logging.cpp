@@ -2,20 +2,17 @@
 
 namespace Internal
 {
-	static inline constexpr std::string_view addressLibraryPathNG = "Data/F4SE/Plugins/version-1-10-984-0.bin";
-	static inline constexpr std::string_view addressLibraryPathOG = "Data/F4SE/Plugins/version-1-10-163-0.bin";
-
 	void Logging::LogUserVersionInfo()
 	{
 		LogSeparator();
 
 		logger::info("VERSION CHECK:"sv);
 
-		logger::info("\tUser F4SE version: {}."sv, F4SE::GetF4SEVersion());
-
 		logger::info("\tUser game version: {}."sv, (REL::Module::IsNG() ? "Next-Gen"sv : "Old-Gen"sv));
 
-		// game:f4se version check
+		logger::info("\tUser F4SE version: {}."sv, F4SE::GetF4SEVersion());
+
+		// game/f4se version match check
 		bool versionMatch = false;
 		if (REL::Module::IsNG()) {
 			if (F4SE::GetF4SEVersion().string() == "0.7.2.0"sv) {
@@ -32,10 +29,10 @@ namespace Internal
 		// address library version check
 		bool hasAddressLibrary = false;
 		if (REL::Module::IsNG()) {
-			std::filesystem::exists(addressLibraryPathNG) ? hasAddressLibrary = true : hasAddressLibrary = false;
+			std::filesystem::exists("Data/F4SE/Plugins/version-1-10-984-0.bin"sv) ? hasAddressLibrary = true : hasAddressLibrary = false;
 		}
 		else {
-			std::filesystem::exists(addressLibraryPathOG) ? hasAddressLibrary = true : hasAddressLibrary = false;
+			std::filesystem::exists("Data/F4SE/Plugins/version-1-10-163-0.bin"sv) ? hasAddressLibrary = true : hasAddressLibrary = false;
 		}
 		logger::info("\tUser has the correct version of Address Library: {}."sv, hasAddressLibrary);
 	}

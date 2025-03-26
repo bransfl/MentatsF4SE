@@ -1,6 +1,4 @@
 #include "Internal/Patches/PuddleCubemapsPatch.hpp"
-#include "Internal/Config.hpp"
-#include "Internal/Utility.hpp"
 
 namespace Internal::Patches
 {
@@ -9,7 +7,7 @@ namespace Internal::Patches
 		logger::info("PuddleCubemapsPatch -> Patch installing..."sv);
 
 		if (!Config::bPuddleCubemapsPatch.GetValue()) {
-			logger::info("Patch aborted: PuddleCubemapsPatch. Reason: Patch was disabled in config file."sv);
+			logger::info("Patch aborted: PuddleCubemapsPatch. Reason: Patch was disabled in config."sv);
 			return;
 		}
 

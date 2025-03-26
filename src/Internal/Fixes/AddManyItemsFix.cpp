@@ -1,5 +1,4 @@
 #include "Internal/Fixes/AddManyItemsFix.hpp"
-#include "Internal/Config.hpp"
 #include "f4se_common/Relocation.h"
 
 namespace Internal::Fixes
@@ -10,7 +9,7 @@ namespace Internal::Fixes
 		logger::info("Fix installing: AddManyItemsFix."sv);
 
 		if (!Config::bAddManyItemsFix.GetValue()) {
-			logger::info("Fix aborted: AddManyItemsFix. Reason: Fix was disabled in config file"sv);
+			logger::info("Fix aborted: AddManyItemsFix. Reason: Fix was disabled in config."sv);
 			return;
 		}
 

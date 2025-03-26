@@ -3,12 +3,21 @@
 namespace Internal::Fixes
 {
 	class CombatMusicFix
+		: public Fix
 	{
 	public:
 		/**
 		 * @brief Initializes/registers the fix.
 		 */
 		static void Install() noexcept;
+
+		/**
+		 * @brief Class name method.
+		 */
+		static std::string_view Module::GetModuleName()
+		{
+			return "CombatMusicFix"sv;
+		}
 
 		/**
 		 * @brief Stops combat music.

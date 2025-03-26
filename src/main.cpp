@@ -1,5 +1,6 @@
 #include "Internal/Config.hpp"
 #include "Internal/Fixes/Installation.hpp"
+#include "Internal/Logging.hpp"
 #include "Internal/Messaging.hpp"
 #include "Internal/Patches/Installation.hpp"
 #include "Internal/Warnings/Installation.hpp"
@@ -46,50 +47,43 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f
 {
 	F4SE::Init(a_f4se);
 
-	// sanity logging since people never post their game versions / f4se versions bro
-	logger::info("---------------------------------------------"sv);
-	logger::info("User F4SE version: {}."sv, F4SE::GetF4SEVersion());
-	logger::info("User game version: {}."sv, (REL::Module::IsNG() ? "Next-Gen" : "Old-Gen"));
-	bool hasAddressLib = false;
-	if (REL::Module::IsNG()) {
-		std::filesystem::exists("Data/F4SE/Plugins/version-1-10-984-0.bin") ? hasAddressLib = true : hasAddressLib = false;
+	Internal::Logging::LogUserVersionInfo();
+
+	if (REX::W32::GetModuleHandleW(L"EngineFixesF4SE.dll")) {
+		logger::critical("Engine Fixes - F4SE was detected. Please ensure that you have fully uninstalled Engine Fixes."sv);
 	}
-	else {
-		std::filesystem::exists("Data/F4SE/Plugins/version-1-10-163-0.bin") ? hasAddressLib = true : hasAddressLib = false;
-	}
-	logger::info("User has the correct version of Address Library: {}."sv, hasAddressLib);
 
 	F4SE::AllocTrampoline(96);
 
-	logger::info("---------------------------------------------"sv);
+	Internal::Logging::LogSeparator();
 	logger::info("Config loading..."sv);
 	Internal::Config::Load();
 	logger::info("Config loaded."sv);
 
 	// more fixes are installed in Internal/Callbacks/Messaging.cpp so we register early
-	logger::info("---------------------------------------------"sv);
+	Internal::Logging::LogSeparator();
 	logger::info("Registering for F4SE events..."sv);
 	F4SE::GetMessagingInterface()->RegisterListener(Internal::Messaging::Callback);
 	logger::info("Registered for F4SE events."sv);
 
-	logger::info("---------------------------------------------"sv);
+	Internal::Logging::LogSeparator();
 	logger::info("Fixes installing..."sv);
 	Internal::Fixes::Install();
 	logger::info("Fixes installed."sv);
 
-	logger::info("---------------------------------------------"sv);
+	Internal::Logging::LogSeparator();
 	logger::info("Patches installing..."sv);
 	Internal::Patches::Install();
 	logger::info("Patches installed."sv);
 
-	logger::info("---------------------------------------------"sv);
+	Internal::Logging::LogSeparator();
 	logger::info("Installing warnings..."sv);
 	Internal::Warnings::Install();
 	logger::info("Warnings installed."sv);
 
-	logger::info("---------------------------------------------"sv);
+	Internal::Logging::LogSeparator();
 	logger::info("Loaded."sv);
-	logger::info("---------------------------------------------"sv);
+	Internal::Logging::LogSeparator();
 
 	return true;
 }

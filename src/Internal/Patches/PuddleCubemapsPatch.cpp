@@ -42,7 +42,7 @@ namespace Internal::Patches
 			}
 
 			worldspace->waterEnvMap.textureName = blank;
-			logger::info("PuddleCubemapsPatch -> Worldspace {} - waterEnvMap was cleared."sv,
+			logger::info("\tPuddleCubemapsPatch -> Worldspace {} - waterEnvMap was cleared."sv,
 				Utility::GetFormInfo(worldspace));
 		}
 	}

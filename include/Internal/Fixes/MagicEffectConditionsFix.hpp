@@ -14,7 +14,7 @@ namespace Internal::Fixes
 		/**
 		 * @brief Class name method.
 		 */
-		static std::string_view Module::GetModuleName()
+		static inline constexpr std::string_view Module::GetModuleName() noexcept
 		{
 			return "MagicEffectConditionsFix"sv;
 		}
@@ -24,7 +24,7 @@ namespace Internal::Fixes
 		 * @brief Gets the value of GameSetting fActiveEffectConditionUpdateInterval, providing an alternate value if the setting is invalid.
 		 * @return The value of fActiveEffectConditionUpdateInterval
 		 */
-		static float ActiveEffectConditionUpdateInterval();
+		static float GetActiveEffectConditionUpdateInterval() noexcept;
 
 		/**
 		 * @brief Hook for ActiveEffect::EvaluateConditions.

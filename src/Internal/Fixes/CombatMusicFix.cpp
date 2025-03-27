@@ -32,8 +32,6 @@ namespace Internal::Fixes
 	// please (just) stop the music!
 	void CombatMusicFix::Fix()
 	{
-		logger::debug("CombatMusicFix -> Fix() running."sv);
-		// asynchronous delay instead of just sleeping for 5 seconds
 		auto asyncFunc = []() {
 			std::this_thread::sleep_for(std::chrono::seconds(5));
 			for (const std::string_view& command : commands) {
@@ -44,7 +42,7 @@ namespace Internal::Fixes
 		t.detach();
 	}
 
-	bool CombatMusicFix::NeedsFix()
+	bool CombatMusicFix::NeedsFix() noexcept
 	{
 		auto playerCharacter = RE::PlayerCharacter::GetSingleton();
 		if (playerCharacter && !playerCharacter->IsInCombat()) {
@@ -78,5 +76,4 @@ namespace Internal::Fixes
 
 		return RE::BSEventNotifyControl::kContinue;
 	}
-
 }

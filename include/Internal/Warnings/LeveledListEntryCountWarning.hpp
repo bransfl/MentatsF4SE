@@ -9,12 +9,12 @@ namespace Internal::Warnings
 		/**
 		 * @brief Installs the warning.
 		 */
-		static void Install();
+		static void Install() noexcept;
 
 		/**
 		 * @brief Class name method.
 		 */
-		static std::string_view Module::GetModuleName()
+		static inline constexpr std::string_view Module::GetModuleName() noexcept
 		{
 			return "LeveledListEntryCountWarning"sv;
 		}
@@ -23,6 +23,6 @@ namespace Internal::Warnings
 		/**
 		 * @brief Checks all RE::TESLevItem forms to see if they have >255 entries.
 		 */
-		static void CheckLeveledLists();
+		static void CheckLeveledLists() noexcept;
 	};
 }

@@ -9,8 +9,12 @@ namespace Internal::Config
 
 	void Load() noexcept
 	{
+		logger::info("Config loading..."sv);
+
 		REX::TOML::SettingStore* toml = REX::TOML::SettingStore::GetSingleton();
 		toml->Init(FILE_PATH_TOML, CUSTOM_FILE_PATH_TOML);
 		toml->Load();
+		
+		logger::info("Config loaded."sv);
 	}
 }

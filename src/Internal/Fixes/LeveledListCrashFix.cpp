@@ -47,7 +47,7 @@ namespace Internal::Fixes
 		}
 	}
 
-	void LeveledListCrashFix::DebugLeveledList(RE::TESLeveledList* a_list, RE::TESForm* a_form)
+	void LeveledListCrashFix::DebugLeveledList(RE::TESLeveledList* a_list, RE::TESForm* a_form) noexcept
 	{
 		// logger::info("Caught problematic insertion of (FormID: {:08X}, EditorID: {}) into item LeveledList (FormID: {:08X}, EditorID: {})"),
 		// 	a_form->GetFormID(), a_form->GetFormEditorID(), a_list->GetFormID(), a_list->GetFormEditorID());
@@ -69,7 +69,7 @@ namespace Internal::Fixes
 		logger::info("---------------------------------------------"sv);
 	}
 
-	std::vector<RE::TESForm*> LeveledListCrashFix::GetEntries(RE::TESLeveledList* a_leveledList)
+	std::vector<RE::TESForm*> LeveledListCrashFix::GetEntries(RE::TESLeveledList* a_leveledList) noexcept
 	{
 		std::vector<RE::TESForm*> ret;
 

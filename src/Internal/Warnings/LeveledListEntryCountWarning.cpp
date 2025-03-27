@@ -2,7 +2,7 @@
 
 namespace Internal::Warnings
 {
-	void LeveledListEntryCountWarning::Install()
+	void LeveledListEntryCountWarning::Install() noexcept
 	{
 		logger::info("LeveledListEntryCountWarning -> Warning installing..."sv);
 
@@ -16,10 +16,16 @@ namespace Internal::Warnings
 		logger::info("LeveledListEntryCountWarning -> Warning installed."sv);
 	}
 
-	void LeveledListEntryCountWarning::CheckLeveledLists()
+	void LeveledListEntryCountWarning::CheckLeveledLists() noexcept
 	{
 		auto dataHandler = RE::TESDataHandler::GetSingleton();
+		if (!dataHandler) {
+			return;
+		}
 		auto& formArray = dataHandler->GetFormArray<RE::TESLevItem>();
+		if (!formArray) {
+			return;
+		}
 
 		uint16_t listsChecked = 0;
 		bool foundBadLL = false;

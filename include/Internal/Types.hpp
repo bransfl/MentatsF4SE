@@ -5,13 +5,13 @@
 namespace Internal
 {
 	/**
-	 * @brief Superclass for all Fixes, Patches, and Warnings.
+	 * @brief Superclass for all Fixes, Patches, Warnings, and Installers.
 	 */
 	class Module
 	{
 	public:
-		virtual std::string_view GetModuleName() = 0;
-		virtual std::string_view GetType() = 0;
+		virtual inline std::string_view GetModuleName() = 0;
+		virtual inline std::string_view GetType() = 0;
 	};
 
 	/**
@@ -20,9 +20,10 @@ namespace Internal
 	class Fix
 		: public Module
 	{
-		static std::string_view Module::GetType()
+	public:
+		static inline constexpr std::string_view Module::GetType() noexcept
 		{
-			return "Fix";
+			return std::string_view("Fix");
 		}
 	};
 
@@ -32,9 +33,10 @@ namespace Internal
 	class Patch
 		: public Module
 	{
-		static std::string_view Module::GetType()
+	public:
+		static inline constexpr std::string_view Module::GetType() noexcept
 		{
-			return "Patch";
+			return std::string_view("Patch");
 		}
 	};
 
@@ -44,9 +46,10 @@ namespace Internal
 	class Warning
 		: public Module
 	{
-		static std::string_view Module::GetType()
+	public:
+		static inline constexpr std::string_view Module::GetType() noexcept
 		{
-			return "Warning";
+			return std::string_view("Warning");
 		}
 	};
 
@@ -54,6 +57,12 @@ namespace Internal
 	 * @brief Superclass for all module installers.
 	 */
 	class Installer
+		: public Module
 	{
+	public:
+		static inline constexpr std::string_view Module::GetType() noexcept
+		{
+			return std::string_view("Installer");
+		}
 	};
 }

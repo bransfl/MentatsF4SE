@@ -8,7 +8,7 @@
 
 namespace Internal::Fixes
 {
-	static inline constexpr std::array FixWorkbenchSoundCommands = {
+	static inline constexpr std::array<std::string_view, 4> FixWorkbenchSoundCommands = {
 		"RecvAnimEvent \"SoundStop\" \"UIWorkshopSewingMachineRunLPM\""sv,
 		"RecvAnimEvent \"SoundStop\" \"UIWorkshopPowerArmorWeldLPM\""sv,
 		"RecvAnimEvent \"SoundStop\" \"UIWorkshopDrillPressDrillLPM\""sv,
@@ -33,7 +33,7 @@ namespace Internal::Fixes
 		logger::info("Fix installed: WorkbenchSoundFix."sv);
 	}
 
-	void WorkbenchSoundFix::FixWorkbenchSounds(RE::TESObjectREFR* a_workbenchUser)
+	void WorkbenchSoundFix::FixWorkbenchSounds(RE::TESObjectREFR* a_workbenchUser) noexcept
 	{
 		logger::info("WorkbenchSoundFix -> FixWorkbenchSounds ran."sv);
 
@@ -42,7 +42,7 @@ namespace Internal::Fixes
 		}
 	}
 
-	bool WorkbenchSoundFix::IsWorkbench(RE::TESFurniture* a_furniture)
+	bool WorkbenchSoundFix::IsWorkbench(RE::TESFurniture* a_furniture) noexcept
 	{
 		if (!a_furniture) {
 			return false;

@@ -14,7 +14,7 @@ namespace Internal::Fixes
 		/**
 		 * @brief Class name method.
 		 */
-		static std::string_view Module::GetModuleName()
+		static inline constexpr std::string_view Module::GetModuleName() noexcept
 		{
 			return "ActorCauseSaveBloatFix"sv;
 		}
@@ -25,7 +25,7 @@ namespace Internal::Fixes
 		 * @param a_cell The cell to gather from. If this is null, an empty vector is returned.
 		 * @return Vector of found references.
 		 */
-		static std::vector<RE::TESObjectREFR*> GetProjectilesInCell(RE::TESObjectCELL* a_cell);
+		static std::vector<RE::TESObjectREFR*> GetProjectilesInCell(RE::TESObjectCELL* a_cell) noexcept;
 
 		class CellAttachDetachEventHandler : public RE::BSTEventSink<RE::CellAttachDetachEvent>
 		{

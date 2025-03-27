@@ -56,33 +56,24 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface* a_f
 	F4SE::AllocTrampoline(96);
 
 	Internal::Logging::LogSeparator();
-	logger::info("Config loading..."sv);
 	Internal::Config::Load();
-	logger::info("Config loaded."sv);
-
-	// more fixes are installed in Internal/Callbacks/Messaging.cpp so we register early
-	Internal::Logging::LogSeparator();
-	logger::info("Registering for F4SE events..."sv);
-	F4SE::GetMessagingInterface()->RegisterListener(Internal::Messaging::Callback);
-	logger::info("Registered for F4SE events."sv);
 
 	Internal::Logging::LogSeparator();
-	logger::info("Fixes installing..."sv);
+	// additional modules are installed in messaging, so we register early
+	Internal::Messaging::RegisterCallback();
+
+	Internal::Logging::LogSeparator();
 	Internal::Fixes::Installation::Install();
-	logger::info("Fixes installed."sv);
 
 	Internal::Logging::LogSeparator();
-	logger::info("Patches installing..."sv);
 	Internal::Patches::Installation::Install();
-	logger::info("Patches installed."sv);
 
 	Internal::Logging::LogSeparator();
-	logger::info("Installing warnings..."sv);
 	Internal::Warnings::Installation::Install();
-	logger::info("Warnings installed."sv);
 
 	Internal::Logging::LogSeparator();
 	logger::info("Loaded."sv);
+
 	Internal::Logging::LogSeparator();
 
 	return true;

@@ -20,7 +20,7 @@ namespace Internal::Warnings
 		logger::info("Warning installed: DupeAddonNodesWarning."sv);
 	}
 
-	void DupeAddonNodesWarning::CheckDupeAddonNodes()
+	void DupeAddonNodesWarning::CheckDupeAddonNodes() noexcept
 	{
 		auto dataHandler = RE::TESDataHandler::GetSingleton();
 		auto& formArray = dataHandler->GetFormArray<RE::BGSAddonNode>();
@@ -59,7 +59,7 @@ namespace Internal::Warnings
 		logger::info("DupeAddonNodesWarning -> CheckDupeAddonNodes finished. NodesChecked: {}, NodeErrors: {}."sv, nodesChecked, nodeErrors);
 	}
 
-	void DupeAddonNodesWarning::ClearNodeMap()
+	void DupeAddonNodesWarning::ClearNodeMap() noexcept
 	{
 		if (!nodeMap.empty()) {
 			nodeMap.clear();

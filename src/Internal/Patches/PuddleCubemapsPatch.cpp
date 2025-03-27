@@ -16,7 +16,7 @@ namespace Internal::Patches
 		logger::info("PuddleCubemapsPatch -> Patch installed."sv);
 	}
 
-	void PuddleCubemapsPatch::Patch()
+	void PuddleCubemapsPatch::Patch() noexcept
 	{
 		auto dataHandler = RE::TESDataHandler::GetSingleton();
 		if (!dataHandler) {

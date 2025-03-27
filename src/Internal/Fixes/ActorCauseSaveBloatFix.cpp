@@ -17,7 +17,7 @@ namespace Internal::Fixes
 		logger::info("ActorCauseSaveBloatFix -> Fix installed."sv);
 	}
 
-	std::vector<RE::TESObjectREFR*> ActorCauseSaveBloatFix::GetProjectilesInCell(RE::TESObjectCELL* a_cell)
+	std::vector<RE::TESObjectREFR*> ActorCauseSaveBloatFix::GetProjectilesInCell(RE::TESObjectCELL* a_cell) noexcept
 	{
 		auto refs = std::vector<RE::TESObjectREFR*>();
 

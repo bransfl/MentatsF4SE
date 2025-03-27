@@ -3,6 +3,7 @@
 namespace Internal::Warnings
 {
 	class Installation
+		: public Installer
 	{
 	public:
 		/**

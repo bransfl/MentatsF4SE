@@ -11,11 +11,22 @@
 
 namespace Internal
 {
+	void Messaging::RegisterCallback()
+	{
+		logger::info("Registering for F4SE events..."sv);
+
+		F4SE::GetMessagingInterface()->RegisterListener(Messaging::Callback);
+
+		logger::info("Registered for F4SE events."sv);
+	}
+
 	// handles various F4SE callback events
-	void Messaging::Callback(F4SE::MessagingInterface::Message* a_msg)
+	void Messaging::Callback(F4SE::MessagingInterface::Message* a_msg) noexcept
 	{
 		switch (a_msg->type) {
 			case F4SE::MessagingInterface::kPostLoadGame: {
+				logger::info("Internal::Messaging::Callback() recieved MessagingInterface::kPostLoadGame"sv);
+
 				Internal::Fixes::ActorCauseSaveBloatFix::Install();
 
 				if (Internal::Fixes::CombatMusicFix::NeedsFix()) {
@@ -29,6 +40,8 @@ namespace Internal
 				break;
 			}
 			case F4SE::MessagingInterface::kGameDataReady: {
+				logger::info("Internal::Messaging::Callback() recieved MessagingInterface::kGameDataReady"sv);
+
 				Internal::Fixes::CombatMusicFix::Install();
 
 				Internal::Patches::PuddleCubemapsPatch::Install();

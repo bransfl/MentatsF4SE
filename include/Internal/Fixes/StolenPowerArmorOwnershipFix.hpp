@@ -14,7 +14,7 @@ namespace Internal::Fixes
 		/**
 		 * @brief Class name method.
 		 */
-		static std::string_view Module::GetModuleName()
+		static inline constexpr std::string_view Module::GetModuleName() noexcept
 		{
 			return "StolenPowerArmorOwnershipFix"sv;
 		}
@@ -25,7 +25,7 @@ namespace Internal::Fixes
 		 * @details Setting ownership by executing a console command on the reference is lazy, but it works on both versions.
 		 * @param a_powerArmorRef The PowerArmor that will be owned by the player.
 		 */
-		static void FixOwnership(RE::TESObjectREFR* a_powerArmorRef);
+		static void FixOwnership(RE::TESObjectREFR* a_powerArmorRef) noexcept;
 
 		class FurnitureEventHandler : public RE::BSTEventSink<RE::TESFurnitureEvent>
 		{

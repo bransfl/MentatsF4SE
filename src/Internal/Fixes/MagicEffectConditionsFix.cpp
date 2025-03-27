@@ -13,7 +13,7 @@ namespace Internal::Fixes
 			logger::info("Fix aborted: MagicEffectConditionsFix. Reason: Fix was disabled in config."sv);
 			return;
 		}
-
+		
 		if (REX::W32::GetModuleHandleW(L"MGEFConditionFix.dll")) {
 			logger::info("Fix aborted: MagicEffectConditionsFix. Reason: Mod was installed: MGEFConditionFix.dll."sv);
 			return;
@@ -37,9 +37,13 @@ namespace Internal::Fixes
 		logger::info("Fix installed: MagicEffectConditionsFix."sv);
 	}
 
-	float MagicEffectConditionsFix::ActiveEffectConditionUpdateInterval()
+	float MagicEffectConditionsFix::GetActiveEffectConditionUpdateInterval() noexcept
 	{
 		RE::Setting* conditionUpdateInterval = RE::GameSettingCollection::GetSingleton()->GetSetting("fActiveEffectConditionUpdateInterval"sv);
+		if (!conditionUpdateInterval) {
+			return 1.0F;
+		}
+
 		if (conditionUpdateInterval->GetFloat() > 0.001F) {
 			return conditionUpdateInterval->GetFloat();
 		}
@@ -81,7 +85,7 @@ namespace Internal::Fixes
 				}
 
 				float& conditionUpdateTime = reinterpret_cast<float&>(a_this->pad94);
-				if (conditionUpdateTime > 0.0F && conditionUpdateTime < ActiveEffectConditionUpdateInterval()) {
+				if (conditionUpdateTime > 0.0F && conditionUpdateTime < GetActiveEffectConditionUpdateInterval()) {
 					// add the effect's elapsed time to the auxillary timer
 					reinterpret_cast<float&>(a_this->pad94) += a_elapsedTimeDelta;
 					return;

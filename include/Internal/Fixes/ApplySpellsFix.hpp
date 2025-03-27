@@ -19,7 +19,7 @@ namespace Internal::Fixes
 		/**
 		 * @brief Class name method.
 		 */
-		static std::string_view Module::GetModuleName()
+		static inline constexpr std::string_view Module::GetModuleName() noexcept
 		{
 			return "ApplySpellsFix"sv;
 		}

@@ -8,6 +8,8 @@ namespace Internal::Fixes
 {
 	void Installation::Install() noexcept
 	{
+		logger::info("Fixes installing..."sv);
+
 		// ActorCauseSaveBloatFix is handled in Messaging
 
 		AddManyItemsFix::Install();
@@ -27,5 +29,7 @@ namespace Internal::Fixes
 		// StolenPowerArmorOwnershipFix is handled in Messaging
 
 		// WorkbenchSoundFix is handled in Messaging
+		
+		logger::info("Fixes installed."sv);
 	}
 }

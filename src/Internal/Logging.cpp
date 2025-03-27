@@ -37,8 +37,38 @@ namespace Internal
 		logger::info("\tUser has the correct version of Address Library: {}."sv, hasAddressLibrary);
 	}
 
-	void Logging::LogSeparator()
+	void Logging::LogSeparator() noexcept
 	{
 		logger::info("---------------------------------------------"sv);
+	}
+
+	std::string_view Logging::ReasonToString(Logging::REASON a_reason) noexcept
+	{
+		switch (a_reason) {
+			case REASON::kDisabledTemporarily: {
+				return "Temporarily disabled"sv;
+				break;
+			}
+			case REASON::kDisabledInConfig: {
+				return "Disabled in config file"sv;
+				break;
+			}
+			case REASON::kDisabledInNG: {
+				return "Disabled for Next-Gen"sv;
+				break;
+			}
+			case REASON::kDisabledInOG: {
+				return "Disabled for Last-Gen"sv;
+				break;
+			}
+			case REASON::kIncompatiblePluginLoaded: {
+				return "Incompatible plugin was loaded"sv;
+				break;
+			}
+			default: {
+				return "UNKNOWN"sv;
+				break;
+			}
+		};
 	}
 }

@@ -14,7 +14,7 @@ namespace Internal::Fixes
 		/**
 		 * @brief Class name method.
 		 */
-		static std::string_view Module::GetModuleName()
+		static inline constexpr std::string_view Module::GetModuleName() noexcept
 		{
 			return "WorkbenchSoundFix"sv;
 		}
@@ -23,7 +23,7 @@ namespace Internal::Fixes
 		 * @brief Stops all workbench SFX annotations on the given reference.
 		 * @param a_workbenchUser The reference to silence.
 		 */
-		static void FixWorkbenchSounds(RE::TESObjectREFR* a_workbenchUser);
+		static void FixWorkbenchSounds(RE::TESObjectREFR* a_workbenchUser) noexcept;
 
 		/**
 		 * @brief Checks if the given furniture reference is a workbench.
@@ -31,7 +31,7 @@ namespace Internal::Fixes
 		 * @return If the a_furniture is a workbench.
 		 *		   If the reference is null, this returns false.
 		 */
-		static bool IsWorkbench(RE::TESFurniture* a_furniture);
+		static bool IsWorkbench(RE::TESFurniture* a_furniture) noexcept;
 
 		class FurnitureEventHandler : public RE::BSTEventSink<RE::TESFurnitureEvent>
 		{

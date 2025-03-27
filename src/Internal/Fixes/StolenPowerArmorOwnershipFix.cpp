@@ -19,7 +19,7 @@ namespace Internal::Fixes
 		logger::info("StolenPowerArmorOwnershipFix -> Fix installed."sv);
 	}
 
-	void StolenPowerArmorOwnershipFix::FixOwnership(RE::TESObjectREFR* a_powerArmorRef)
+	void StolenPowerArmorOwnershipFix::FixOwnership(RE::TESObjectREFR* a_powerArmorRef) noexcept
 	{
 		if (!a_powerArmorRef) {
 			return;

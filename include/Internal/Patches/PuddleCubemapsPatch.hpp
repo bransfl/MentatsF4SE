@@ -14,7 +14,7 @@ namespace Internal::Patches
 		/**
 		 * @brief Class name method.
 		 */
-		static std::string_view Module::GetModuleName()
+		static inline constexpr std::string_view Module::GetModuleName() noexcept
 		{
 			return "PuddleCubemapsPatch"sv;
 		}
@@ -23,6 +23,6 @@ namespace Internal::Patches
 		/**
 		 * @brief Patches all loaded RE::TESWorldspace forms to set their waterEnvMap member to none.
 		 */
-		static void Patch();
+		static void Patch() noexcept;
 	};
 }

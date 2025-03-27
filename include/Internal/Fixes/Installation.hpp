@@ -3,6 +3,7 @@
 namespace Internal::Fixes
 {
 	class Installation
+		: public Installer
 	{
 	public:
 		/**

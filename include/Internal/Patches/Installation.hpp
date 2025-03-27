@@ -3,6 +3,7 @@
 namespace Internal::Patches
 {
 	class Installation
+		: public Installer
 	{
 	public:
 		/**

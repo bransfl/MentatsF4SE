@@ -14,7 +14,7 @@ namespace Internal::Fixes
 		/**
 		 * @brief Class name method.
 		 */
-		static std::string_view Module::GetModuleName()
+		static inline constexpr std::string_view Module::GetModuleName() noexcept
 		{
 			return "LeveledListCrashFix"sv;
 		}
@@ -38,13 +38,13 @@ namespace Internal::Fixes
 		 * @param a_list The LeveledList that was attempted to be inserted into.
 		 * @param a_form The form that was attempted to be inserted into a_list.
 		 */
-		static void DebugLeveledList(RE::TESLeveledList* a_list, RE::TESForm* a_form);
+		static void DebugLeveledList(RE::TESLeveledList* a_list, RE::TESForm* a_form) noexcept;
 
 		/**
 		 * @brief Returns all form entries in the given LeveledList.
 		 * @param a_leveledList The LeveledList to process.
 		 * @return Vector of all forms contained witin a_leveledList.
 		 */
-		static std::vector<RE::TESForm*> GetEntries(RE::TESLeveledList* a_leveledList);
+		static std::vector<RE::TESForm*> GetEntries(RE::TESLeveledList* a_leveledList) noexcept;
 	};
 }

@@ -42,12 +42,13 @@ namespace Internal::Fixes
 	{
 		switch (*a_event.type) {
 			case RE::CellAttachDetachEvent::EVENT_TYPE::kPreDetach: {
+				logger::warn("ActorCauseSaveBloatFix -> Event recieved."sv);
 				if (!a_event.cell) {
-					logger::warn("ActorCauseSaveBloatFix -> a_event.cell was nullptr. Skipping this cell."sv);
+					logger::warn("\tActorCauseSaveBloatFix -> a_event.cell was nullptr. Skipping this cell."sv);
 				}
 
 				std::vector<RE::TESObjectREFR*> projectiles = GetProjectilesInCell(a_event.cell);
-				logger::info("ActorCauseSaveBloatFix -> Processing projectiles vector. Size: {}."sv, projectiles.size());
+				logger::info("\tActorCauseSaveBloatFix -> Processing projectiles vector. Size: {}."sv, projectiles.size());
 				if (projectiles.size() == 0) {
 					return RE::BSEventNotifyControl::kContinue;
 					break;

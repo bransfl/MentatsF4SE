@@ -47,7 +47,7 @@ namespace Internal::Warnings
 				const auto currentNode = (*res.first).second;
 				if (currentNode != addonNode && currentNode->formID != addonNode->formID) {
 					nodeErrors++;
-					logger::warn("DupeAddonNodesWarning -> Duplicate AddonNode index found: {}. Index was found at (Form: {} in Plugin: {}) AND (Form: {} in Plugin {})."sv,
+					logger::warn("\tDupeAddonNodesWarning -> Duplicate AddonNode index found: {}. Index was found at (Form: {} in Plugin: {}) AND (Form: {} in Plugin {})."sv,
 						addonNode->index,
 						Utility::GetFormInfo(currentNode), Utility::GetModName(currentNode, false),
 						Utility::GetFormInfo(addonNode), Utility::GetModName(addonNode, false));
@@ -56,7 +56,7 @@ namespace Internal::Warnings
 			}
 		}
 
-		logger::info("DupeAddonNodesWarning -> CheckDupeAddonNodes finished. NodesChecked: {}, NodeErrors: {}."sv, nodesChecked, nodeErrors);
+		logger::info("\tDupeAddonNodesWarning -> CheckDupeAddonNodes finished. NodesChecked: {}, NodeErrors: {}."sv, nodesChecked, nodeErrors);
 	}
 
 	void DupeAddonNodesWarning::ClearNodeMap() noexcept

@@ -22,19 +22,18 @@ namespace Internal::Warnings
 
 	void DupeAddonNodesWarning::CheckDupeAddonNodes() noexcept
 	{
-		auto dataHandler = RE::TESDataHandler::GetSingleton();
+		RE::TESDataHandler* dataHandler = RE::TESDataHandler::GetSingleton();
+		if (!dataHandler) {
+			logger::warn("DupeAddonNodesWarning -> CheckDupeAddonNodes -> dataHandler was nullptr, aborted processing."sv);
+			return;
+		}
 		auto& formArray = dataHandler->GetFormArray<RE::BGSAddonNode>();
 		uint32_t nodesChecked = 0;
 		uint32_t nodeErrors = 0;
 
 		ClearNodeMap();
 
-		for (auto* addonNode : formArray) {
-			if (!addonNode) {
-				continue;
-			}
-
-			addonNode = addonNode->As<RE::BGSAddonNode>();
+		for (RE::BGSAddonNode* addonNode : formArray) {
 			if (!addonNode) {
 				continue;
 			}

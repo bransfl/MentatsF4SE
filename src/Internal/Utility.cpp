@@ -4,12 +4,11 @@ namespace Internal
 {
 	void Utility::ExecuteCommand(std::string_view a_command, RE::TESObjectREFR* a_targetRef, bool a_silent)
 	{
-		auto* log = RE::ConsoleLog::GetSingleton();
-		auto compiler = RE::ScriptCompiler();
-
-		auto* scriptFactory = RE::ConcreteFormFactory<RE::Script>::GetFormFactory();
-		auto* script = scriptFactory->Create();
-		auto buffer = log->buffer;
+		RE::ConsoleLog* log = RE::ConsoleLog::GetSingleton();
+		RE::ScriptCompiler compiler = RE::ScriptCompiler();
+		RE::ConcreteFormFactory<RE::Script>* scriptFactory = RE::ConcreteFormFactory<RE::Script>::GetFormFactory();
+		RE::Script* script = scriptFactory->Create();
+		RE::BSString buffer = log->buffer;
 
 		script->SetText(a_command);
 		script->CompileAndRun(&compiler, RE::COMPILER_NAME::kSystemWindow, a_targetRef);
@@ -27,14 +26,10 @@ namespace Internal
 
 	std::string_view Utility::GetModName(RE::TESForm* a_form, bool a_lastModified)
 	{
-		const auto index = a_lastModified ? -1 : 0;
-		const auto* file = a_form->GetFile(index);
-		if (file) {
-			return file->filename;
-		}
-		else {
-			return "MODNAME_NOT_FOUND"sv;
-		}
+		const int32_t index = a_lastModified ? -1 : 0;
+		const RE::TESFile* file = a_form->GetFile(index);
+
+		return (file) ? std::string_view(file->filename) : "MODNAME_NOT_FOUND"sv;
 	}
 
 	int32_t Utility::GetNumEntries(RE::TESLeveledList* a_leveledList)
@@ -55,6 +50,6 @@ namespace Internal
 
 		RE::TESFormID formID = a_form->GetFormID();
 		std::string_view editorID = a_form->GetFormEditorID();
-		return "(FormID: {:08X}, EditorID: {})", formID, editorID;
+		return "(FormID: {:08X}, EditorID: {})"sv, formID, editorID;
 	}
 }

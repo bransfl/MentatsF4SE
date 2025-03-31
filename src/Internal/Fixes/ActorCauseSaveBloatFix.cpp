@@ -45,6 +45,8 @@ namespace Internal::Fixes
 				logger::warn("ActorCauseSaveBloatFix -> Event recieved."sv);
 				if (!a_event.cell) {
 					logger::warn("\tActorCauseSaveBloatFix -> a_event.cell was nullptr. Skipping this cell."sv);
+					return RE::BSEventNotifyControl::kContinue;
+					break;
 				}
 
 				std::vector<RE::TESObjectREFR*> projectiles = GetProjectilesInCell(a_event.cell);

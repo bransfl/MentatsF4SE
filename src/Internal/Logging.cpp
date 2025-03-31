@@ -15,14 +15,10 @@ namespace Internal
 		// game/f4se version match check
 		bool versionMatch = false;
 		if (REL::Module::IsNG()) {
-			if (F4SE::GetF4SEVersion().string() == "0.7.2.0"sv) {
-				versionMatch = true;
-			}
+			versionMatch = F4SE::GetF4SEVersion().string() == "0.7.2.0"sv;
 		}
 		else {
-			if (F4SE::GetF4SEVersion().string() == "0.6.23.0"sv) {
-				versionMatch = true;
-			}
+			versionMatch = F4SE::GetF4SEVersion().string() == "0.6.23.0"sv;
 		}
 		logger::info("\tUser has correct Game and F4SE version: {}."sv, versionMatch);
 

@@ -29,7 +29,7 @@ namespace Internal::Fixes
 		// StolenPowerArmorOwnershipFix is handled in Messaging
 
 		// WorkbenchSoundFix is handled in Messaging
-		
+
 		logger::info("Fixes installed."sv);
 	}
 }

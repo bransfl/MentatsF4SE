@@ -54,7 +54,7 @@ namespace Internal::Fixes
 	RE::BSEventNotifyControl WorkbenchSoundFix::FurnitureEventHandler::ProcessEvent(const RE::TESFurnitureEvent& a_event, RE::BSTEventSource<RE::TESFurnitureEvent>*)
 	{
 		if (a_event.IsEnter()) {
-			// we only run on IsExit(), otherwise workbenches would be silent
+			// we only run on IsExit(), otherwise all workbenches would be silent
 			return RE::BSEventNotifyControl::kContinue;
 		}
 

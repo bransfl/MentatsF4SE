@@ -37,6 +37,8 @@ namespace Internal
 
 				Internal::Fixes::StolenPowerArmorOwnershipFix::Install();
 
+				logger::info("Internal::Messaging::Callback() finished processing MessagingInterface::kPostLoadGame"sv);
+
 				break;
 			}
 			case F4SE::MessagingInterface::kGameDataReady: {
@@ -49,6 +51,8 @@ namespace Internal
 				Internal::Warnings::DupeAddonNodesWarning::Install();
 
 				Internal::Warnings::LeveledListEntryCountWarning::Install();
+
+				logger::info("Internal::Messaging::Callback() finished processing MessagingInterface::kGameDataReady"sv);
 
 				break;
 			}

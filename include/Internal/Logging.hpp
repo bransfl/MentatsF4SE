@@ -8,7 +8,7 @@ namespace Internal
 		/**
 		 * @brief Enum class for consistent log formatting between modules.
 		 */
-		static enum class REASON {
+		static enum class REASON : uint8_t {
 			kDisabledTemporarily = 0,
 			kDisabledInConfig = 1,
 			kDisabledInNG = 2,

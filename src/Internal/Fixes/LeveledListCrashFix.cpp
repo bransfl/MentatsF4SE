@@ -66,7 +66,7 @@ namespace Internal::Fixes
 			}
 			i++;
 		}
-		logger::info("---------------------------------------------"sv);
+		Logging::LogSeparator();
 	}
 
 	std::vector<RE::TESForm*> LeveledListCrashFix::GetEntries(RE::TESLeveledList* a_leveledList) noexcept

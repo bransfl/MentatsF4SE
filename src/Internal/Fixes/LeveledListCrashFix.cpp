@@ -70,18 +70,22 @@ namespace Internal::Fixes
 
 	std::vector<RE::TESForm*> LeveledListCrashFix::GetEntries(RE::TESLeveledList* a_leveledList) noexcept
 	{
-		std::vector<RE::TESForm*> ret;
+		auto entries = std::vector<RE::TESForm*>();
 
-		for (size_t i = 0; i < a_leveledList->baseListCount; i++) {
-			RE::LEVELED_OBJECT& entry = a_leveledList->leveledLists[i];
-			ret.push_back(entry.form);
+		if (a_leveledList->baseListCount > 0) {
+			for (size_t i = 0; i < a_leveledList->baseListCount; i++) {
+				RE::LEVELED_OBJECT& entry = a_leveledList->leveledLists[i];
+				entries.push_back(entry.form);
+			}
 		}
 
-		for (size_t i = 0; i < a_leveledList->scriptListCount; i++) {
-			RE::LEVELED_OBJECT*& entry = a_leveledList->scriptAddedLists[i];
-			ret.push_back(entry->form);
+		if (a_leveledList->scriptListCount > 0) {
+			for (size_t i = 0; i < a_leveledList->scriptListCount; i++) {
+				RE::LEVELED_OBJECT*& entry = a_leveledList->scriptAddedLists[i];
+				entries.push_back(entry->form);
+			}
 		}
 
-		return ret;
+		return entries;
 	}
 }

@@ -31,6 +31,9 @@ namespace Internal::Fixes
 	RE::BSEventNotifyControl StolenPowerArmorOwnershipFix::FurnitureEventHandler::ProcessEvent(const RE::TESFurnitureEvent& a_event, RE::BSTEventSource<RE::TESFurnitureEvent>*)
 	{
 		auto* player = RE::PlayerCharacter::GetSingleton();
+		if (!player) {
+			return RE::BSEventNotifyControl::kContinue;
+		}
 
 		if (!a_event.actor.get() || a_event.actor.get() != player) {
 			return RE::BSEventNotifyControl::kContinue;
@@ -47,8 +50,9 @@ namespace Internal::Fixes
 		}
 
 		if (furn == player->lastUsedPowerArmor.get().get()) {
-			logger::info("StolenPowerArmorOwnershipFix -> FixOwnership() running on furniture: {}."sv,
+			logger::info("StolenPowerArmorOwnershipFix -> FixOwnership() running on power armor furniture: {}."sv,
 				Utility::GetFormInfo(furn->GetBaseObject()));
+
 			FixOwnership(furn);
 		}
 

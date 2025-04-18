@@ -18,7 +18,7 @@ namespace Internal::Warnings
 
 	void LeveledListEntryCountWarning::CheckLeveledLists() noexcept
 	{
-		auto dataHandler = RE::TESDataHandler::GetSingleton();
+		RE::TESDataHandler* dataHandler = RE::TESDataHandler::GetSingleton();
 		if (!dataHandler) {
 			return;
 		}

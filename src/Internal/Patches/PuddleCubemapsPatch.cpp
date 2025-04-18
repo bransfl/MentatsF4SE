@@ -18,7 +18,7 @@ namespace Internal::Patches
 
 	void PuddleCubemapsPatch::Patch() noexcept
 	{
-		auto dataHandler = RE::TESDataHandler::GetSingleton();
+		RE::TESDataHandler* dataHandler = RE::TESDataHandler::GetSingleton();
 		if (!dataHandler) {
 			logger::warn("PuddleCubemapsPatch -> dataHandler was nullptr. Patch was not applied."sv);
 			return;
@@ -31,7 +31,7 @@ namespace Internal::Patches
 		}
 
 		// textureName is a RE::BSFixedString type
-		RE::BSFixedString blank = RE::BSFixedString("");
+		RE::BSFixedString blankTextureName = RE::BSFixedString("");
 
 		for (RE::TESWorldSpace* worldspace : worldspaces) {
 			if (!worldspace) {
@@ -39,7 +39,7 @@ namespace Internal::Patches
 				continue;
 			}
 
-			worldspace->waterEnvMap.textureName = blank;
+			worldspace->waterEnvMap.textureName = blankTextureName;
 			logger::info("\tPuddleCubemapsPatch -> Worldspace {} - waterEnvMap was cleared."sv,
 				Utility::GetFormInfo(worldspace));
 		}

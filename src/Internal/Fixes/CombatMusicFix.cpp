@@ -3,7 +3,7 @@
 // prevents combat music from playing when not intended to play
 namespace Internal::Fixes
 {
-	static inline constexpr std::array commands = {
+	static inline constexpr std::array<std::string_view, 9> commands = {
 		"RemoveMusic MUSzCombat"sv,
 		"RemoveMusic MUSzCombatBoss"sv,
 		"RemoveMusic MUSzCombatBossLegendary"sv,
@@ -44,13 +44,12 @@ namespace Internal::Fixes
 
 	bool CombatMusicFix::NeedsFix() noexcept
 	{
-		auto playerCharacter = RE::PlayerCharacter::GetSingleton();
-		if (playerCharacter && !playerCharacter->IsInCombat()) {
-			return true;
-		}
-		else {
+		auto* player = RE::PlayerCharacter::GetSingleton();
+		if (!player) {
 			return false;
 		}
+
+		return !player->IsInCombat();
 	}
 
 	RE::BSEventNotifyControl CombatMusicFix::DeathEventHandler::ProcessEvent(const RE::TESDeathEvent& a_event, RE::BSTEventSource<RE::TESDeathEvent>*)

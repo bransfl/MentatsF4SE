@@ -22,7 +22,8 @@ namespace Internal::Fixes
 		F4SE::Trampoline& trampoline = F4SE::GetTrampoline();
 
 		if (REL::Module::IsNG()) {
-			// NG Patch - TODO needs to be tested and fixed
+			// NG Patch - TODO needs to be tested and fixed.
+			// the problem is that we don't have the NG ID for ActiveEffect::EvaluateConditions().
 			logger::info("Fix aborted: MagicEffectConditionsFix. Reason: Game version was Next-Gen."sv);
 			return;
 			// REL::Relocation<uintptr_t> ptr_EvaluateConditions_NG{ REL::ID(2226003) };

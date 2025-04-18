@@ -1,8 +1,11 @@
 #include "Internal/Utility.hpp"
 
+#pragma warning(push)
+#pragma warning(disable : 4834) // GetFormInfo() is being annoying
+
 namespace Internal
 {
-	void Utility::ExecuteCommand(std::string_view a_command, RE::TESObjectREFR* a_targetRef, bool a_silent)
+	bool Utility::ExecuteCommand(std::string_view a_command, RE::TESObjectREFR* a_targetRef, bool a_silent)
 	{
 		RE::ConsoleLog* log = RE::ConsoleLog::GetSingleton();
 		RE::ScriptCompiler compiler = RE::ScriptCompiler();
@@ -15,6 +18,7 @@ namespace Internal
 
 		if (!script->header.isCompiled) {
 			logger::info("Utility -> ExecuteCommand: Failed to compile command: {}"sv, a_command);
+			return false;
 		}
 
 		if (a_silent == true) {
@@ -22,6 +26,7 @@ namespace Internal
 		}
 
 		delete script;
+		return true;
 	}
 
 	std::string_view Utility::GetModName(RE::TESForm* a_form, bool a_lastModified)
@@ -53,3 +58,5 @@ namespace Internal
 		return "(FormID: {:08X}, EditorID: {})"sv, formID, editorID;
 	}
 }
+
+#pragma warning(pop)

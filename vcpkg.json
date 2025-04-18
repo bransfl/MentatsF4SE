@@ -4,8 +4,6 @@
 		"rsm-mmio",
 		"spdlog",
 		"simpleini",
-		"toml11",
-		"boost-algorithm",
-		"boost-container"
+		"toml11"
 	]
 }

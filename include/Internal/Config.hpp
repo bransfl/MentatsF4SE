@@ -27,9 +27,7 @@ namespace Internal::Config
 
 	inline const auto bWorkbenchSoundFix = REX::TOML::Bool{ "Fixes"sv, "bWorkbenchSoundFix"sv, false };
 
-	// PATCHES
-	inline const auto bBetterHelpConsoleCommandPatch = REX::TOML::Bool{ "Patches"sv, "bBetterHelpConsoleCommandPatch"sv, false };
-	
+	// PATCHES	
 	inline const auto bLoadEditorIDsPatch = REX::TOML::Bool{ "Patches"sv, "bLoadEditorIDsPatch"sv, false };
 
 	inline const auto bPuddleCubemapsPatch = REX::TOML::Bool{ "Patches"sv, "bPuddleCubemapsPatch"sv, false };

@@ -13,8 +13,9 @@ namespace Internal
 		 * @param a_command The command to execute.
 		 * @param a_targetRef The target to execute this command on. This can be nullptr.
 		 * @param a_silent If the console command should be visible in the console's history.
+		 * @return If the command was successfully executed.
 		 */
-		static void ExecuteCommand(std::string_view a_command, RE::TESObjectREFR* a_targetRef, bool a_silent);
+		static bool ExecuteCommand(std::string_view a_command, RE::TESObjectREFR* a_targetRef, bool a_silent);
 
 		/**
 		 * @brief Returns the mod that a form is defined in, or was last modified by.

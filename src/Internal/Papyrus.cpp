@@ -3,9 +3,10 @@
 #pragma warning(push)
 #pragma warning(disable : 4100) // unreferenced formal parameters
 
+
 namespace Internal
 {
-	bool Papyrus::IsMentatsInstalled(RE::BSScript::IVirtualMachine& a_vm, RE::VMStackID a_vmStackID, std::monostate) noexcept
+	bool Papyrus::IsMentatsInstalled(DEFAULT_SCRIPT_PARAMS) noexcept
 	{
 		return true;
 	}

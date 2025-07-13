@@ -55,17 +55,16 @@ namespace Internal::Fixes
 	RE::BSEventNotifyControl CombatMusicFix::DeathEventHandler::ProcessEvent(const RE::TESDeathEvent& a_event, RE::BSTEventSource<RE::TESDeathEvent>*)
 	{
 		if (a_event.dying == true) {
-			// the actor hasnt finished dying,escape early
+			// the actor hasn't finished dying
 			return RE::BSEventNotifyControl::kContinue;
 		}
 
 		if (a_event.actorDying.get() == nullptr || a_event.actorKiller.get() == nullptr) {
-			// one of the actors was nullptr, escape early
 			return RE::BSEventNotifyControl::kContinue;
 		}
 
 		if (a_event.actorKiller.get() != RE::PlayerCharacter::GetSingleton()) {
-			// we dont need to run this for every single kill
+			// we don't need to run this for every single kill
 			return RE::BSEventNotifyControl::kContinue;
 		}
 

@@ -22,16 +22,17 @@ namespace Internal::Fixes
 		/**
 		 * @brief Stops all workbench SFX annotations on the given reference.
 		 * @param a_workbenchUser The reference to silence.
+		 * @param a_furniture The furniture reference that a_workbenchUser was using.
 		 */
-		static void FixWorkbenchSounds(RE::TESObjectREFR* a_workbenchUser) noexcept;
+		static void FixWorkbenchSounds(RE::TESObjectREFR* a_workbenchUser, RE::TESFurniture* a_furniture) noexcept;
 
-		/**
-		 * @brief Checks if the given furniture reference is a workbench.
-		 * @param a_furniture The reference to check.
-		 * @return If the a_furniture is a workbench.
-		 *		   If the reference is null, this returns false.
-		 */
-		static bool IsWorkbench(RE::TESFurniture* a_furniture) noexcept;
+		// /**
+		//  * @brief Checks if the given furniture reference is a workbench.
+		//  * @param a_furniture The reference to check.
+		//  * @return If the a_furniture is a workbench.
+		//  *		   If the reference is null, this returns false.
+		//  */
+		// static bool IsWorkbench(RE::TESFurniture* a_furniture) noexcept;
 
 		class FurnitureEventHandler : public RE::BSTEventSink<RE::TESFurnitureEvent>
 		{
@@ -84,7 +85,7 @@ namespace Internal::Fixes
 					return RE::BSEventNotifyControl::kContinue;
 				}
 
-				FixWorkbenchSounds(a_event.actor.get().get());
+				FixWorkbenchSounds(a_event.actor.get().get(), nullptr);
 
 				return RE::BSEventNotifyControl::kContinue;
 			}

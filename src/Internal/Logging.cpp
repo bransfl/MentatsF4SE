@@ -7,9 +7,7 @@ namespace Internal
 		LogSeparator();
 
 		logger::info("VERSION CHECK:"sv);
-
 		logger::info("\tUser game version: {}."sv, (REL::Module::IsNG() ? "Next-Gen"sv : "Old-Gen"sv));
-
 		logger::info("\tUser F4SE version: {}."sv, F4SE::GetF4SEVersion());
 
 		// game/f4se version match check
@@ -25,10 +23,10 @@ namespace Internal
 		// address library version check
 		bool hasAddressLibrary = false;
 		if (REL::Module::IsNG()) {
-			std::filesystem::exists("Data/F4SE/Plugins/version-1-10-984-0.bin"sv) ? hasAddressLibrary = true : hasAddressLibrary = false;
+			hasAddressLibrary = std::filesystem::exists("Data/F4SE/Plugins/version-1-10-984-0.bin"sv);
 		}
 		else {
-			std::filesystem::exists("Data/F4SE/Plugins/version-1-10-163-0.bin"sv) ? hasAddressLibrary = true : hasAddressLibrary = false;
+			hasAddressLibrary = std::filesystem::exists("Data/F4SE/Plugins/version-1-10-163-0.bin"sv);
 		}
 		logger::info("\tUser has the correct version of Address Library: {}."sv, hasAddressLibrary);
 	}

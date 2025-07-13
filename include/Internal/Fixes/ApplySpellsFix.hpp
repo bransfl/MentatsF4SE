@@ -1,96 +1,96 @@
-#pragma once
+// #pragma once
 
-// fixes entrypoint kApplyCombatHitSpell so multiple spells can be applied at once
-namespace Internal::Fixes
-{
-	// static RE::BGSEntryPoint::ENTRY_POINT GetEntryPoint(RE::BGSEntryPointPerkEntry* a_this);
+// // fixes entrypoint kApplyCombatHitSpell so multiple spells can be applied at once
+// namespace Internal::Fixes
+// {
+// 	// static RE::BGSEntryPoint::ENTRY_POINT GetEntryPoint(RE::BGSEntryPointPerkEntry* a_this);
 
-	// static auto* GetEntryPointData(RE::BGSEntryPointPerkEntry* a_this);
+// 	// static auto* GetEntryPointData(RE::BGSEntryPointPerkEntry* a_this);
 
-	class ApplySpellsFix
-		: public Fix
-	{
-	public:
-		/**
-		 * @brief Installs the fix.
-		 */
-		static void Install() noexcept;
+// 	class ApplySpellsFix
+// 		: public Fix
+// 	{
+// 	public:
+// 		/**
+// 		 * @brief Installs the fix.
+// 		 */
+// 		static void Install() noexcept;
 
-		/**
-		 * @brief Class name method.
-		 */
-		static inline constexpr std::string_view Module::GetModuleName() noexcept
-		{
-			return "ApplySpellsFix"sv;
-		}
+// 		/**
+// 		 * @brief Class name method.
+// 		 */
+// 		static inline constexpr std::string_view Module::GetModuleName() noexcept
+// 		{
+// 			return "ApplySpellsFix"sv;
+// 		}
 
-		static void ApplyCombatHitSpell(
-			RE::BGSEntryPoint::ENTRY_POINT entryPoint,
-			RE::Actor* perkOwner,
-			...);
+// 		static void ApplyCombatHitSpell(
+// 			RE::BGSEntryPoint::ENTRY_POINT entryPoint,
+// 			RE::Actor* perkOwner,
+// 			...);
 
-		static std::vector<void*> HandleEntryPoint(
-			RE::BGSEntryPoint::ENTRY_POINT entryPoint,
-			RE::Actor* perkOwner,
-			std::vector<RE::TESForm*> conditionFilterArguments);
-	};
+// 		static std::vector<void*> HandleEntryPoint(
+// 			RE::BGSEntryPoint::ENTRY_POINT entryPoint,
+// 			RE::Actor* perkOwner,
+// 			std::vector<RE::TESForm*> conditionFilterArguments);
+// 	};
 
-	/* --------------------------------------------- */
+// 	/* --------------------------------------------- */
 
-	// hacky test/port from skse stuff to make stuff easier to read
-	//
-	// namespace Visitor
-	// {
-	// 	class RE::BGSPerkEntry;
-	// 	class PerkEntryVisitor
-	// 	{
-	// 	public:
-	// 		virtual RE::BSContainer::ForEachResult operator()(RE::BGSPerkEntry* perkEntry) = 0; // 0
-	// 	};
-	// 	static_assert(sizeof(PerkEntryVisitor) == 0x8);
+// 	// hacky test/port from skse stuff to make stuff easier to read
+// 	//
+// 	// namespace Visitor
+// 	// {
+// 	// 	class RE::BGSPerkEntry;
+// 	// 	class PerkEntryVisitor
+// 	// 	{
+// 	// 	public:
+// 	// 		virtual RE::BSContainer::ForEachResult operator()(RE::BGSPerkEntry* perkEntry) = 0; // 0
+// 	// 	};
+// 	// 	static_assert(sizeof(PerkEntryVisitor) == 0x8);
 
-	// 	class RE::Actor;
-	// 	class RE::TESForm;
+// 	// 	class RE::Actor;
+// 	// 	class RE::TESForm;
 
-	// 	class HandleEntryPointVisitor
-	// 		: public PerkEntryVisitor // 0
-	// 	{
-	// 	public:
-	// 		// Override (PerkEntryVisitor)
-	// 		virtual RE::BSContainer::ForEachResult operator()(RE::BGSPerkEntry* perkEntry) override; // 0
+// 	// 	class HandleEntryPointVisitor
+// 	// 		: public PerkEntryVisitor // 0
+// 	// 	{
+// 	// 	public:
+// 	// 		// Override (PerkEntryVisitor)
+// 	// 		virtual RE::BSContainer::ForEachResult operator()(RE::BGSPerkEntry* perkEntry) override; // 0
 
-	// 		HandleEntryPointVisitor() = delete;
-	// 		HandleEntryPointVisitor(const HandleEntryPointVisitor&) = delete;
-	// 		HandleEntryPointVisitor(HandleEntryPointVisitor&&) = delete;
+// 	// 		HandleEntryPointVisitor() = delete;
+// 	// 		HandleEntryPointVisitor(const HandleEntryPointVisitor&) = delete;
+// 	// 		HandleEntryPointVisitor(HandleEntryPointVisitor&&) = delete;
 
-	// 		~HandleEntryPointVisitor() = default;
+// 	// 		~HandleEntryPointVisitor() = default;
 
-	// 		HandleEntryPointVisitor& operator=(const HandleEntryPointVisitor&) = delete;
-	// 		HandleEntryPointVisitor& operator=(HandleEntryPointVisitor&&) = delete;
+// 	// 		HandleEntryPointVisitor& operator=(const HandleEntryPointVisitor&) = delete;
+// 	// 		HandleEntryPointVisitor& operator=(HandleEntryPointVisitor&&) = delete;
 
-	// 		HandleEntryPointVisitor(
-	// 			RE::BGSEntryPointFunctionData::FunctionType	entryPointFunctionType,
-	// 			RE::TESForm** 								conditionFilterArguments,
-	// 			void**										entryPointFunctionArguments,
-	// 			RE::Actor*									perkOwner,
-	// 			std::uint8_t								conditionFilterArgumentCount,
-	// 			std::uint8_t								entryPointFunctionArgumentCount) {
-	// 				this->entryPointFunctionType = entryPointFunctionType;
-	// 				this->conditionFilterArguments = conditionFilterArguments;
-	// 				this->entryPointFunctionArguments = entryPointFunctionArguments;
-	// 				this->perkOwner = perkOwner;
-	// 				this->conditionFilterArgumentCount = conditionFilterArgumentCount;
-	// 				this->entryPointFunctionArgumentCount = entryPointFunctionArgumentCount;
-	// 			}
+// 	// 		HandleEntryPointVisitor(
+// 	// 			RE::BGSEntryPointFunctionData::FunctionType	entryPointFunctionType,
+// 	// 			RE::TESForm** 								conditionFilterArguments,
+// 	// 			void**										entryPointFunctionArguments,
+// 	// 			RE::Actor*									perkOwner,
+// 	// 			std::uint8_t								conditionFilterArgumentCount,
+// 	// 			std::uint8_t								entryPointFunctionArgumentCount) {
+// 	// 				this->entryPointFunctionType = entryPointFunctionType;
+// 	// 				this->conditionFilterArguments = conditionFilterArguments;
+// 	// 				this->entryPointFunctionArguments = entryPointFunctionArguments;
+// 	// 				this->perkOwner = perkOwner;
+// 	// 				this->conditionFilterArgumentCount = conditionFilterArgumentCount;
+// 	// 				this->entryPointFunctionArgumentCount = entryPointFunctionArgumentCount;
+// 	// 			}
 
-	// 		// Member variables
-	// 		RE::BGSEntryPointFunctionData::FunctionType entryPointFunctionType; // 8
-	// 		RE::TESForm** conditionFilterArguments;								// 10
-	// 		void** entryPointFunctionArguments;									// 18
-	// 		RE::Actor* perkOwner;												// 20
-	// 		uint8_t conditionFilterArgumentCount;								// 28
-	// 		uint8_t entryPointFunctionArgumentCount;							// 29
-	// 	};
-	// }
+// 	// 		// Member variables
+// 	// 		RE::BGSEntryPointFunctionData::FunctionType entryPointFunctionType; // 8
+// 	// 		RE::TESForm** conditionFilterArguments;								// 10
+// 	// 		void** entryPointFunctionArguments;									// 18
+// 	// 		RE::Actor* perkOwner;												// 20
+// 	// 		uint8_t conditionFilterArgumentCount;								// 28
+// 	// 		uint8_t entryPointFunctionArgumentCount;							// 29
+// 	// 	};
+// 	// }
 
-}
+// }

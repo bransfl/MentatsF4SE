@@ -1,5 +1,7 @@
 #pragma once
 
+#define DEFAULT_SCRIPT_PARAMS RE::BSScript::IVirtualMachine &a_vm, RE::VMStackID a_vmStackID, std::monostate
+
 namespace Internal
 {
 	class Papyrus
@@ -11,7 +13,7 @@ namespace Internal
 		 * @brief Checks if Mentats is installed.
 		 * @return If MentatsF4SE is installed or not.
 		 */
-		static bool IsMentatsInstalled(RE::BSScript::IVirtualMachine& a_vm, RE::VMStackID a_vmStackID, std::monostate) noexcept;
+		static bool IsMentatsInstalled(DEFAULT_SCRIPT_PARAMS) noexcept;
 
 		/**
 		 * @brief Registers new Papyrus functions with the VM.

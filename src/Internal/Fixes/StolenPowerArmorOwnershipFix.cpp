@@ -44,7 +44,7 @@ namespace Internal::Fixes
 			return RE::BSEventNotifyControl::kContinue;
 		}
 
-		// just in case the player hasnt used power armor yet
+		// just in case the player hasn't used power armor yet
 		if (!player->lastUsedPowerArmor.get() || !player->lastUsedPowerArmor.get().get()) {
 			return RE::BSEventNotifyControl::kContinue;
 		}

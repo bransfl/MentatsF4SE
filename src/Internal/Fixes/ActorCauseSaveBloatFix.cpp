@@ -50,7 +50,7 @@ namespace Internal::Fixes
 				}
 
 				std::vector<RE::TESObjectREFR*> projectiles = GetProjectilesInCell(a_event.cell);
-				logger::info("\tActorCauseSaveBloatFix -> Processing projectiles vector. Size: {}."sv, projectiles.size());
+				logger::debug("\tActorCauseSaveBloatFix -> Processing projectiles vector. Size: {}."sv, projectiles.size());
 				if (projectiles.size() == 0) {
 					return RE::BSEventNotifyControl::kContinue;
 					break;

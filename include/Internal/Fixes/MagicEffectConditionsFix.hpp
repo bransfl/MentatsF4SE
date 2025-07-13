@@ -33,6 +33,6 @@ namespace Internal::Fixes
 		 * @param a_elapsedTimeDelta The amount of time that this effect has been active.
 		 * @param a_forceUpdate If this condition should be forcefully re-evaluated. (?)
 		 */
-		static void Hook_EvaluateConditions(RE::ActiveEffect* a_this, float a_elapsedTimeDelta, bool a_forceUpdate);
+		static void EvaluateConditions_Hook(RE::ActiveEffect* a_this, float a_elapsedTimeDelta, bool a_forceUpdate);
 	};
 }

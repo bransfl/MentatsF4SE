@@ -2,8 +2,8 @@
 
 namespace Internal::Fixes
 {
-	typedef void(Signature_EvaluateConditions)(RE::ActiveEffect*, float, bool);
-	REL::Relocation<Signature_EvaluateConditions> OriginalFunction_EvaluateConditions;
+	typedef void(EvaluateConditions_Signature)(RE::ActiveEffect*, float, bool);
+	REL::Relocation<EvaluateConditions_Signature> EvaluateConditions_Original;
 
 	void MagicEffectConditionsFix::Install() noexcept
 	{
@@ -13,7 +13,7 @@ namespace Internal::Fixes
 			logger::info("Fix aborted: MagicEffectConditionsFix. Reason: Fix was disabled in config."sv);
 			return;
 		}
-		
+
 		if (REX::W32::GetModuleHandleW(L"MGEFConditionFix.dll")) {
 			logger::info("Fix aborted: MagicEffectConditionsFix. Reason: Mod was installed: MGEFConditionFix.dll."sv);
 			return;
@@ -22,17 +22,17 @@ namespace Internal::Fixes
 		F4SE::Trampoline& trampoline = F4SE::GetTrampoline();
 
 		if (REL::Module::IsNG()) {
-			// NG Patch - TODO needs to be tested and fixed.
-			// the problem is that we don't have the NG ID for ActiveEffect::EvaluateConditions().
+			// NG Patch - TODO
+			// the problem is that we don't have the NG ID for ActiveEffect::EvaluateConditions()'s CheckDisplacementSpellOnTarget().
 			logger::info("Fix aborted: MagicEffectConditionsFix. Reason: Game version was Next-Gen."sv);
 			return;
 			// REL::Relocation<uintptr_t> ptr_EvaluateConditions_NG{ REL::ID(2226003) };
-			// OriginalFunction_EvaluateConditions = trampoline.write_branch<5>(ptr_EvaluateConditions_NG.address(), &Hook_EvaluateConditions);
+			// EvaluateConditions_Original = trampoline.write_branch<5>(ptr_EvaluateConditions_NG.address(), &EvaluateConditions_Hook);
 		}
 		else {
 			// OG Patch
 			REL::Relocation<uintptr_t> ptr_EvaluateConditions_OG{ REL::ID(1228998) };
-			OriginalFunction_EvaluateConditions = trampoline.write_branch<5>(ptr_EvaluateConditions_OG.address(), &Hook_EvaluateConditions);
+			EvaluateConditions_Original = trampoline.write_branch<5>(ptr_EvaluateConditions_OG.address(), &EvaluateConditions_Hook);
 		}
 
 		logger::info("Fix installed: MagicEffectConditionsFix."sv);
@@ -45,8 +45,9 @@ namespace Internal::Fixes
 			return 1.0F;
 		}
 
-		if (conditionUpdateInterval->GetFloat() > 0.001F) {
-			return conditionUpdateInterval->GetFloat();
+		float conditionUpdateIntervalValue = conditionUpdateInterval->GetFloat();
+		if (conditionUpdateIntervalValue > 0.001F) {
+			return conditionUpdateIntervalValue;
 		}
 		else {
 			return 1.0F;
@@ -54,9 +55,9 @@ namespace Internal::Fixes
 	}
 
 	// thank you bingle my beloved
-	void MagicEffectConditionsFix::Hook_EvaluateConditions(RE::ActiveEffect* a_this, float a_elapsedTimeDelta, bool a_forceUpdate)
+	void MagicEffectConditionsFix::EvaluateConditions_Hook(RE::ActiveEffect* a_this, float a_elapsedTimeDelta, bool a_forceUpdate)
 	{
-		// logger::debug("MagicEffectConditionsFix -> Hook_EvaluateConditions -> a_this->spell was {}."sv,
+		// logger::debug("MagicEffectConditionsFix -> EvaluateConditions_Hook -> a_this->spell was {}."sv,
 		// 	RE::TESForm::GetFormByID(a_this->spell->GetFormID())->As<RE::TESForm>());
 
 		if (a_this->conditionStatus == RE::ActiveEffect::ConditionStatus::kNotAvailable) {
@@ -68,8 +69,17 @@ namespace Internal::Fixes
 			RE::AlchemyItem* potion = RE::TESForm::GetFormByID(a_this->spell->GetFormID())->As<RE::AlchemyItem>();
 			if (potion) {
 				if (potion->data.addictionChance > 0.0 || potion->data.addictionItem != nullptr) {
-					// this is a fire-and-forget addictive potion (likely an addictive chem)
-					// so we return normally since fire-and-forget potions don't evaluate conditions after application
+					// this is a fire-and-forget addictive potion (chem/alcohol) so we evaluate conditions and return normally
+					// if (a_this->effect->conditions.IsTrue(a_this->target->GetTargetStatsObject(), a_this->caster.get().get()) && !a_this->CheckDisplacementSpellOnTarget()) {
+					// 	a_this->conditionStatus = RE::ActiveEffect::ConditionStatus::kTrue;
+					// }
+					// else {
+					// 	a_this->conditionStatus = RE::ActiveEffect::ConditionStatus::kFalse;
+					// }
+					// return;
+					logger::info("mgef conditions fix: about to return _Original..."sv);
+					EvaluateConditions_Original(a_this, a_elapsedTimeDelta, a_forceUpdate);
+					logger::info("mgef conditions fix: finished _Original, returning."sv);
 					return;
 				}
 			}

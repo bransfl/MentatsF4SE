@@ -34,6 +34,9 @@ namespace Internal::Fixes
 		//  */
 		// static bool IsWorkbench(RE::TESFurniture* a_furniture) noexcept;
 
+		/*
+		 * Processes furniture enter/exit events.
+		 */
 		class FurnitureEventHandler : public RE::BSTEventSink<RE::TESFurnitureEvent>
 		{
 		public:
@@ -62,6 +65,9 @@ namespace Internal::Fixes
 			FurnitureEventHandler& operator=(FurnitureEventHandler&&) = delete;
 		};
 
+		/*
+		 * Processes actor cell attach/detach events.
+		 */
 		class ActorCellEventHandler : public RE::BSTEventSink<RE::BGSActorCellEvent>
 		{
 		public:
@@ -71,24 +77,7 @@ namespace Internal::Fixes
 				return std::addressof(singleton);
 			}
 
-			virtual RE::BSEventNotifyControl ProcessEvent(const RE::BGSActorCellEvent& a_event, RE::BSTEventSource<RE::BGSActorCellEvent>*) override
-			{
-				if (a_event.actor.get().get() && a_event.actor.get().get() != RE::PlayerCharacter::GetSingleton()) {
-					return RE::BSEventNotifyControl::kContinue;
-				}
-
-				auto ui = RE::UI::GetSingleton();
-				if (!ui) {
-					return RE::BSEventNotifyControl::kContinue;
-				}
-				if (ui->GetMenuOpen("ExamineMenu"sv) || ui->GetMenuOpen("CookingMenu"sv)) {
-					return RE::BSEventNotifyControl::kContinue;
-				}
-
-				FixWorkbenchSounds(a_event.actor.get().get(), nullptr);
-
-				return RE::BSEventNotifyControl::kContinue;
-			}
+			virtual RE::BSEventNotifyControl ProcessEvent(const RE::BGSActorCellEvent& a_event, RE::BSTEventSource<RE::BGSActorCellEvent>*) override;
 
 			ActorCellEventHandler() = default;
 			ActorCellEventHandler(const ActorCellEventHandler&) = delete;

@@ -8,7 +8,7 @@
 
 namespace Internal::Fixes
 {
-	// map: furniture formid : console command
+	// furniture formid : console command
 	static inline const std::unordered_map<RE::TESFormID, std::string_view> furnitureCommandMap = {
 		{ 0x08674C, "RecvAnimEvent \"SoundStop\" \"NPCHumanWeldLPM\""sv },																			 // WorkshopScavengingStation
 		{ 0x12EA9B, "RecvAnimEvent \"SoundStop\" \"UIWorkshopSewingMachineRunLPM\""sv },															 // WorkbenchArmorA
@@ -28,6 +28,9 @@ namespace Internal::Fixes
 		}
 
 		auto* player = RE::PlayerCharacter::GetSingleton();
+		if (!player) {
+			return;
+		}
 		RE::TESFurnitureEvent::GetEventSource()->RegisterSink(WorkbenchSoundFix::FurnitureEventHandler::GetSingleton());
 		player->RE::BSTEventSource<RE::BGSActorCellEvent>::RegisterSink(WorkbenchSoundFix::ActorCellEventHandler::GetSingleton());
 
@@ -43,29 +46,19 @@ namespace Internal::Fixes
 		}
 
 		if (a_furniture) {
-			// process the furniture
+			// silence the sound annotation for the given furniture
 			RE::TESFormID furnitureFormID = a_furniture->GetFormID();
-			for (const auto& elem : furnitureCommandMap) {
-				if (elem.first == furnitureFormID) {
-					Utility::ExecuteCommand(elem.second, a_workbenchUser, true);
-				}
+			if (furnitureCommandMap.contains(furnitureFormID)) {
+				Utility::ExecuteCommand(furnitureCommandMap.at(furnitureFormID), nullptr, true);
 			}
 		}
 		else {
-			// process all commands on the user
+			// silence all sound annotations
 			for (const auto& elem : furnitureCommandMap) {
 				Utility::ExecuteCommand(elem.second, a_workbenchUser, true);
 			}
 		}
 	}
-
-	// bool WorkbenchSoundFix::IsWorkbench(RE::TESFurniture* a_furniture) noexcept
-	// {
-	// 	if (!a_furniture) {
-	// 		return false;
-	// 	}
-	// 	return a_furniture->wbData.type != RE::WorkbenchData::Type::kNone;
-	// }
 
 	RE::BSEventNotifyControl WorkbenchSoundFix::FurnitureEventHandler::ProcessEvent(const RE::TESFurnitureEvent& a_event, RE::BSTEventSource<RE::TESFurnitureEvent>*)
 	{
@@ -85,6 +78,26 @@ namespace Internal::Fixes
 		}
 
 		FixWorkbenchSounds(actor, furniture);
+
+		return RE::BSEventNotifyControl::kContinue;
+	}
+
+	RE::BSEventNotifyControl WorkbenchSoundFix::ActorCellEventHandler::ProcessEvent(const RE::BGSActorCellEvent& a_event, RE::BSTEventSource<RE::BGSActorCellEvent>*)
+	{
+		RE::TESObjectREFR* actor = a_event.actor.get().get();
+		if (!actor) {
+			return RE::BSEventNotifyControl::kContinue;
+		}
+
+		RE::UI* ui = RE::UI::GetSingleton();
+		if (!ui) {
+			return RE::BSEventNotifyControl::kContinue;
+		}
+		if (ui->GetMenuOpen("ExamineMenu"sv) || ui->GetMenuOpen("CookingMenu"sv)) {
+			return RE::BSEventNotifyControl::kContinue;
+		}
+
+		FixWorkbenchSounds(actor, nullptr);
 
 		return RE::BSEventNotifyControl::kContinue;
 	}
